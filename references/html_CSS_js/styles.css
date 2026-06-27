@@ -4,8 +4,16 @@
    Type: Nexa Heavy (display) + Plus Jakarta Sans (text)
    ========================================================= */
 
-/* Fonts (Nexa, Plus Jakarta Sans, JetBrains Mono) are loaded via next/font
-   in app/(frontend)/fonts.ts and exposed as the CSS variables consumed below. */
+@font-face{
+  font-family:"Nexa";
+  src:url("assets/Nexa-Heavy.woff2") format("woff2");
+  font-weight:900;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:"Nexa";
+  src:url("assets/Nexa-ExtraLight.woff2") format("woff2");
+  font-weight:200;font-style:normal;font-display:swap;
+}
 
 :root{
   --blue:#0106FF;
@@ -41,9 +49,9 @@
   --r-lg:16px;
   --r-xl:24px;
 
-  --f-display:var(--font-nexa),"Plus Jakarta Sans",system-ui,sans-serif;
-  --f-text:var(--font-jakarta),"Plus Jakarta Sans",system-ui,sans-serif;
-  --f-mono:var(--font-jetbrains-mono),ui-monospace,monospace;
+  --f-display:"Nexa","Plus Jakarta Sans",system-ui,sans-serif;
+  --f-text:"Plus Jakarta Sans",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,monospace;
 
   --ease:cubic-bezier(.2,.7,.2,1);
 }

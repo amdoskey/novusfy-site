@@ -48,3 +48,6 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Unused commercial trial/demo fonts (not used by the build; do not redistribute)
+/assets/fonts/other fonts/
