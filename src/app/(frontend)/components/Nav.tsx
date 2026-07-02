@@ -10,7 +10,7 @@ const LINKS = [
   { href: '/services', label: 'Services' },
   { href: '/learning-hub', label: 'Learning Hub' },
   { href: '/#work', label: 'Work' },
-  { href: '/#contact', label: 'Contact' },
+  { href: '/contact', label: 'Contact' },
 ]
 
 export default function Nav() {

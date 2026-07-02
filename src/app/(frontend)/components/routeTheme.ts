@@ -9,4 +9,5 @@ export const ROUTE_THEME: Record<string, RouteTheme> = {
   '/about': { page: 'about' },
   '/services': { page: 'services' },
   '/learning-hub': { page: 'learning' },
+  '/contact': { page: 'contact' },
 }

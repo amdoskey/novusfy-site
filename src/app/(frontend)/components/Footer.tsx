@@ -25,7 +25,7 @@ export default function Footer() {
         <div className="foot__col">
           <h4>Explore</h4>
           <Link href="/learning-hub">Learning Hub</Link>
-          <Link href="/#contact">Contact</Link>
+          <Link href="/contact">Contact</Link>
           <Link href="#">Privacy</Link>
         </div>
         <div className="foot__col">
