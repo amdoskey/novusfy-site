@@ -51,3 +51,7 @@ node_modules/
 
 # Unused commercial trial/demo fonts (not used by the build; do not redistribute)
 /assets/fonts/other fonts/
+
+# Local verification artifacts
+/.playwright-mcp/
+/*.png
