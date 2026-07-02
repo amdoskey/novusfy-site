@@ -267,6 +267,17 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:900;letter-spacing
 .foot__base{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:28px;
   font-family:var(--f-mono);font-size:12px;letter-spacing:.04em;color:var(--muted-invert)}
 
+/* SOCIAL ROW (footer + contact page) */
+.social{display:flex;gap:12px;flex-wrap:wrap}
+.social a{width:40px;height:40px;border:1px solid var(--outline);border-radius:999px;
+  display:grid;place-items:center;color:var(--muted);
+  transition:color .2s var(--ease),border-color .2s var(--ease),background .2s var(--ease)}
+.social a:hover{color:var(--blue);border-color:var(--blue)}
+.social svg{width:18px;height:18px;fill:currentColor;stroke:currentColor}
+.foot__social{margin-top:22px}
+.foot .social a{border-color:var(--line-dark);color:var(--muted-invert)}
+.foot .social a:hover{color:var(--blue-tint);border-color:var(--blue-tint)}
+
 /* INTERIOR HEADER */
 .phead{padding:clamp(56px,7vw,100px) 0 clamp(40px,5vw,60px);
   background:radial-gradient(110% 80% at 100% 0,rgba(1,6,255,.06),transparent 55%)}

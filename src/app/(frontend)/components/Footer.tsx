@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import React from 'react'
 
+import SocialLinks from './SocialLinks'
+
 export default function Footer() {
   return (
     <footer className="foot">
@@ -12,6 +14,7 @@ export default function Footer() {
             <span className="brand__word brand__word--invert">Novusfy</span>
           </Link>
           <p className="foot__slogan">Your Next Begins Now.</p>
+          <SocialLinks className="foot__social" />
         </div>
         <div className="foot__col">
           <h4>Company</h4>

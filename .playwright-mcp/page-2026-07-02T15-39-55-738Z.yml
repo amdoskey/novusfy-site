@@ -1,0 +1,137 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Novusfy home" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: Novusfy
+      - navigation "Primary" [ref=e6]:
+        - link "Home" [ref=e7] [cursor=pointer]:
+          - /url: /
+        - link "About" [ref=e8] [cursor=pointer]:
+          - /url: /about
+        - link "Services" [ref=e9] [cursor=pointer]:
+          - /url: /services
+        - link "Learning Hub" [ref=e10] [cursor=pointer]:
+          - /url: /learning-hub
+        - link "Work" [ref=e11] [cursor=pointer]:
+          - /url: /#work
+        - link "Contact" [ref=e12] [cursor=pointer]:
+          - /url: /#contact
+      - link "Get Started" [ref=e14] [cursor=pointer]:
+        - /url: /#contact
+  - main [ref=e15]:
+    - generic [ref=e17]:
+      - paragraph [ref=e18]: About Novusfy
+      - heading "The bridge to your next chapter." [level=1] [ref=e20]
+      - paragraph [ref=e21]: "We're a consulting, marketing, and digital solutions company built around one idea: meaningful progress starts the moment you get clear about what's next."
+    - generic [ref=e24]:
+      - generic [ref=e26]:
+        - generic [ref=e27]: Team / office image
+        - text: "4 : 5 portrait · add photo"
+      - generic [ref=e28]:
+        - paragraph [ref=e29]: Our story
+        - heading "Built for the in-between moments." [level=2] [ref=e30]
+        - paragraph [ref=e31]: Most businesses don't fail because of one wrong decision. They drift — unclear on the goal, unsure of the next step, busy without progress. Novusfy was founded to close that gap.
+        - paragraph [ref=e32]: We bring together strategy, marketing, digital systems, and practical learning under one roof so growth isn't fragmented across five vendors and three half-finished plans. One partner, one direction, real momentum.
+        - paragraph [ref=e33]: From offices in Germany and Erbil, we work with businesses, startups, and ambitious professionals across the region who are ready to grow, launch, or reinvent.
+        - generic [ref=e34]:
+          - generic [ref=e35]:
+            - paragraph [ref=e36]: Mission
+            - heading "Turn intention into progress." [level=3] [ref=e37]
+            - paragraph [ref=e38]: Give every client the clarity, structure, and tools to move from "someday" to "started" — and keep moving.
+          - generic [ref=e39]:
+            - paragraph [ref=e40]: Vision
+            - heading "A region of builders." [level=3] [ref=e41]
+            - paragraph [ref=e42]: To be the trusted partner behind the next generation of confident, modern, growing businesses.
+    - generic [ref=e44]:
+      - paragraph [ref=e45]: Brand philosophy
+      - paragraph [ref=e46]: Every transformation begins in the present moment. Your business grows when your focus is clear, your strategy is intentional, and your action starts now.
+      - paragraph [ref=e47]: We don't chase trends. We build thoughtful, meaningful progress — rooted in awareness, strategy, and modern tools.
+    - generic [ref=e49]:
+      - generic [ref=e50]:
+        - paragraph [ref=e51]: Why Novusfy
+        - heading "Strategy and execution, under one roof." [level=2] [ref=e52]
+      - generic [ref=e53]:
+        - generic [ref=e54]:
+          - generic [ref=e55]: "01"
+          - heading "One partner" [level=3] [ref=e56]
+          - paragraph [ref=e57]: Strategy, marketing, and digital align instead of competing across vendors.
+        - generic [ref=e58]:
+          - generic [ref=e59]: "02"
+          - heading "Clarity first" [level=3] [ref=e60]
+          - paragraph [ref=e61]: We define the real objective before spending a dirham on tactics.
+        - generic [ref=e62]:
+          - generic [ref=e63]: "03"
+          - heading "Modern tools" [level=3] [ref=e64]
+          - paragraph [ref=e65]: AI and automation built into systems that actually run your business.
+        - generic [ref=e66]:
+          - generic [ref=e67]: "04"
+          - heading "We build with you" [level=3] [ref=e68]
+          - paragraph [ref=e69]: Not a deck and a handshake — execution you can see, measure, and own.
+    - generic [ref=e72]:
+      - generic [ref=e74]:
+        - generic [ref=e75]: Founder photo
+        - text: "1 : 1 · add photo"
+      - generic [ref=e76]:
+        - paragraph [ref=e77]: Leadership · Novusfy
+        - heading "Experience that's been on your side of the table." [level=2] [ref=e78]
+        - paragraph [ref=e79]: "Novusfy is led by people who've built, launched, and reinvented real businesses — not just advised on them. That perspective shapes every engagement: we know how it feels to face the next move without a map."
+        - paragraph [ref=e80]: Our team blends strategy, brand, performance marketing, and product thinking, so the advice you get is grounded in what actually ships and grows.
+        - link "Meet the team →" [ref=e81] [cursor=pointer]:
+          - /url: /#contact
+    - generic [ref=e84]:
+      - paragraph [ref=e85]: Let's begin
+      - heading "Your next begins now." [level=2] [ref=e86]
+      - paragraph [ref=e87]: If you're ready to grow, launch, or reinvent — we're ready to build it with you.
+      - generic [ref=e88]:
+        - link "Start Your Next Chapter →" [ref=e89] [cursor=pointer]:
+          - /url: /#contact
+          - text: Start Your Next Chapter
+          - generic [ref=e90]: →
+        - link "Explore Services" [ref=e91] [cursor=pointer]:
+          - /url: /services
+      - generic [ref=e92]:
+        - generic [ref=e93]:
+          - generic [ref=e94]: Offices
+          - paragraph [ref=e95]: Germany · Erbil
+        - generic [ref=e96]:
+          - generic [ref=e97]: Email
+          - paragraph [ref=e98]: info@novusfy.com
+        - generic [ref=e99]:
+          - generic [ref=e100]: Web
+          - paragraph [ref=e101]: novusfy.com
+  - contentinfo [ref=e102]:
+    - generic [ref=e103]:
+      - generic [ref=e104]:
+        - link "Novusfy" [ref=e105] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e106]: Novusfy
+        - paragraph [ref=e107]: Your Next Begins Now.
+      - generic [ref=e108]:
+        - heading "Company" [level=4] [ref=e109]
+        - link "About" [ref=e110] [cursor=pointer]:
+          - /url: /about
+        - link "Services" [ref=e111] [cursor=pointer]:
+          - /url: /services
+        - link "Work" [ref=e112] [cursor=pointer]:
+          - /url: /#work
+      - generic [ref=e113]:
+        - heading "Explore" [level=4] [ref=e114]
+        - link "Learning Hub" [ref=e115] [cursor=pointer]:
+          - /url: /learning-hub
+        - link "Contact" [ref=e116] [cursor=pointer]:
+          - /url: /#contact
+        - link "Privacy" [ref=e117] [cursor=pointer]:
+          - /url: "#"
+      - generic [ref=e118]:
+        - heading "Reach us" [level=4] [ref=e119]
+        - link "info@novusfy.com" [ref=e120] [cursor=pointer]:
+          - /url: mailto:info@novusfy.com
+        - link "Germany · Erbil" [ref=e121] [cursor=pointer]:
+          - /url: "#"
+        - link "novusfy.com" [ref=e122] [cursor=pointer]:
+          - /url: "#"
+    - generic [ref=e123]:
+      - generic [ref=e124]: © 2026 Novusfy. All rights reserved.
+      - generic [ref=e125]: Clarity · Strategy · Execution · Growth
+  - alert [ref=e126]
