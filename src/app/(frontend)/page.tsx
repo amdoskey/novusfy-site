@@ -348,7 +348,7 @@ export default function HomePage() {
               Tell us where you want to go. We&apos;ll show you the path and walk it with you.
             </p>
             <div className="final-cta__actions">
-              <a href="mailto:hello@novusfy.com" className="btn btn--solid">
+              <a href="mailto:info@novusfy.com" className="btn btn--solid">
                 Start Your Next Chapter <span className="btn__arrow">→</span>
               </a>
               <Link href="/services" className="btn btn--ghost btn--ghost-invert">
@@ -358,11 +358,11 @@ export default function HomePage() {
             <div className="final-cta__meta">
               <div>
                 <span className="label label--invert">Offices</span>
-                <p>Dubai · Erbil</p>
+                <p>Germany · Erbil</p>
               </div>
               <div>
                 <span className="label label--invert">Email</span>
-                <p>hello@novusfy.com</p>
+                <p>info@novusfy.com</p>
               </div>
               <div>
                 <span className="label label--invert">Web</span>

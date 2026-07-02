@@ -228,11 +228,11 @@ export default function ServicesPage() {
             <div className="final-cta__meta">
               <div>
                 <span className="label label--invert">Offices</span>
-                <p>Dubai · Erbil</p>
+                <p>Germany · Erbil</p>
               </div>
               <div>
                 <span className="label label--invert">Email</span>
-                <p>hello@novusfy.com</p>
+                <p>info@novusfy.com</p>
               </div>
               <div>
                 <span className="label label--invert">Web</span>

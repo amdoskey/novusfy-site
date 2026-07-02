@@ -46,7 +46,7 @@ export default function AboutPage() {
               plans. One partner, one direction, real momentum.
             </p>
             <p>
-              From offices in Dubai and Erbil, we work with businesses, startups, and ambitious
+              From offices in Germany and Erbil, we work with businesses, startups, and ambitious
               professionals across the region who are ready to grow, launch, or reinvent.
             </p>
             <div className="mv">
@@ -174,11 +174,11 @@ export default function AboutPage() {
             <div className="final-cta__meta">
               <div>
                 <span className="label label--invert">Offices</span>
-                <p>Dubai · Erbil</p>
+                <p>Germany · Erbil</p>
               </div>
               <div>
                 <span className="label label--invert">Email</span>
-                <p>hello@novusfy.com</p>
+                <p>info@novusfy.com</p>
               </div>
               <div>
                 <span className="label label--invert">Web</span>

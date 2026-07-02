@@ -27,8 +27,8 @@ export default function Footer() {
         </div>
         <div className="foot__col">
           <h4>Reach us</h4>
-          <a href="mailto:hello@novusfy.com">hello@novusfy.com</a>
-          <a href="#">Dubai · Erbil</a>
+          <a href="mailto:info@novusfy.com">info@novusfy.com</a>
+          <a href="#">Germany · Erbil</a>
           <a href="#">novusfy.com</a>
         </div>
       </div>
