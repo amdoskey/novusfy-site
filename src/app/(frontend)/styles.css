@@ -693,3 +693,19 @@ body[data-hero="dark"] .nav.is-stuck{animation:navSettle var(--dur-med) var(--ea
   content:"";position:absolute;top:-20%;bottom:-20%;left:0;width:45%;pointer-events:none;
   background:linear-gradient(100deg,transparent,rgba(255,255,255,.06),transparent);
   animation:phSheen 7.5s var(--ease-in-out-soft) infinite}
+
+/* =========================================================
+   PAGE-LOAD EXPERIENCE (Stage 5)
+   Nav + page header settle on first paint. The nav lives in
+   the persistent layout so this runs once per hard load, never
+   on client-side route changes. Nothing blocks interaction;
+   fill-mode backwards releases after the animation ends.
+   ========================================================= */
+@keyframes navIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.nav{animation:navIn var(--dur-slow) var(--ease-out-expo) 50ms backwards}
+@keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.phead .wrap > *{animation:riseIn var(--dur-med) var(--ease-out-expo) backwards}
+.phead .wrap > *:nth-child(1){animation-delay:.05s}
+.phead .wrap > *:nth-child(2){animation-delay:.15s}
+.phead .wrap > *:nth-child(3){animation-delay:.25s}
+.phead .wrap > *:nth-child(4){animation-delay:.35s}
