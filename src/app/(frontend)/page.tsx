@@ -21,9 +21,11 @@ export default function HomePage() {
             <span className="eyebrow__dot"></span>Novusfy Strategy Group
           </p>
           <h1 className="herox__title">
-            Your Next
+            <span className="hx-line">Your Next</span>
             <br />
-            Begins <span className="ink-glow">Now.</span>
+            <span className="hx-line">
+              Begins <span className="ink-glow">Now.</span>
+            </span>
           </h1>
           <p className="herox__sub">
             We help businesses grow, launch, and reinvent through strategy, marketing, digital

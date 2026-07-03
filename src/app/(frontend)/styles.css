@@ -592,3 +592,27 @@ body[data-hero="dark"] .nav.is-stuck .nav__burger span{background:var(--ink)}
 .rv-in{opacity:1;transform:translateY(0);
   transition:opacity var(--dur-slow) var(--ease-out-expo) var(--rv-delay,0ms),
     transform var(--dur-slow) var(--ease-out-expo) var(--rv-delay,0ms)}
+
+/* =========================================================
+   HERO INTRO — "the birth moment" (Stage 2c/2d/2e)
+   Canvas core blooms (JS); DOM content follows in sequence.
+   fill-mode backwards: holds hidden through the delay, then
+   releases so later transitions (scroll-hint fade) work.
+   Global reduced-motion rule disables all of it -> final state.
+   ========================================================= */
+@keyframes heroRise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.herox__label{animation:heroRise var(--dur-slow) var(--ease-out-expo) .35s backwards}
+.hx-line{display:inline-block;animation:heroRise .9s var(--ease-out-expo) backwards}
+.herox__title .hx-line:first-child{animation-delay:.55s}
+.herox__title .hx-line:last-of-type{animation-delay:.78s}
+.herox__sub{animation:heroRise var(--dur-slow) var(--ease-out-expo) 1.05s backwards}
+.herox__actions{animation:heroRise var(--dur-slow) var(--ease-out-expo) 1.18s backwards}
+.herox__tags{animation:heroRise var(--dur-slow) var(--ease-out-expo) 1.32s backwards}
+.herox__scroll{transition:opacity var(--dur-med) var(--ease);
+  animation:heroRise var(--dur-slow) var(--ease-out-expo) 1.7s backwards}
+.herox__scroll.is-hidden{opacity:0}
+
+/* "Now." glow breathes with the core — one heartbeat for the hero.
+   Core pulse ≈ 8.7s at 60fps (t*0.012 rad/frame); opacity-only. */
+@keyframes inkPulse{0%,100%{opacity:1}50%{opacity:.9}}
+.ink-glow{animation:inkPulse 8.7s var(--ease-in-out-soft) 1.9s infinite}
