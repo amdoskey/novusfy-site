@@ -34,7 +34,14 @@ const GROUPS = [
 
 const HEADS = ['.sec-head', '.method__head', '.pillars__head']
 
-const SINGLES = ['.method__cta', '.learn-preview__intro', '.philosophy__quote', '.philosophy__by']
+// .stitch gets a draw-in (clip-path) via its own .rv/.rv-in CSS rules.
+const SINGLES = [
+  '.method__cta',
+  '.learn-preview__intro',
+  '.philosophy__quote',
+  '.philosophy__by',
+  '.stitch',
+]
 
 const STAGGER = 70
 
@@ -45,17 +52,23 @@ export default function ScrollReveal() {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduce || !('IntersectionObserver' in window)) return
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('rv-in')
-            io.unobserve(e.target)
-          }
-        })
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
-    )
+    const onIntersect = (entries: IntersectionObserverEntry[], obs: IntersectionObserver) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('rv-in')
+          obs.unobserve(e.target)
+        }
+      })
+    }
+    const io = new IntersectionObserver(onIntersect, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px',
+    })
+    // Hairline elements (1px stitches) never reach a 0.12 ratio — observe at 0.
+    const ioThin = new IntersectionObserver(onIntersect, {
+      threshold: 0,
+      rootMargin: '0px 0px -40px 0px',
+    })
 
     const prepped: HTMLElement[] = []
     const prep = (el: Element | null, delay: number) => {
@@ -63,7 +76,7 @@ export default function ScrollReveal() {
       if (el.classList.contains('rv') || el.classList.contains('rv-in')) return
       el.classList.add('rv')
       el.style.setProperty('--rv-delay', `${delay}ms`)
-      io.observe(el)
+      ;(el.offsetHeight <= 2 ? ioThin : io).observe(el)
       prepped.push(el)
     }
 
@@ -110,6 +123,7 @@ export default function ScrollReveal() {
 
     return () => {
       io.disconnect()
+      ioThin.disconnect()
       statIo.disconnect()
       prepped.forEach((el) => {
         el.classList.remove('rv', 'rv-in')

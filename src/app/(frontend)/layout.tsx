@@ -2,6 +2,7 @@ import React from 'react'
 
 import BodyAttributes from './components/BodyAttributes'
 import Footer from './components/Footer'
+import Interactions from './components/Interactions'
 import Nav from './components/Nav'
 import { ROUTE_THEME } from './components/routeTheme'
 import ScrollReveal from './components/ScrollReveal'
@@ -39,6 +40,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <main>{children}</main>
         <Footer />
         <ScrollReveal />
+        <Interactions />
       </body>
     </html>
   )
