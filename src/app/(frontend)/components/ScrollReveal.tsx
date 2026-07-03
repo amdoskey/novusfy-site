@@ -3,11 +3,40 @@
 import { usePathname } from 'next/navigation'
 import { useEffect } from 'react'
 
-// Port of the IntersectionObserver scroll-reveal from the original script.js.
-// Runs on every route change so newly mounted sections animate in. Respects
-// prefers-reduced-motion.
-const SELECTOR =
-  '.pillar,.step,.case,.svc-card,.cat,.course,.flow__step,.fstep,.mv__card,.why__cell,.format__item,.topic-rail li,.nextcard,.learn-card,.mstep'
+/*
+  Staggered scroll-reveal (Stage 1b).
+  - Group containers stagger their direct children by 70ms.
+  - Section heads compose in: label -> title (+100ms) -> lede (+220ms).
+  - Stats (e.g. "+312%") count up ~1s on first reveal.
+  Elements are hidden with .rv and revealed with .rv-in — once revealed,
+  never re-hidden. Skipped entirely under prefers-reduced-motion.
+*/
+const GROUPS = [
+  '.nextkind__grid',
+  '.pillars__grid',
+  '.method__steps',
+  '.learn-cards',
+  '.work__bento',
+  '.why__grid',
+  '.cats__grid',
+  '.courses__grid',
+  '.format__grid',
+  '.svc__grid',
+  '.flow',
+  '.mv',
+  '.offices__grid',
+  '.final-cta__card',
+  '.waitlist__card',
+  '.contact__grid',
+  '.story__grid',
+  '.founder__card',
+]
+
+const HEADS = ['.sec-head', '.method__head', '.pillars__head']
+
+const SINGLES = ['.method__cta', '.learn-preview__intro', '.philosophy__quote', '.philosophy__by']
+
+const STAGGER = 70
 
 export default function ScrollReveal() {
   const pathname = usePathname()
@@ -16,31 +45,77 @@ export default function ScrollReveal() {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduce || !('IntersectionObserver' in window)) return
 
-    const targets = Array.from(document.querySelectorAll<HTMLElement>(SELECTOR))
-    targets.forEach((el, i) => {
-      el.style.opacity = '0'
-      el.style.transform = 'translateY(16px)'
-      el.style.transition =
-        'opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1)'
-      el.style.transitionDelay = (i % 6) * 60 + 'ms'
-    })
-
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            const el = e.target as HTMLElement
-            el.style.opacity = '1'
-            el.style.transform = 'none'
-            io.unobserve(el)
+            e.target.classList.add('rv-in')
+            io.unobserve(e.target)
           }
         })
       },
       { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
     )
-    targets.forEach((t) => io.observe(t))
 
-    return () => io.disconnect()
+    const prepped: HTMLElement[] = []
+    const prep = (el: Element | null, delay: number) => {
+      if (!(el instanceof HTMLElement)) return
+      if (el.classList.contains('rv') || el.classList.contains('rv-in')) return
+      el.classList.add('rv')
+      el.style.setProperty('--rv-delay', `${delay}ms`)
+      io.observe(el)
+      prepped.push(el)
+    }
+
+    // Heads first so their inner text isn't re-prepped as group children.
+    document.querySelectorAll(HEADS.join(',')).forEach((head) => {
+      head.querySelectorAll('.label, h1, h2, .sec-lede').forEach((el) => {
+        if (el.matches('.label')) prep(el, 0)
+        else if (el.matches('h1,h2')) prep(el, 100)
+        else prep(el, 220)
+      })
+    })
+
+    document.querySelectorAll(GROUPS.join(',')).forEach((group) => {
+      Array.from(group.children).forEach((child, i) => prep(child, Math.min(i, 7) * STAGGER))
+    })
+
+    document.querySelectorAll(SINGLES.join(',')).forEach((el) => prep(el, 0))
+
+    // Count-up stats on first reveal (~1s, ease-out).
+    const statIo = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return
+          statIo.unobserve(e.target)
+          const el = e.target as HTMLElement
+          const m = (el.textContent || '').match(/^([^\d]*)([\d][\d,.]*)(.*)$/)
+          if (!m) return
+          const target = parseFloat(m[2].replace(/,/g, ''))
+          if (!isFinite(target)) return
+          const t0 = performance.now()
+          const dur = 1000
+          const tick = (t: number) => {
+            const k = Math.min(1, (t - t0) / dur)
+            const eased = 1 - Math.pow(1 - k, 3)
+            el.textContent = `${m[1]}${Math.round(target * eased)}${m[3]}`
+            if (k < 1) requestAnimationFrame(tick)
+          }
+          requestAnimationFrame(tick)
+        })
+      },
+      { threshold: 0.4 },
+    )
+    document.querySelectorAll('.tile__stat b').forEach((el) => statIo.observe(el))
+
+    return () => {
+      io.disconnect()
+      statIo.disconnect()
+      prepped.forEach((el) => {
+        el.classList.remove('rv', 'rv-in')
+        el.style.removeProperty('--rv-delay')
+      })
+    }
   }, [pathname])
 
   return null
