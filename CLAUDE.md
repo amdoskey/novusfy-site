@@ -194,34 +194,52 @@ this address is legally binding.
 - Real contact details, offices, socials, WhatsApp/Call links, maps
 - Resend account created, API key generated
 - `RESEND_API_KEY` populated in local `.env` *(confirmed July 2026)*
+- **Vercel Environment Variables ARE set** (`DATABASE_URL`, `PAYLOAD_SECRET`
+  confirmed working — live `/admin` loads and renders Dashboard).
+  *(Corrects an earlier version of this doc that said they were empty.)*
+- **Admin user exists** and works on both local (`localhost:3000/admin`) and
+  live (`novusfy-site.vercel.app/admin`) — both show identical state.
+- **Confirmed single shared database.** Local dev and Vercel production point
+  at the **same Neon database** — this is a deliberate decision (see below),
+  not a bug.
+
+### 🗄️ Database strategy — single shared DB (deliberate)
+
+No dev/prod branch split. Local `npm run dev` and the Vercel deployment both
+read/write the **same Neon database**. Chosen over a two-branch setup to avoid
+sync overhead for a single-owner project at this stage.
+
+**Implication:** local testing (seeding data, creating/deleting test users,
+running migrations) writes directly to production. Be deliberate about what
+you run locally once real content exists.
+
+**Mitigation:** take a manual Neon snapshot/backup before any bulk
+seed/migration work, especially before building out the Payload collections in
+item 2 below. Revisit the dev/prod split later only if it becomes a real pain
+point (e.g. multiple people building against the DB at once).
 
 ### 🔧 Immediately open (blocking)
-1. **Vercel Environment Variables are EMPTY.** Must add `DATABASE_URL`,
-   `PAYLOAD_SECRET`, `RESEND_API_KEY` → then **redeploy**. This is why the
-   contact form has never sent email and why live `/admin` doesn't work.
-2. **Neon has one project / one branch.** Create a `development` branch for
-   local, keep `main` for production. Local `.env` → dev branch; Vercel →
-   main branch.
-3. **Create admin users** in both environments (local `/admin` and live
-   `/admin`) — the databases are currently empty.
-4. **Verify `novusfy.com` as a sending domain in Resend** (DNS records).
+1. **Verify `novusfy.com` as a sending domain in Resend** (DNS records).
    Until then email sends from `onboarding@resend.dev` and lands in spam.
-   Required before any waitlist/marketing email.
+   Required before any waitlist/marketing email. Also re-confirm the contact
+   form actually delivers email now that `RESEND_API_KEY` is populated.
 
 ### 📋 Next build phases (in order)
-5. **Waitlist backend** — handler that (a) saves signup to a Payload
-   `waitlist-signups` collection, (b) adds contact to a Resend Audience,
-   (c) sends automated welcome email. Use a non-`/api` path.
-6. **Payload collections** — Courses (title, slug, description, category,
+2. **Payload collections** — Courses (title, slug, description, category,
    cover, **access type: free|paid**, price, downloadable file,
    draft/published), Portfolio, Articles, Blog. Model the Courses schema
    carefully *before* building; changing it after real entries is painful.
-   Currently only scaffold `Users`/`Media` collections exist — this is the
-   biggest real gap: the CMS does nothing yet, every content edit is a code
-   change + deploy.
-7. **Stripe purchase + protected download flow** — needs its own focused
+   Currently only scaffold `Users`/`Media` collections exist (confirmed via
+   live `/admin` screenshot, July 2026) — this is the biggest real gap: the
+   CMS does nothing yet, every content edit is a code change + deploy.
+   **Take a Neon snapshot before seeding**, since this is a shared DB (see
+   above).
+3. **Waitlist backend** — handler that (a) saves signup to a Payload
+   `waitlist-signups` collection, (b) adds contact to a Resend Audience,
+   (c) sends automated welcome email. Use a non-`/api` path.
+4. **Stripe purchase + protected download flow** — needs its own focused
    session (webhooks + preventing link sharing).
-8. **Point `novusfy.com` DNS at Vercel** (currently still serving an old
+5. **Point `novusfy.com` DNS at Vercel** (currently still serving an old
    WordPress site — see §7).
 
 ---
