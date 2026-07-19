@@ -8,7 +8,7 @@ doing any Payload-related work.
 Novusfy website project with full context. Written for a Claude that has no
 memory of prior sessions.
 
-**Last updated:** July 2026
+**Last updated:** July 19, 2026
 **Owner:** DDTAJ (based in Erbil, Iraq)
 **Repo:** GitHub → `novusfy-site` · **Live:** `novusfy-site.vercel.app`
 
@@ -79,10 +79,22 @@ src/app/(frontend)/     ← the public website (all work happens here)
   fonts.ts · styles.css · routeTheme.ts
 
 src/app/(payload)/      ← Payload admin + API — DO NOT TOUCH
+
+src/collections/        ← Users · Media · CourseCategories · Courses
+                          Portfolio · Articles
+src/access/index.ts     ← shared access helpers
+                          (publishedOrAuthenticated · authenticated)
 ```
 
-**Current Payload collections (verified July 2026):** `Users`, `Media` —
-both scaffold defaults. No content collections modeled yet; see §6.
+**Current Payload collections (verified July 2026):** `Users`, `Media`
+(scaffold defaults) + `CourseCategories`, `Courses`, `Portfolio`, `Articles`
+(all four modeled and live in `/admin`, all empty — no content entered yet).
+
+**Localization is ON:** `locales: ['en', 'de']`, `defaultLocale: 'en'`,
+`fallback: true`. Localized fields carry EN + DE; `slug` is deliberately **not**
+localized (one URL per doc across locales). API takes `?locale=de` — note that
+Payload does **not** reject unknown locales, it falls back, so `?locale=fr`
+returns 200 rather than an error.
 
 ### 🔴 Critical gotchas (learned the hard way)
 
@@ -137,7 +149,8 @@ balance`, seam stitches) · Page-load settle. All respect
 `prefers-reduced-motion`. ~165fps, no dependencies added.
 
 **Frontend note:** all five pages above are fully static — none currently read
-from Payload. This is intentional until content collections are modeled (§6).
+from Payload. The collections now exist (§2) but nothing is wired to them yet;
+connecting pages to Payload is a separate, deliberate task (§6).
 
 ---
 
@@ -202,6 +215,12 @@ this address is legally binding.
 - **Confirmed single shared database.** Local dev and Vercel production point
   at the **same Neon database** — this is a deliberate decision (see below),
   not a bug.
+- **Payload schema built (July 19, 2026)** — `CourseCategories`, `Courses`,
+  `Portfolio`, `Articles` modeled in `src/collections/`, plus **en/de
+  localization** enabled. Schema-only: no frontend wiring, no seed content.
+  Neon snapshot was taken before the schema push. Verified: types generate,
+  `tsc` clean, production build clean (all 5 pages still static), all four REST
+  endpoints 200 while `/api/bogus` 404s. Commits `9ce7e3d` + `0a24bbe`.
 
 ### 🗄️ Database strategy — single shared DB (deliberate)
 
@@ -214,9 +233,15 @@ running migrations) writes directly to production. Be deliberate about what
 you run locally once real content exists.
 
 **Mitigation:** take a manual Neon snapshot/backup before any bulk
-seed/migration work, especially before building out the Payload collections in
-item 2 below. Revisit the dev/prod split later only if it becomes a real pain
-point (e.g. multiple people building against the DB at once).
+seed/migration work. This was done before the July 19 collections push and
+should be repeated before any future schema change. Revisit the dev/prod split
+later only if it becomes a real pain point (e.g. multiple people building
+against the DB at once).
+
+**Consequence now visible:** `npm run dev` pushes schema straight to the shared
+DB, so there are **no migration files** and therefore no reproducible schema
+history. Accepted cost of the single-DB choice — but if a second person ever
+builds against this DB, revisit both decisions together.
 
 ### 🔧 Immediately open (blocking)
 1. **Verify `novusfy.com` as a sending domain in Resend** (DNS records).
@@ -224,23 +249,58 @@ point (e.g. multiple people building against the DB at once).
    Required before any waitlist/marketing email. Also re-confirm the contact
    form actually delivers email now that `RESEND_API_KEY` is populated.
 
+2. **Two unpushed commits sit on local `main`** (`9ce7e3d`, `0a24bbe` — the
+   collections + localization). Reviewed locally but **not yet pushed**; push
+   when ready and Vercel auto-deploys.
+
 ### 📋 Next build phases (in order)
-2. **Payload collections** — Courses (title, slug, description, category,
-   cover, **access type: free|paid**, price, downloadable file,
-   draft/published), Portfolio, Articles, Blog. Model the Courses schema
-   carefully *before* building; changing it after real entries is painful.
-   Currently only scaffold `Users`/`Media` collections exist (confirmed via
-   live `/admin` screenshot, July 2026) — this is the biggest real gap: the
-   CMS does nothing yet, every content edit is a code change + deploy.
-   **Take a Neon snapshot before seeding**, since this is a shared DB (see
-   above).
-3. **Waitlist backend** — handler that (a) saves signup to a Payload
+3. **Enter real content via `/admin`** — 10 portfolio case studies + 5 articles
+   are prepared and waiting. Doing this *before* wiring the frontend means the
+   pages have real data to render against instead of placeholders. Note every
+   localized field now asks for EN **and** DE.
+4. **Wire the frontend to Payload** — convert Learning Hub / Selected Work /
+   articles from hardcoded markup to server components querying Payload. This
+   is what finally kills the placeholder content in §8. Suggested order: start
+   with one section end-to-end (Learning Hub is the most list-shaped), confirm
+   the pattern, then repeat.
+5. **Waitlist backend** — handler that (a) saves signup to a Payload
    `waitlist-signups` collection, (b) adds contact to a Resend Audience,
    (c) sends automated welcome email. Use a non-`/api` path.
-4. **Stripe purchase + protected download flow** — needs its own focused
-   session (webhooks + preventing link sharing).
-5. **Point `novusfy.com` DNS at Vercel** (currently still serving an old
+6. **Stripe purchase + protected download flow** — needs its own focused
+   session (webhooks + preventing link sharing). The `Courses.downloadFile`
+   field already exists and is ungated; gating it is this phase's job.
+7. **Point `novusfy.com` DNS at Vercel** (currently still serving an old
    WordPress site — see §7).
+
+### 🧩 Schema decisions worth knowing (July 19, 2026)
+
+- **Draft-enabled collections do not use Media's `read: () => true`.** That
+  would leak unpublished drafts. They use `publishedOrAuthenticated` in
+  `src/access/index.ts`, which returns a `{ _status: { equals: 'published' } }`
+  query constraint for anonymous requests. **Still unverified by observation** —
+  there were no documents to test against. Confirm with a real draft: create
+  one, then hit `/api/courses` logged out and check it's absent.
+- **`Courses.price` is cleared by a `beforeChange` hook when `accessType` is
+  `free`.** `admin.condition` only hides a field in the UI — it does not stop a
+  stale value being stored, which would eventually reach Stripe.
+- **`Articles.tags` is freeform `text` + `hasMany`, not a `select`.** A select's
+  options are a hardcoded enum, so adding a tag would mean a code change and a
+  deploy — the exact problem the CMS exists to solve. `Portfolio.
+  servicesProvided` *is* a select, because those six service lines are
+  genuinely fixed.
+- **`Portfolio.results.value` is not localized** (figures like `+312%` read the
+  same in every locale); its `label` is localized.
+- **Slugs are manual text fields.** Payload's `slugField()` auto-generate helper
+  exists in the skill reference if hand-typing them becomes annoying.
+
+### 🐛 Known broken (pre-existing, unrelated to features)
+
+- **`npm run lint` fails outright** — `TypeError: Converting circular structure
+  to JSON` inside ESLint's own config loader (`ConfigArrayFactory`), before any
+  source file is read. An eslint-config-next / ESLint 9.39 incompatibility.
+  Confirmed present at clean `HEAD` with no local changes, so it is **not**
+  caused by any recent work. Typecheck (`npx tsc --noEmit`) and
+  `npm run build` both pass — use those as the real gate until lint is fixed.
 
 ---
 
@@ -339,4 +399,6 @@ RESEND_API_KEY=re_...
 - Prefer **small staged commits**, verified locally before pushing.
 - Ask Claude Code to **propose a plan before building** on anything substantial,
   and to **not push** until the owner has reviewed locally.
-- Keep content **static** until the Payload collections are deliberately modeled.
+- Collections are now modeled (§2), so the "keep everything static" rule has
+  served its purpose. The frontend is still hardcoded — wire it to Payload
+  deliberately, one section at a time (§6 item 4), not in one sweep.
