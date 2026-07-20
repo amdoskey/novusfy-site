@@ -73,6 +73,8 @@ src/app/(frontend)/     ← the public website (all work happens here)
   learning-hub/page.tsx ← /learning-hub
   contact/page.tsx      ← /contact
   contact/send/route.ts ← contact form email handler
+  work/page.tsx         ← /work  (all published case studies)
+  work/[slug]/page.tsx  ← /work/erbil-hills etc.
   components/           ← Nav, Footer, HeroCanvas, ContactForm,
                           ScrollReveal, WaitlistForm, SocialLinks,
                           BodyAttributes, Interactions
@@ -84,6 +86,7 @@ src/collections/        ← Users · Media · CourseCategories · Courses
                           Portfolio · Articles
 src/access/index.ts     ← shared access helpers
                           (publishedOrAuthenticated · authenticated)
+src/lib/portfolio.ts    ← public Portfolio queries + SERVICE_LABELS map
 src/seed/               ← one-off seeding — portfolio.ts (runner)
                           portfolio-data.ts (content) · lexical.ts
                           (Markdown → Lexical converter). Reusable for the
@@ -162,9 +165,24 @@ draw-in) · Section craft (ambient glow drift, ghost numerals, `text-wrap:
 balance`, seam stitches) · Page-load settle. All respect
 `prefers-reduced-motion`. ~165fps, no dependencies added.
 
-**Frontend note:** all five pages above are fully static — none currently read
-from Payload. The collections now exist (§2) but nothing is wired to them yet;
-connecting pages to Payload is a separate, deliberate task (§6).
+**Work** *(added July 20, 2026)* — `/work` lists all published case studies;
+`/work/[slug]` renders the full case study (meta, cover, results grid, richText
+body, gallery, external link). Both read live from Payload.
+
+**Frontend note — partially wired to Payload.** The homepage "Selected Work"
+bento and the `/work` routes query the `Portfolio` collection. Everything else
+(hero, services, Learning Hub, About, Contact) is still hardcoded. Wiring the
+remaining sections is §6 item 3.
+
+**Data-fetch pattern (follow this for the next section):** Local API via
+`getPayload({ config })` in Server Components, query helpers isolated in
+`src/lib/portfolio.ts`, `export const revalidate = 300` (ISR — 5 min) on each
+page, `generateStaticParams` for dynamic routes. Public queries **must** filter
+`_status: 'published'` explicitly: server-side Local API bypasses access control
+by default, so the `publishedOrAuthenticated` helper does **not** protect you
+here. Rich text renders through `RichText` from
+`@payloadcms/richtext-lexical/react` — already a dependency, do not hand-roll a
+Lexical renderer or add a package for it.
 
 ---
 
@@ -277,16 +295,15 @@ builds against this DB, revisit both decisions together.
    (skips existing slugs) and the Markdown → Lexical converter is already
    written. Every localized field asks for EN **and** DE — the seeded 5 are
    EN-only and fall back.
-   - **Owner actions still pending on the seeded 5:** replace the shared gray
-     placeholder image (Media id 1) with real photography per entry, then flip
-     each from draft to published when happy.
-3. **Wire the frontend to Payload** — convert Learning Hub / Selected Work /
-   articles from hardcoded markup to server components querying Payload. This
-   is what finally kills the placeholder content in §8. Suggested order: start
-   with one section end-to-end (Learning Hub is the most list-shaped), confirm
-   the pattern, then repeat. Note server components must query with
-   `draft: true` + an authenticated context to see unpublished work, or the
-   seeded drafts simply won't appear.
+   - All 5 seeded entries were **published July 20, 2026** and are live on the
+     homepage and `/work`. Still pending: replace the shared gray placeholder
+     image (Media id 1) with real photography per entry.
+3. **Wire the remaining frontend to Payload.** ✅ **Portfolio done**
+   (July 20, 2026): homepage bento + `/work` + `/work/[slug]`, and the fake
+   Selected Work content in §8 is gone. **Remaining:** Learning Hub → `Courses`
+   + `CourseCategories`, and an articles/blog index → `Articles`. Follow the
+   established pattern documented in §3 — `src/lib/portfolio.ts` is the
+   reference implementation; copy its shape into `src/lib/courses.ts`.
 4. **Waitlist backend** — handler that (a) saves signup to a Payload
    `waitlist-signups` collection, (b) adds contact to a Resend Audience,
    (c) sends automated welcome email. Use a non-`/api` path.
@@ -381,16 +398,21 @@ The site currently contains **invented demo content** written to fill the layout
 Karwan's audit correctly flags fake stats as *irreführende Werbung* (misleading
 advertising — legally risky in Germany). These must go:
 
-- **Fake clients in Selected Work:** "Meridian Clinic Group", "Atlas Logistics",
-  "Verda Travel", "Nimbus Retail" — the real replacements (Erbil Hills, GAV TV,
-  Korek Telecom, DDTAJ, Aral Hope) are now seeded in `Portfolio` as drafts and
-  land on the page once §6 item 3 wires it up.
-- **Fake stats:** "+312% qualified reach", "3 locations launched",
-  "2.4× repeat bookings", "12+ years of expertise"
-- **Wrong currency reference:** About page says *"before spending a **dirham** on
-  tactics"* — leftover from an early assumption that the office was in Dubai.
+- ✅ **Fake clients — REMOVED (July 20, 2026).** "Meridian Clinic Group",
+  "Atlas Logistics", "Verda Travel", "Nimbus Retail" are gone from the codebase.
+  The homepage bento and `/work` now render the real seeded case studies from
+  Payload.
+- ✅ **Fake stat "+312% qualified reach" — REMOVED.** Stats on tiles now come
+  from `Portfolio.results`. **Note:** "3 locations launched", "2.4× repeat
+  bookings" and "12+ years of expertise" were listed here historically but a
+  grep confirms they **do not exist anywhere in the codebase** — this list was
+  overstating what remained.
+- ✅ **Currency reference — FIXED.** About now reads *"before spending a single
+  dinar on tactics"* (was "dirham", a leftover from an early Dubai assumption).
 - **Image placeholders** awaiting real photography: hero image slot, About
-  team/office image, founder photo, all Work bento tiles.
+  team/office image, founder photo. **All 5 case studies share one gray
+  placeholder** (Media id 1) — replace per entry in `/admin`; the frontend picks
+  up new images automatically within the 5-minute ISR window.
 - **`public/og-image.png`** (1200×630) — social share preview, artwork needed.
   *Still missing, confirmed July 2026.*
 
