@@ -84,11 +84,16 @@ src/collections/        ← Users · Media · CourseCategories · Courses
                           Portfolio · Articles
 src/access/index.ts     ← shared access helpers
                           (publishedOrAuthenticated · authenticated)
+src/seed/               ← one-off seeding — portfolio.ts (runner)
+                          portfolio-data.ts (content) · lexical.ts
+                          (Markdown → Lexical converter). Reusable for the
+                          next content batch; see §6.
+assets/content/         ← source Markdown the seeds were transcribed from
 ```
 
 **Current Payload collections (verified July 2026):** `Users`, `Media`
-(scaffold defaults) + `CourseCategories`, `Courses`, `Portfolio`, `Articles`
-(all four modeled and live in `/admin`, all empty — no content entered yet).
+(scaffold defaults) + `CourseCategories`, `Courses`, `Portfolio`, `Articles`.
+`Portfolio` holds **5 seeded case studies, all drafts**; the rest are empty.
 
 **Localization is ON:** `locales: ['en', 'de']`, `defaultLocale: 'en'`,
 `fallback: true`. Localized fields carry EN + DE; `slug` is deliberately **not**
@@ -113,6 +118,15 @@ returns 200 rather than an error.
    round to 0, so stitch dividers never trigger reveals otherwise).
 7. **Lenis smooth-scroll was deliberately skipped** — it hijacks the hash anchors
    (`#waitlist`, `/#contact`) the site relies on.
+8. **`payload run` silently no-ops on a floating promise.** It exits as soon as
+   the module finishes loading, so `main().catch(...)` at the bottom of a script
+   dies at the first `await` — **no output, exit code 0**, nothing written. Looks
+   exactly like a script that ran and did nothing. Use **top-level `await`**.
+9. **`payload run` strips CLI args** — `process.argv` is empty, so
+   `npm run payload run script.ts -- --dry` does *not* reach the script. A
+   `--dry` guard checked this way silently evaluates false and the script runs
+   **live**. Use an env var instead (`SEED_DRY=1 npm run payload run ...`).
+   Gotchas 8 + 9 together cost most of a session on July 20, 2026.
 
 ---
 
@@ -221,6 +235,12 @@ this address is legally binding.
   Neon snapshot was taken before the schema push. Verified: types generate,
   `tsc` clean, production build clean (all 5 pages still static), all four REST
   endpoints 200 while `/api/bogus` 404s. Commits `9ce7e3d` + `0a24bbe`.
+- **Portfolio seeded (July 20, 2026)** — 5 case studies created as **drafts**
+  via `src/seed/portfolio.ts`, transcribed from
+  `assets/content/portfolio-seed-data.md`. Rich text converted from Markdown to
+  Lexical nodes (headings / bullet lists / blockquotes / inline bold), verified
+  structurally against the source. All share one placeholder Media image
+  pending real photography. Draft access control verified at the same time.
 
 ### 🗄️ Database strategy — single shared DB (deliberate)
 
@@ -249,27 +269,31 @@ builds against this DB, revisit both decisions together.
    Required before any waitlist/marketing email. Also re-confirm the contact
    form actually delivers email now that `RESEND_API_KEY` is populated.
 
-2. **Two unpushed commits sit on local `main`** (`9ce7e3d`, `0a24bbe` — the
-   collections + localization). Reviewed locally but **not yet pushed**; push
-   when ready and Vercel auto-deploys.
-
 ### 📋 Next build phases (in order)
-3. **Enter real content via `/admin`** — 10 portfolio case studies + 5 articles
-   are prepared and waiting. Doing this *before* wiring the frontend means the
-   pages have real data to render against instead of placeholders. Note every
-   localized field now asks for EN **and** DE.
-4. **Wire the frontend to Payload** — convert Learning Hub / Selected Work /
+2. **Finish the content load.** 5 Portfolio case studies are seeded as drafts
+   (July 20, 2026) — Erbil Hills, GAV TV, Korek Telecom, DDTAJ, Aral Hope.
+   Remaining: **~5 more portfolio entries** and **5 articles**. Re-run the seed
+   script with a new data file rather than hand-entering; it is idempotent
+   (skips existing slugs) and the Markdown → Lexical converter is already
+   written. Every localized field asks for EN **and** DE — the seeded 5 are
+   EN-only and fall back.
+   - **Owner actions still pending on the seeded 5:** replace the shared gray
+     placeholder image (Media id 1) with real photography per entry, then flip
+     each from draft to published when happy.
+3. **Wire the frontend to Payload** — convert Learning Hub / Selected Work /
    articles from hardcoded markup to server components querying Payload. This
    is what finally kills the placeholder content in §8. Suggested order: start
    with one section end-to-end (Learning Hub is the most list-shaped), confirm
-   the pattern, then repeat.
-5. **Waitlist backend** — handler that (a) saves signup to a Payload
+   the pattern, then repeat. Note server components must query with
+   `draft: true` + an authenticated context to see unpublished work, or the
+   seeded drafts simply won't appear.
+4. **Waitlist backend** — handler that (a) saves signup to a Payload
    `waitlist-signups` collection, (b) adds contact to a Resend Audience,
    (c) sends automated welcome email. Use a non-`/api` path.
-6. **Stripe purchase + protected download flow** — needs its own focused
+5. **Stripe purchase + protected download flow** — needs its own focused
    session (webhooks + preventing link sharing). The `Courses.downloadFile`
    field already exists and is ungated; gating it is this phase's job.
-7. **Point `novusfy.com` DNS at Vercel** (currently still serving an old
+6. **Point `novusfy.com` DNS at Vercel** (currently still serving an old
    WordPress site — see §7).
 
 ### 🧩 Schema decisions worth knowing (July 19, 2026)
@@ -277,9 +301,10 @@ builds against this DB, revisit both decisions together.
 - **Draft-enabled collections do not use Media's `read: () => true`.** That
   would leak unpublished drafts. They use `publishedOrAuthenticated` in
   `src/access/index.ts`, which returns a `{ _status: { equals: 'published' } }`
-  query constraint for anonymous requests. **Still unverified by observation** —
-  there were no documents to test against. Confirm with a real draft: create
-  one, then hit `/api/courses` logged out and check it's absent.
+  query constraint for anonymous requests. ✅ **Verified July 20, 2026** against
+  the 5 seeded drafts: anonymous `/api/portfolio` → 0 docs, anonymous
+  `?draft=true` → 0 docs (not bypassable via query param), Local API with
+  `overrideAccess: false` and no user → 0 docs, privileged query → all 5.
 - **`Courses.price` is cleared by a `beforeChange` hook when `accessType` is
   `free`.** `admin.condition` only hides a field in the UI — it does not stop a
   stale value being stored, which would eventually reach Stripe.
@@ -357,7 +382,9 @@ Karwan's audit correctly flags fake stats as *irreführende Werbung* (misleading
 advertising — legally risky in Germany). These must go:
 
 - **Fake clients in Selected Work:** "Meridian Clinic Group", "Atlas Logistics",
-  "Verda Travel", "Nimbus Retail"
+  "Verda Travel", "Nimbus Retail" — the real replacements (Erbil Hills, GAV TV,
+  Korek Telecom, DDTAJ, Aral Hope) are now seeded in `Portfolio` as drafts and
+  land on the page once §6 item 3 wires it up.
 - **Fake stats:** "+312% qualified reach", "3 locations launched",
   "2.4× repeat bookings", "12+ years of expertise"
 - **Wrong currency reference:** About page says *"before spending a **dirham** on
