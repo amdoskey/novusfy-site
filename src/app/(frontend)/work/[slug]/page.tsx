@@ -47,9 +47,20 @@ export default async function CaseStudyPage({
   const cover = mediaFrom(entry.coverImage)
   const services = entry.servicesProvided ?? []
   const results = entry.results ?? []
+  // Skip gallery entries that repeat the cover (or each other) — the seeded
+  // entries all share one placeholder, which otherwise renders the same image
+  // twice and reads like the page restarting.
+  const seenMedia = new Set<string | number>()
+  if (cover?.id) seenMedia.add(cover.id)
+
   const gallery = (entry.gallery ?? [])
     .map((row) => mediaFrom(row.image))
     .filter((m): m is NonNullable<typeof m> => Boolean(m?.url))
+    .filter((m) => {
+      if (seenMedia.has(m.id)) return false
+      seenMedia.add(m.id)
+      return true
+    })
 
   return (
     <>

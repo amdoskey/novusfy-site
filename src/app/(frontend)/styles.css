@@ -240,9 +240,13 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:900;letter-spacing
     linear-gradient(150deg,var(--surface-high),var(--midnight))}
 .tile--dark .tile__ph{background:repeating-linear-gradient(45deg,rgba(1,6,255,.14) 0 2px,transparent 2px 16px),
     linear-gradient(150deg,#1b1b2a,var(--midnight))}
+/* Caption is always legible — a tile whose title only appears on hover reads as
+   an empty image, and hover doesn't exist on touch devices at all. Hover
+   deepens the scrim rather than revealing the text. */
 .tile__cap{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:26px;
-  background:linear-gradient(to top,rgba(10,10,15,.82),transparent 60%);opacity:0;transition:opacity var(--dur-med) var(--ease)}
-.tile:hover .tile__cap{opacity:1}
+  background:linear-gradient(to top,rgba(10,10,15,.86),rgba(10,10,15,.15) 55%,transparent 78%);
+  opacity:1;transition:background var(--dur-med) var(--ease)}
+.tile:hover .tile__cap{background:linear-gradient(to top,rgba(10,10,15,.92),rgba(10,10,15,.35) 60%,rgba(10,10,15,.08) 85%)}
 .tile__cap .label{color:var(--inverse-on);opacity:.8;margin-bottom:6px}
 .tile__cap h4{color:#fff;font-size:22px}
 .tile__center{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px}
