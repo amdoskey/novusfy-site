@@ -3,7 +3,8 @@
 import { usePathname } from 'next/navigation'
 import { useEffect } from 'react'
 
-import { ROUTE_THEME } from './routeTheme'
+import { routing } from '@/i18n/routing'
+import { ROUTE_THEME, stripLocale } from './routeTheme'
 
 // The stylesheet keys nav theming off body[data-hero] / body[data-page]
 // (e.g. body[data-hero="dark"] .nav). The initial value is set by the
@@ -14,7 +15,9 @@ export default function BodyAttributes() {
 
   useEffect(() => {
     const body = document.body
-    const conf = ROUTE_THEME[pathname]
+    // next/navigation's pathname still carries the /de prefix, but ROUTE_THEME
+    // is keyed by unprefixed path.
+    const conf = ROUTE_THEME[stripLocale(pathname, routing.locales)]
 
     if (conf?.page) body.setAttribute('data-page', conf.page)
     else body.removeAttribute('data-page')

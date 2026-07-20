@@ -1,46 +1,50 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
-import {
-  getPortfolioBySlug,
-  getPortfolioSlugs,
-  mediaFrom,
-  SERVICE_LABELS,
-} from '@/lib/portfolio'
-import { CaseStudyBody } from '../../components/CaseStudyBody'
+import { getPortfolioBySlug, getPortfolioSlugs, mediaFrom, SERVICE_LABELS } from '@/lib/portfolio'
+import { Link } from '@/i18n/navigation'
+import { routing, type Locale } from '@/i18n/routing'
+import { localeAlternates } from '@/lib/metadata'
+import { CaseStudyBody } from '../../../components/CaseStudyBody'
 
 export const revalidate = 300
 
+// Slugs are not localized (one URL per doc across locales), so params are the
+// cartesian product of locales x slugs.
 export async function generateStaticParams() {
   const slugs = await getPortfolioSlugs()
-  return slugs.map((slug) => ({ slug }))
+  return routing.locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })))
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string; locale: string }>
 }): Promise<Metadata> {
-  const { slug } = await params
-  const entry = await getPortfolioBySlug(slug)
+  const { slug, locale } = await params
+  const entry = await getPortfolioBySlug(slug, locale as Locale)
   if (!entry) return { title: 'Work — Novusfy' }
 
   return {
     title: `${entry.title} — Novusfy`,
     description: entry.summary ?? undefined,
+    ...localeAlternates(locale, `/work/${slug}`),
   }
 }
 
 export default async function CaseStudyPage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string; locale: string }>
 }) {
-  const { slug } = await params
-  const entry = await getPortfolioBySlug(slug)
+  const { slug, locale } = await params
+  setRequestLocale(locale)
+
+  const t = await getTranslations('caseStudy')
+  const entry = await getPortfolioBySlug(slug, locale as Locale)
 
   if (!entry) notFound()
 
@@ -67,7 +71,7 @@ export default async function CaseStudyPage({
       <section className="phead case-head">
         <div className="wrap">
           <Link href="/work" className="case-back">
-            ← All work
+            {t('backShort')}
           </Link>
 
           {entry.clientName ? (
@@ -82,13 +86,13 @@ export default async function CaseStudyPage({
           <dl className="case-meta">
             {entry.industry ? (
               <div className="case-meta__item">
-                <dt>Industry</dt>
+                <dt>{t('industry')}</dt>
                 <dd>{entry.industry}</dd>
               </div>
             ) : null}
             {services.length > 0 ? (
               <div className="case-meta__item">
-                <dt>Services</dt>
+                <dt>{t('services')}</dt>
                 <dd>
                   <ul className="case-tags">
                     {services.map((s) => (
@@ -125,7 +129,7 @@ export default async function CaseStudyPage({
       {results.length > 0 ? (
         <section className="case-results">
           <div className="wrap">
-            <p className="label">Results</p>
+            <p className="label">{t('results')}</p>
             <div className="case-results__grid">
               {results.map((r, i) => (
                 <div key={r.id ?? i} className="case-result">
@@ -150,7 +154,7 @@ export default async function CaseStudyPage({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Visit {entry.clientName ?? 'site'} ↗
+                {t('visit', { name: entry.clientName ?? t('site') })} ↗
               </a>
             </p>
           ) : null}
@@ -179,7 +183,7 @@ export default async function CaseStudyPage({
       <section className="case-next">
         <div className="wrap">
           <Link href="/work" className="btn btn--ghost">
-            ← Back to all work
+            {t('backLong')}
           </Link>
         </div>
       </section>

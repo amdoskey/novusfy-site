@@ -66,21 +66,25 @@ pairing them with the text span renders "NOVUSFY Novusfy" (bug already hit once)
 ### Directory structure
 
 ```
-src/app/(frontend)/     ← the public website (all work happens here)
-  page.tsx              ← /
-  about/page.tsx        ← /about
-  services/page.tsx     ← /services
-  learning-hub/page.tsx ← /learning-hub
-  contact/page.tsx      ← /contact
-  contact/send/route.ts ← contact form email handler
-  work/page.tsx         ← /work  (all published case studies)
-  work/[slug]/page.tsx  ← /work/erbil-hills etc.
-  components/           ← Nav, Footer, HeroCanvas, ContactForm,
+src/app/(frontend)/
+  [locale]/             ← EVERY page lives under here (en unprefixed, de = /de)
+    layout.tsx          ← root layout: <html lang>, NextIntlClientProvider
+    page.tsx            ← /            + /de
+    about/page.tsx      ← /about       + /de/about
+    services/page.tsx · learning-hub/page.tsx · contact/page.tsx
+    work/page.tsx       ← /work  (all published case studies)
+    work/[slug]/page.tsx ← /work/erbil-hills etc.
+  contact/send/route.ts ← ⚠️ OUTSIDE [locale] on purpose — see gotcha 10
+  components/           ← Nav, Footer, HeroCanvas, ContactForm, LocaleSwitcher,
                           ScrollReveal, WaitlistForm, SocialLinks,
                           BodyAttributes, Interactions
   fonts.ts · styles.css · routeTheme.ts
 
 src/app/(payload)/      ← Payload admin + API — DO NOT TOUCH
+src/i18n/               ← routing.ts (locales) · navigation.ts (locale-aware
+                          Link/usePathname) · request.ts (message loading)
+src/middleware.ts       ← 🔴 locale routing — matcher MUST exclude Payload
+messages/               ← en.json (real copy) · de.json (English placeholders)
 
 src/collections/        ← Users · Media · CourseCategories · Courses
                           Portfolio · Articles
@@ -98,7 +102,20 @@ assets/content/         ← source Markdown the seeds were transcribed from
 (scaffold defaults) + `CourseCategories`, `Courses`, `Portfolio`, `Articles`.
 `Portfolio` holds **5 seeded case studies, all drafts**; the rest are empty.
 
-**Localization is ON:** `locales: ['en', 'de']`, `defaultLocale: 'en'`,
+**Frontend localization (next-intl, added July 20, 2026).** Routing is
+`localePrefix: 'as-needed'` — English stays unprefixed (`/about`), German lives
+at `/de/about`, so every pre-existing English URL still resolves. Static UI copy
+comes from `messages/*.json`; CMS content comes from Payload with the active
+locale passed through (`getPortfolioBySlug(slug, locale)`).
+
+⚠️ **`messages/de.json` currently holds English placeholder values** — `/de/*`
+renders English at German URLs, and is therefore `noindex` until real
+translations land (§7). Copy extraction is **partially complete**: `nav`,
+`footer`, `home`, `about`, `work`, `caseStudy` are keyed; **`services`,
+`learning-hub` and `contact` still have hardcoded English JSX** and must be
+extracted before those pages can be translated.
+
+**Payload localization is ON:** `locales: ['en', 'de']`, `defaultLocale: 'en'`,
 `fallback: true`. Localized fields carry EN + DE; `slug` is deliberately **not**
 localized (one URL per doc across locales). API takes `?locale=de` — note that
 Payload does **not** reject unknown locales, it falls back, so `?locale=fr`
@@ -130,6 +147,21 @@ returns 200 rather than an error.
    `--dry` guard checked this way silently evaluates false and the script runs
    **live**. Use an env var instead (`SEED_DRY=1 npm run payload run ...`).
    Gotchas 8 + 9 together cost most of a session on July 20, 2026.
+10. 🔴 **The next-intl middleware matcher must exclude Payload.** `src/middleware.ts`
+    rewrites paths for locale routing. If its matcher catches `/admin` or
+    `/api/*`, the CMS breaks outright — admin stops loading, every REST endpoint
+    404s. It also excludes `/contact/send`, because `ContactForm` posts to that
+    absolute path from every locale and must not become `/de/contact/send`.
+    **Any change to that regex needs `/admin` + `/api/portfolio` re-tested.**
+11. **`ROUTE_THEME` is keyed by unprefixed path** (`/about`, not `/de/about`).
+    Both consumers — `BodyAttributes.tsx` and the pre-hydration inline script in
+    `[locale]/layout.tsx` — run the path through `stripLocale()` first. Skip that
+    and every German page silently loses its nav theming on first paint.
+12. **Use `Link` from `@/i18n/navigation`, never `next/link`,** for internal
+    links — a raw `next/link href="/about"` drops a German visitor back into
+    English. Exception: `LocaleSwitcher` uses `next/link` with a `getPathname()`
+    href on purpose, because next-intl's `Link` with an explicit `locale` always
+    emits a prefix (`/en/about`), which then 307s to `/about`.
 
 ---
 
@@ -347,6 +379,25 @@ builds against this DB, revisit both decisions together.
 ---
 
 ## 7. 🇩🇪 German legal compliance (required before going live)
+
+> ### 🔺 PRIORITY RAISED — July 20, 2026
+>
+> The site now ships a **German-language version** at `/de/*` (see §2). That
+> materially changes the risk profile: an English-only site aimed at an
+> international audience is a weak trigger for German consumer/DDG obligations,
+> but a site actively serving German at German URLs is a **strong** one. It is
+> evidence of targeting the German market, which is the test that matters for
+> Impressum (§5 DDG), the Datenschutzerklärung, and the Google Maps consent
+> issue below.
+>
+> **These must land before real German traffic — not indefinitely after.**
+> Concretely: before `novusfy.com` DNS points at Vercel (§6 item 6), and before
+> `/de/*` is de-noindexed once the German translations arrive.
+>
+> Mitigation in place meanwhile: **every `/de/*` page carries `noindex, follow`**
+> (`localeAlternates()` in `src/lib/metadata.ts`), so German pages are not yet
+> being indexed or surfaced to German searchers. That is a holding measure, not
+> compliance — remove it only together with the legal pages, not before.
 
 Karwan (the registered company contact in Germany) supplied an audit. **Note: he
 reviewed the OLD WordPress site still live at novusfy.com**, so his WordPress-

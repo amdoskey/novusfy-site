@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import type { Portfolio, Media } from '@/payload-types'
+import type { Locale } from '@/i18n/routing'
 
 /**
  * Public Portfolio queries for the frontend.
@@ -18,7 +19,12 @@ async function payloadClient() {
   return getPayload({ config })
 }
 
-export async function getFeaturedPortfolio(limit = 4): Promise<Portfolio[]> {
+/**
+ * `locale` is passed straight through to Payload. Payload's `fallback: true`
+ * means German requests return English values for any field not yet translated,
+ * so /de/work/* reads correctly before the German content exists.
+ */
+export async function getFeaturedPortfolio(locale: Locale, limit = 4): Promise<Portfolio[]> {
   const payload = await payloadClient()
   const { docs } = await payload.find({
     collection: 'portfolio',
@@ -26,11 +32,13 @@ export async function getFeaturedPortfolio(limit = 4): Promise<Portfolio[]> {
     sort: 'title',
     limit,
     depth: 1,
+    locale,
+    fallbackLocale: 'en',
   })
   return docs
 }
 
-export async function getAllPortfolio(): Promise<Portfolio[]> {
+export async function getAllPortfolio(locale: Locale): Promise<Portfolio[]> {
   const payload = await payloadClient()
   const { docs } = await payload.find({
     collection: 'portfolio',
@@ -38,17 +46,24 @@ export async function getAllPortfolio(): Promise<Portfolio[]> {
     sort: 'title',
     limit: 100,
     depth: 1,
+    locale,
+    fallbackLocale: 'en',
   })
   return docs
 }
 
-export async function getPortfolioBySlug(slug: string): Promise<Portfolio | null> {
+export async function getPortfolioBySlug(
+  slug: string,
+  locale: Locale,
+): Promise<Portfolio | null> {
   const payload = await payloadClient()
   const { docs } = await payload.find({
     collection: 'portfolio',
     where: { and: [PUBLISHED, { slug: { equals: slug } }] },
     limit: 1,
     depth: 2,
+    locale,
+    fallbackLocale: 'en',
   })
   return docs[0] ?? null
 }

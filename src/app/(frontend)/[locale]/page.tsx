@@ -1,23 +1,33 @@
-import Link from 'next/link'
 import React from 'react'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-import HeroCanvas from './components/HeroCanvas'
-import { WorkTile } from './components/WorkTile'
+import HeroCanvas from '../components/HeroCanvas'
+import { WorkTile } from '../components/WorkTile'
 import { getFeaturedPortfolio } from '@/lib/portfolio'
+import { Link } from '@/i18n/navigation'
+import { routing, type Locale } from '@/i18n/routing'
+import { localeAlternates } from '@/lib/metadata'
 
 export const revalidate = 300
 
-export const metadata = {
-  title: 'Novusfy — Your Next Begins Now',
-  description:
-    'Novusfy helps businesses, startups, and ambitious professionals grow, launch, and reinvent through strategy, marketing, digital systems, and practical learning.',
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  return localeAlternates(locale, '/')
 }
 
 /** Bento shape: first tile is the large feature, second spans wide. */
 const BENTO_MODIFIERS = ['tile--xl', 'tile--w tile--dark', '', 'tile--dark']
 
-export default async function HomePage() {
-  const featured = await getFeaturedPortfolio(4)
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  setRequestLocale(locale)
+
+  const t = await getTranslations('home')
+  const featured = await getFeaturedPortfolio(locale as Locale, 4)
   return (
     <>
       {/* HERO — immersive "Birth of Next" motion field */}
@@ -26,32 +36,31 @@ export default async function HomePage() {
         <div className="herox__veil" aria-hidden="true"></div>
         <div className="herox__content">
           <p className="herox__label">
-            <span className="eyebrow__dot"></span>Novusfy Strategy Group
+            <span className="eyebrow__dot"></span>
+            {t('hero.eyebrow')}
           </p>
           <h1 className="herox__title">
-            <span className="hx-line">Your Next</span>
+            <span className="hx-line">{t('hero.titleLine1')}</span>
             <br />
             <span className="hx-line">
-              Begins <span className="ink-glow">Now.</span>
+              {t('hero.titleLine2Prefix')}{' '}
+              <span className="ink-glow">{t('hero.titleLine2Accent')}</span>
             </span>
           </h1>
-          <p className="herox__sub">
-            We help businesses grow, launch, and reinvent through strategy, marketing, digital
-            systems, and practical learning.
-          </p>
+          <p className="herox__sub">{t('hero.subtitle')}</p>
           <div className="herox__actions">
             <Link href="/#contact" className="btn btn--solid">
-              Start Your Next Chapter <span className="btn__arrow">→</span>
+              {t('hero.ctaPrimary')} <span className="btn__arrow">→</span>
             </Link>
             <Link href="/services" className="btn btn--glass">
-              Explore Services
+              {t('hero.ctaSecondary')}
             </Link>
           </div>
           <ul className="herox__tags">
-            <li>Strategy</li>
-            <li>Marketing</li>
-            <li>Digital</li>
-            <li>Learning</li>
+            <li>{t('hero.tagStrategy')}</li>
+            <li>{t('hero.tagMarketing')}</li>
+            <li>{t('hero.tagDigital')}</li>
+            <li>{t('hero.tagLearning')}</li>
           </ul>
         </div>
         <div className="herox__scroll" aria-hidden="true">
@@ -63,42 +72,30 @@ export default async function HomePage() {
       <section className="nextkind">
         <div className="wrap">
           <div className="sec-head">
-            <p className="label">Where you are now</p>
-            <h2 className="sec-title">What kind of next are you building?</h2>
-            <p className="sec-lede">
-              Wherever you are now, Novusfy helps you define the next move — and build the path to
-              reach it.
-            </p>
+            <p className="label">{t('nextKind.label')}</p>
+            <h2 className="sec-title">{t('nextKind.title')}</h2>
+            <p className="sec-lede">{t('nextKind.lede')}</p>
           </div>
           <div className="nextkind__grid">
             <article className="nextcard">
               <div className="nextcard__no">01</div>
-              <h3>Launch</h3>
-              <p>For startups, new brands, new products, and new ideas that need structure.</p>
+              <h3>{t('nextKind.launchTitle')}</h3>
+              <p>{t('nextKind.launchBody')}</p>
             </article>
             <article className="nextcard">
               <div className="nextcard__no">02</div>
-              <h3>Grow</h3>
-              <p>
-                For businesses that need marketing, sales direction, digital systems, and stronger
-                execution.
-              </p>
+              <h3>{t('nextKind.growTitle')}</h3>
+              <p>{t('nextKind.growBody')}</p>
             </article>
             <article className="nextcard">
               <div className="nextcard__no">03</div>
-              <h3>Reinvent</h3>
-              <p>
-                For companies that feel stuck, outdated, unclear, or ready for a stronger market
-                position.
-              </p>
+              <h3>{t('nextKind.reinventTitle')}</h3>
+              <p>{t('nextKind.reinventBody')}</p>
             </article>
             <article className="nextcard">
               <div className="nextcard__no">04</div>
-              <h3>Learn</h3>
-              <p>
-                For professionals and teams building practical skills in AI, marketing, digital
-                tools, and business systems.
-              </p>
+              <h3>{t('nextKind.learnTitle')}</h3>
+              <p>{t('nextKind.learnBody')}</p>
             </article>
           </div>
         </div>
@@ -109,13 +106,10 @@ export default async function HomePage() {
         <div className="wrap">
           <div className="pillars__head">
             <div className="sec-head" style={{ marginBottom: 0 }}>
-              <p className="label">What we do</p>
-              <h2 className="sec-title">Six ways we move you forward.</h2>
+              <p className="label">{t('pillars.label')}</p>
+              <h2 className="sec-title">{t('pillars.title')}</h2>
             </div>
-            <p className="sec-lede">
-              A connected ecosystem of consulting, marketing, digital, learning, and execution
-              services.
-            </p>
+            <p className="sec-lede">{t('pillars.lede')}</p>
           </div>
           <div className="pillars__grid">
             <article className="pillar">
@@ -126,8 +120,8 @@ export default async function HomePage() {
                 </svg>
               </div>
               <div className="pillar__no">01</div>
-              <h3>Business Consulting &amp; Development</h3>
-              <p>Strategic direction that brings clarity, structure, and real progress.</p>
+              <h3>{t('pillars.p1Title')}</h3>
+              <p>{t('pillars.p1Body')}</p>
               <div className="pillar__rule"></div>
             </article>
             <article className="pillar">
@@ -139,8 +133,8 @@ export default async function HomePage() {
                 </svg>
               </div>
               <div className="pillar__no">02</div>
-              <h3>Startup Lab &amp; Venture Enablement</h3>
-              <p>From idea to launch — we build your foundations with you.</p>
+              <h3>{t('pillars.p2Title')}</h3>
+              <p>{t('pillars.p2Body')}</p>
               <div className="pillar__rule"></div>
             </article>
             <article className="pillar">
@@ -151,8 +145,8 @@ export default async function HomePage() {
                 </svg>
               </div>
               <div className="pillar__no">03</div>
-              <h3>Marketing-as-a-Service</h3>
-              <p>Your marketing department — simplified, modern, results-driven.</p>
+              <h3>{t('pillars.p3Title')}</h3>
+              <p>{t('pillars.p3Body')}</p>
               <div className="pillar__rule"></div>
             </article>
             <article className="pillar">
@@ -164,8 +158,8 @@ export default async function HomePage() {
                 </svg>
               </div>
               <div className="pillar__no">04</div>
-              <h3>Digital &amp; Creative Solutions</h3>
-              <p>Modern digital experiences designed for clarity, impact, and growth.</p>
+              <h3>{t('pillars.p4Title')}</h3>
+              <p>{t('pillars.p4Body')}</p>
               <div className="pillar__rule"></div>
             </article>
             <article className="pillar">
@@ -175,8 +169,8 @@ export default async function HomePage() {
                 </svg>
               </div>
               <div className="pillar__no">05</div>
-              <h3>Experiential &amp; Travel Business Solutions</h3>
-              <p>Enhancing customer journeys through powerful, memorable experiences.</p>
+              <h3>{t('pillars.p5Title')}</h3>
+              <p>{t('pillars.p5Body')}</p>
               <div className="pillar__rule"></div>
             </article>
             <article className="pillar">
@@ -186,8 +180,8 @@ export default async function HomePage() {
                 </svg>
               </div>
               <div className="pillar__no">06</div>
-              <h3>Personal &amp; Professional Development</h3>
-              <p>Growth begins within — we help you unlock your potential.</p>
+              <h3>{t('pillars.p6Title')}</h3>
+              <p>{t('pillars.p6Body')}</p>
               <div className="pillar__rule"></div>
             </article>
           </div>
@@ -202,48 +196,39 @@ export default async function HomePage() {
               className="label label--invert"
               style={{ justifyContent: 'center', color: 'var(--blue-tint)' }}
             >
-              The Novusfy Method
+              {t('method.label')}
             </p>
-            <h2 style={{ marginTop: 14 }}>A clear path from where you are to what&apos;s next.</h2>
+            <h2 style={{ marginTop: 14 }}>{t('method.title')}</h2>
           </div>
           <ol className="method__steps">
             <li className="mstep">
               <span className="mstep__no">01</span>
-              <h3>Diagnose</h3>
-              <p>
-                We understand where you are, what is blocking progress, and what opportunity is
-                worth pursuing.
-              </p>
+              <h3>{t('method.s1Title')}</h3>
+              <p>{t('method.s1Body')}</p>
             </li>
             <li className="mstep">
               <span className="mstep__no">02</span>
-              <h3>Define</h3>
-              <p>We shape the strategy, priorities, offer, message, structure, and roadmap.</p>
+              <h3>{t('method.s2Title')}</h3>
+              <p>{t('method.s2Body')}</p>
             </li>
             <li className="mstep">
               <span className="mstep__no">03</span>
-              <h3>Build</h3>
-              <p>We create the brand, website, campaigns, systems, documents, or launch assets.</p>
+              <h3>{t('method.s3Title')}</h3>
+              <p>{t('method.s3Body')}</p>
             </li>
             <li className="mstep">
               <span className="mstep__no">04</span>
-              <h3>Move</h3>
-              <p>
-                We support execution, measure progress, improve what works, and help you keep
-                momentum.
-              </p>
+              <h3>{t('method.s4Title')}</h3>
+              <p>{t('method.s4Body')}</p>
             </li>
           </ol>
           <div className="method__cta">
             <div>
-              <h3>Not sure where you stand?</h3>
-              <p>
-                Start with a business readiness consultation. We&apos;ll map your next move in 45
-                minutes.
-              </p>
+              <h3>{t('method.ctaTitle')}</h3>
+              <p>{t('method.ctaBody')}</p>
             </div>
             <Link href="/#contact" className="btn btn--solid">
-              Book a consultation <span className="btn__arrow">→</span>
+              {t('method.ctaButton')} <span className="btn__arrow">→</span>
             </Link>
           </div>
         </div>
@@ -254,36 +239,33 @@ export default async function HomePage() {
         <div className="wrap">
           <div className="learn-preview__grid">
             <div className="learn-preview__intro">
-              <p className="label">Coming soon</p>
-              <h2>The Learning Hub.</h2>
-              <p>
-                Short, action-focused courses for the next generation of business builders — videos,
-                guides, templates, and practical systems you can use.
-              </p>
+              <p className="label">{t('learnPreview.label')}</p>
+              <h2>{t('learnPreview.title')}</h2>
+              <p>{t('learnPreview.body')}</p>
               <Link href="/learning-hub" className="link-arrow">
-                Preview the Hub →
+                {t('learnPreview.link')}
               </Link>
             </div>
             <div className="learn-cards">
               <div className="learn-card">
-                <p className="label">Course</p>
-                <h4>AI &amp; Automation</h4>
-                <p>Put AI to work in real workflows — not as a gimmick, as a system.</p>
+                <p className="label">{t('learnPreview.c1Label')}</p>
+                <h4>{t('learnPreview.c1Title')}</h4>
+                <p>{t('learnPreview.c1Body')}</p>
               </div>
               <div className="learn-card">
-                <p className="label">Build</p>
-                <h4>Websites &amp; Apps with AI</h4>
-                <p>Ship a working site or app fast using modern AI-assisted tools.</p>
+                <p className="label">{t('learnPreview.c2Label')}</p>
+                <h4>{t('learnPreview.c2Title')}</h4>
+                <p>{t('learnPreview.c2Body')}</p>
               </div>
               <div className="learn-card">
-                <p className="label">Guide</p>
-                <h4>Paid Ads &amp; SEO</h4>
-                <p>Precision targeting and organic growth strategies that convert.</p>
+                <p className="label">{t('learnPreview.c3Label')}</p>
+                <h4>{t('learnPreview.c3Title')}</h4>
+                <p>{t('learnPreview.c3Body')}</p>
               </div>
               <div className="learn-card">
-                <p className="label">Masterclass</p>
-                <h4>Modern Marketing</h4>
-                <p>Systems thinking for campaigns built to compound over time.</p>
+                <p className="label">{t('learnPreview.c4Label')}</p>
+                <h4>{t('learnPreview.c4Title')}</h4>
+                <p>{t('learnPreview.c4Body')}</p>
               </div>
             </div>
           </div>
@@ -294,23 +276,19 @@ export default async function HomePage() {
       <section className="work" id="work">
         <div className="wrap">
           <div className="sec-head">
-            <p className="label">Selected work</p>
-            <h2 className="sec-title">Next chapters we&apos;ve helped write.</h2>
+            <p className="label">{t('workSection.label')}</p>
+            <h2 className="sec-title">{t('workSection.title')}</h2>
           </div>
           {featured.length > 0 ? (
             <>
               <div className="work__bento">
                 {featured.map((entry, i) => (
-                  <WorkTile
-                    key={entry.id}
-                    entry={entry}
-                    modifier={BENTO_MODIFIERS[i] ?? ''}
-                  />
+                  <WorkTile key={entry.id} entry={entry} modifier={BENTO_MODIFIERS[i] ?? ''} />
                 ))}
               </div>
               <p className="work__more">
                 <Link href="/work" className="btn btn--ghost">
-                  See all work
+                  {t('workSection.seeAll')}
                 </Link>
               </p>
             </>
@@ -326,31 +304,29 @@ export default async function HomePage() {
               className="label label--invert"
               style={{ justifyContent: 'center', color: 'var(--blue-tint)' }}
             >
-              Ready for your next?
+              {t('finalCta.label')}
             </p>
-            <h2 style={{ marginTop: 16 }}>Your next begins now.</h2>
-            <p className="final-cta__sub">
-              Tell us where you want to go. We&apos;ll show you the path and walk it with you.
-            </p>
+            <h2 style={{ marginTop: 16 }}>{t('finalCta.title')}</h2>
+            <p className="final-cta__sub">{t('finalCta.subtitle')}</p>
             <div className="final-cta__actions">
               <a href="mailto:info@novusfy.com" className="btn btn--solid">
-                Start Your Next Chapter <span className="btn__arrow">→</span>
+                {t('finalCta.ctaPrimary')} <span className="btn__arrow">→</span>
               </a>
               <Link href="/services" className="btn btn--ghost btn--ghost-invert">
-                Explore Services
+                {t('finalCta.ctaSecondary')}
               </Link>
             </div>
             <div className="final-cta__meta">
               <div>
-                <span className="label label--invert">Offices</span>
-                <p>Germany · Erbil</p>
+                <span className="label label--invert">{t('finalCta.officesLabel')}</span>
+                <p>{t('finalCta.officesValue')}</p>
               </div>
               <div>
-                <span className="label label--invert">Email</span>
+                <span className="label label--invert">{t('finalCta.emailLabel')}</span>
                 <p>info@novusfy.com</p>
               </div>
               <div>
-                <span className="label label--invert">Web</span>
+                <span className="label label--invert">{t('finalCta.webLabel')}</span>
                 <p>novusfy.com</p>
               </div>
             </div>

@@ -1,15 +1,30 @@
-import Link from 'next/link'
 import React from 'react'
+import { setRequestLocale } from 'next-intl/server'
 
-import WaitlistForm from '../components/WaitlistForm'
+import { Link } from '@/i18n/navigation'
+import { routing } from '@/i18n/routing'
+import { localeAlternates } from '@/lib/metadata'
 
-export const metadata = {
-  title: 'Learning Hub — Novusfy',
-  description:
-    'Downloadable course packs for the next generation of business builders. AI, automation, websites, apps, paid ads, SEO, and modern marketing. Coming soon.',
+import WaitlistForm from '../../components/WaitlistForm'
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
 }
 
-export default function LearningHubPage() {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  return {
+    title: 'Learning Hub — Novusfy',
+    description:
+      'Downloadable course packs for the next generation of business builders. AI, automation, websites, apps, paid ads, SEO, and modern marketing. Coming soon.',
+    ...localeAlternates(locale, '/learning-hub'),
+  }
+}
+
+export default async function LearningHubPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  setRequestLocale(locale)
+
   return (
     <>
       <section className="phead">
@@ -92,7 +107,9 @@ export default function LearningHubPage() {
               </div>
               <div className="course__body">
                 <h3>AI Automation for Business</h3>
-                <p>Map your repetitive work and automate it end-to-end with practical AI tooling.</p>
+                <p>
+                  Map your repetitive work and automate it end-to-end with practical AI tooling.
+                </p>
                 <div className="course__foot">
                   <span>Early access</span>
                   <span className="link-arrow">Notify me →</span>

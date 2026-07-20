@@ -1,13 +1,25 @@
-import Link from 'next/link'
 import React from 'react'
+import { setRequestLocale } from 'next-intl/server'
 
-import ContactForm from '../components/ContactForm'
-import SocialLinks from '../components/SocialLinks'
+import { Link } from '@/i18n/navigation'
+import { routing } from '@/i18n/routing'
+import { localeAlternates } from '@/lib/metadata'
 
-export const metadata = {
-  title: 'Contact — Novusfy',
-  description:
-    'Get in touch with Novusfy. Two offices — Germany and Erbil, Iraq — one team. Reach us directly or send a message and we’ll reply within one business day.',
+import ContactForm from '../../components/ContactForm'
+import SocialLinks from '../../components/SocialLinks'
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  return {
+    title: 'Contact — Novusfy',
+    description:
+      'Get in touch with Novusfy. Two offices — Germany and Erbil, Iraq — one team. Reach us directly or send a message and we’ll reply within one business day.',
+    ...localeAlternates(locale, '/contact'),
+  }
 }
 
 const OFFICES = [
@@ -30,7 +42,10 @@ const OFFICES = [
   },
 ]
 
-export default function ContactPage() {
+export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  setRequestLocale(locale)
+
   return (
     <>
       <section className="phead">

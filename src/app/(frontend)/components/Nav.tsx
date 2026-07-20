@@ -1,26 +1,37 @@
 'use client'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname as useRawPathname } from 'next/navigation'
+import { useLocale, useTranslations } from 'next-intl'
 import React, { useEffect, useRef, useState } from 'react'
 
+import { Link, usePathname } from '@/i18n/navigation'
+import { routing } from '@/i18n/routing'
+import { stripLocale } from './routeTheme'
+import LocaleSwitcher from './LocaleSwitcher'
+
+// hrefs are locale-free — next-intl's Link adds the /de prefix as needed.
 const LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/services', label: 'Services' },
-  { href: '/learning-hub', label: 'Learning Hub' },
-  { href: '/work', label: 'Work' },
-  { href: '/contact', label: 'Contact' },
-]
+  { href: '/', key: 'home' },
+  { href: '/about', key: 'about' },
+  { href: '/services', key: 'services' },
+  { href: '/learning-hub', key: 'learningHub' },
+  { href: '/work', key: 'work' },
+  { href: '/contact', key: 'contact' },
+] as const
 
 export default function Nav() {
+  // next-intl's usePathname is already locale-stripped; the raw one still has
+  // the prefix and is what the scroll effect needs to detect the home route.
   const pathname = usePathname()
+  const rawPathname = useRawPathname()
+  const locale = useLocale()
+  const t = useTranslations('nav')
   const [open, setOpen] = useState(false)
   const navRef = useRef<HTMLElement>(null)
 
   // Home uses the dark immersive hero, so the nav starts transparent and
   // solidifies once scrolled past the hero (mirrors the original stickyNav()).
-  const isHome = pathname === '/'
+  const isHome = stripLocale(rawPathname, routing.locales) === '/'
 
   useEffect(() => {
     if (!isHome) return
@@ -38,7 +49,7 @@ export default function Nav() {
   // Close the mobile menu whenever the route changes.
   useEffect(() => {
     setOpen(false)
-  }, [pathname])
+  }, [rawPathname])
 
   const isActive = (href: string) => {
     if (href.includes('#')) return false
@@ -49,25 +60,26 @@ export default function Nav() {
 
   const cta =
     pathname === '/learning-hub'
-      ? { href: '#waitlist', label: 'Join Waitlist' }
-      : { href: '/#contact', label: 'Get Started' }
+      ? { href: '#waitlist', label: t('joinWaitlist') }
+      : { href: '/#contact', label: t('getStarted') }
 
   return (
     <header className="nav" id="nav" ref={navRef}>
       <div className="nav__inner">
-        <Link className="brand" href="/" aria-label="Novusfy home">
+        <Link className="brand" href="/" aria-label={t('homeAria')}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className="brand__mark" src="/icon-blue.png" alt="" />
           <span className="brand__word">Novusfy</span>
         </Link>
-        <nav className="nav__links" aria-label="Primary">
+        <nav className="nav__links" aria-label={t('primaryAria')}>
           {LINKS.map((l) => (
-            <Link key={l.label} href={l.href} className={isActive(l.href) ? 'is-active' : undefined}>
-              {l.label}
+            <Link key={l.key} href={l.href} className={isActive(l.href) ? 'is-active' : undefined}>
+              {t(l.key)}
             </Link>
           ))}
         </nav>
         <div className="nav__cta">
+          <LocaleSwitcher currentLocale={locale} />
           <Link href={cta.href} className="btn btn--solid btn--sm">
             {cta.label}
           </Link>
@@ -75,7 +87,7 @@ export default function Nav() {
         <button
           className="nav__burger"
           id="burger"
-          aria-label="Open menu"
+          aria-label={t('openMenu')}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
@@ -86,13 +98,14 @@ export default function Nav() {
       </div>
       <div className="nav__mobile" id="mobileMenu" hidden={!open}>
         {LINKS.map((l) => (
-          <Link key={l.label} href={l.href} onClick={() => setOpen(false)}>
-            {l.label}
+          <Link key={l.key} href={l.href} onClick={() => setOpen(false)}>
+            {t(l.key)}
           </Link>
         ))}
         <Link href={cta.href} className="btn btn--solid" onClick={() => setOpen(false)}>
           {cta.label}
         </Link>
+        <LocaleSwitcher currentLocale={locale} className="nav__mobile-locale" />
       </div>
     </header>
   )

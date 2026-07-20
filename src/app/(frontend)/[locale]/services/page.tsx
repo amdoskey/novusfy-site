@@ -1,13 +1,28 @@
-import Link from 'next/link'
 import React from 'react'
+import { setRequestLocale } from 'next-intl/server'
 
-export const metadata = {
-  title: 'Services — Novusfy',
-  description:
-    'Strategy, marketing, digital systems, and execution — built around your next move.',
+import { Link } from '@/i18n/navigation'
+import { routing } from '@/i18n/routing'
+import { localeAlternates } from '@/lib/metadata'
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
 }
 
-export default function ServicesPage() {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  return {
+    title: 'Services — Novusfy',
+    description:
+      'Strategy, marketing, digital systems, and execution — built around your next move.',
+    ...localeAlternates(locale, '/services'),
+  }
+}
+
+export default async function ServicesPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  setRequestLocale(locale)
+
   return (
     <>
       <section className="phead">
