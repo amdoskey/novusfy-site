@@ -110,10 +110,14 @@ locale passed through (`getPortfolioBySlug(slug, locale)`).
 
 ⚠️ **`messages/de.json` currently holds English placeholder values** — `/de/*`
 renders English at German URLs, and is therefore `noindex` until real
-translations land (§7). Copy extraction is **partially complete**: `nav`,
-`footer`, `home`, `about`, `work`, `caseStudy` are keyed; **`services`,
-`learning-hub` and `contact` still have hardcoded English JSX** and must be
-extracted before those pages can be translated.
+translations land (§7). Copy extraction is **complete (July 20, 2026)**: all six
+pages plus `ContactForm` and `WaitlistForm` are keyed — 322 keys across 11
+namespaces (`nav`, `footer`, `home`, `about`, `services`, `learningHub`,
+`contact`, `work`, `caseStudy`, `contactForm`, `waitlistForm`), with en/de key
+parity verified. **Translating the site = filling `messages/de.json` + entering
+DE field values in Payload.** No JSX changes needed. Not keyed on purpose: the
+`media-ph__tag` photo-placeholder markers on About (they get deleted when real
+photos land, §8) and the contact form's hidden honeypot label.
 
 **Payload localization is ON:** `locales: ['en', 'de']`, `defaultLocale: 'en'`,
 `fallback: true`. Localized fields carry EN + DE; `slug` is deliberately **not**

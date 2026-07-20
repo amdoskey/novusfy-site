@@ -4,6 +4,7 @@ import { setRequestLocale } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
 import { localeAlternates } from '@/lib/metadata'
+import { getTranslations } from 'next-intl/server'
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -23,20 +24,18 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
   const { locale } = await params
   setRequestLocale(locale)
 
+  const t = await getTranslations('services')
+
   return (
     <>
       <section className="phead">
         <div className="wrap">
           <p className="eyebrow">
-            <span className="eyebrow__dot"></span>What we do
+            <span className="eyebrow__dot"></span>
+            {t('eyebrow')}
           </p>
-          <h1 className="phead__title">
-            Strategy, marketing, digital systems, and execution — built around your next move.
-          </h1>
-          <p className="phead__sub">
-            Six core capabilities, one operating partner. Engage one or stack them into a complete
-            growth system.
-          </p>
+          <h1 className="phead__title">{t('title')}</h1>
+          <p className="phead__sub">{t('subtitle')}</p>
         </div>
       </section>
 
@@ -52,17 +51,14 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                   <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
                 </svg>
               </div>
-              <div className="svc-card__no">Service 01</div>
-              <h3>Business Consulting &amp; Development</h3>
-              <p>
-                Strategic direction that brings clarity, structure, and real progress to where your
-                business goes next.
-              </p>
+              <div className="svc-card__no">{t('s1No')}</div>
+              <h3>{t('s1Title')}</h3>
+              <p>{t('s1Body')}</p>
               <div className="svc-card__list">
-                <span>Strategy</span>
-                <span>Positioning</span>
-                <span>Operating model</span>
-                <span>Roadmaps</span>
+                <span>{t('s1t1')}</span>
+                <span>{t('s1t2')}</span>
+                <span>{t('s1t3')}</span>
+                <span>{t('s1t4')}</span>
               </div>
             </article>
             <article className="svc-card">
@@ -73,17 +69,14 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                   <circle cx="14.5" cy="9.5" r="1.5" />
                 </svg>
               </div>
-              <div className="svc-card__no">Service 02</div>
-              <h3>Startup Lab &amp; Venture Enablement</h3>
-              <p>
-                From idea to launch — we build your foundations: model, brand, product, and the
-                first path to customers.
-              </p>
+              <div className="svc-card__no">{t('s2No')}</div>
+              <h3>{t('s2Title')}</h3>
+              <p>{t('s2Body')}</p>
               <div className="svc-card__list">
-                <span>Validation</span>
-                <span>Branding</span>
-                <span>MVP</span>
-                <span>Go-to-market</span>
+                <span>{t('s2t1')}</span>
+                <span>{t('s2t2')}</span>
+                <span>{t('s2t3')}</span>
+                <span>{t('s2t4')}</span>
               </div>
             </article>
             <article className="svc-card">
@@ -93,17 +86,14 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                   <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
                 </svg>
               </div>
-              <div className="svc-card__no">Service 03</div>
-              <h3>Marketing-as-a-Service</h3>
-              <p>
-                Your marketing department — simplified, modern, and results-driven. Strategy,
-                content, and paid in one system.
-              </p>
+              <div className="svc-card__no">{t('s3No')}</div>
+              <h3>{t('s3Title')}</h3>
+              <p>{t('s3Body')}</p>
               <div className="svc-card__list">
-                <span>Paid ads</span>
-                <span>SEO</span>
-                <span>Content</span>
-                <span>Analytics</span>
+                <span>{t('s3t1')}</span>
+                <span>{t('s3t2')}</span>
+                <span>{t('s3t3')}</span>
+                <span>{t('s3t4')}</span>
               </div>
             </article>
             <article className="svc-card">
@@ -114,17 +104,14 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                   <path d="M6 17v4" />
                 </svg>
               </div>
-              <div className="svc-card__no">Service 04</div>
-              <h3>Digital &amp; Creative Solutions</h3>
-              <p>
-                Modern digital experiences designed for clarity, impact, and growth — websites,
-                apps, and brand systems.
-              </p>
+              <div className="svc-card__no">{t('s4No')}</div>
+              <h3>{t('s4Title')}</h3>
+              <p>{t('s4Body')}</p>
               <div className="svc-card__list">
-                <span>Web &amp; apps</span>
-                <span>UX/UI</span>
-                <span>Automation</span>
-                <span>Identity</span>
+                <span>{t('s4t1')}</span>
+                <span>{t('s4t2')}</span>
+                <span>{t('s4t3')}</span>
+                <span>{t('s4t4')}</span>
               </div>
             </article>
             <article className="svc-card">
@@ -133,17 +120,14 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                   <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 3 21 3s-3 .5-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 4.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1Z" />
                 </svg>
               </div>
-              <div className="svc-card__no">Service 05</div>
-              <h3>Experiential &amp; Travel Business Solutions</h3>
-              <p>
-                Enhancing customer journeys through powerful, memorable experiences — on the ground
-                and across borders.
-              </p>
+              <div className="svc-card__no">{t('s5No')}</div>
+              <h3>{t('s5Title')}</h3>
+              <p>{t('s5Body')}</p>
               <div className="svc-card__list">
-                <span>Journeys</span>
-                <span>Events</span>
-                <span>Hospitality</span>
-                <span>Partnerships</span>
+                <span>{t('s5t1')}</span>
+                <span>{t('s5t2')}</span>
+                <span>{t('s5t3')}</span>
+                <span>{t('s5t4')}</span>
               </div>
             </article>
             <article className="svc-card">
@@ -152,17 +136,14 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                   <path d="M12 3a4 4 0 0 0-4 4c0 1.5-1 2-1.5 3.5C6 12 6 13 7 14c0 2 1 3 2 3.5V20h6v-2.5c1-.5 2-1.5 2-3.5 1-1 1-2 .5-3.5C17 9 16 8.5 16 7a4 4 0 0 0-4-4Z" />
                 </svg>
               </div>
-              <div className="svc-card__no">Service 06</div>
-              <h3>Personal &amp; Professional Development</h3>
-              <p>
-                Growth begins within — we help you unlock your potential through coaching and
-                practical, applied learning.
-              </p>
+              <div className="svc-card__no">{t('s6No')}</div>
+              <h3>{t('s6Title')}</h3>
+              <p>{t('s6Body')}</p>
               <div className="svc-card__list">
-                <span>Coaching</span>
-                <span>Workshops</span>
-                <span>Leadership</span>
-                <span>Skills</span>
+                <span>{t('s6t1')}</span>
+                <span>{t('s6t2')}</span>
+                <span>{t('s6t3')}</span>
+                <span>{t('s6t4')}</span>
               </div>
             </article>
           </div>
@@ -176,7 +157,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
               className="label label--invert"
               style={{ justifyContent: 'center', color: 'var(--blue-tint)' }}
             >
-              How we work
+              {t('howLabel')}
             </p>
             <h2
               style={{
@@ -185,34 +166,34 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                 letterSpacing: '-.035em',
               }}
             >
-              Five moves from idea to momentum.
+              {t('howTitle')}
             </h2>
           </div>
           <ol className="flow">
             <li className="fstep">
               <span className="fstep__no">01</span>
-              <h3>Discover</h3>
-              <p>We learn your business, market, and the real goal behind the brief.</p>
+              <h3>{t('f1Title')}</h3>
+              <p>{t('f1Body')}</p>
             </li>
             <li className="fstep">
               <span className="fstep__no">02</span>
-              <h3>Define</h3>
-              <p>We set the objective, the audience, and the measure of success.</p>
+              <h3>{t('f2Title')}</h3>
+              <p>{t('f2Body')}</p>
             </li>
             <li className="fstep">
               <span className="fstep__no">03</span>
-              <h3>Design</h3>
-              <p>We architect the strategy, system, and assets your next move needs.</p>
+              <h3>{t('f3Title')}</h3>
+              <p>{t('f3Body')}</p>
             </li>
             <li className="fstep">
               <span className="fstep__no">04</span>
-              <h3>Deploy</h3>
-              <p>We launch — brand, digital, and campaigns, live and working together.</p>
+              <h3>{t('f4Title')}</h3>
+              <p>{t('f4Body')}</p>
             </li>
             <li className="fstep">
               <span className="fstep__no">05</span>
-              <h3>Develop</h3>
-              <p>We measure and refine so results compound long after launch day.</p>
+              <h3>{t('f5Title')}</h3>
+              <p>{t('f5Body')}</p>
             </li>
           </ol>
         </div>
@@ -225,32 +206,29 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
               className="label label--invert"
               style={{ justifyContent: 'center', color: 'var(--blue-tint)' }}
             >
-              Ready when you are
+              {t('ctaLabel')}
             </p>
-            <h2 style={{ marginTop: 16 }}>Schedule a consultation.</h2>
-            <p className="final-cta__sub">
-              Bring your next move. We&apos;ll map the path and the system to get there — in 45
-              minutes.
-            </p>
+            <h2 style={{ marginTop: 16 }}>{t('ctaTitle')}</h2>
+            <p className="final-cta__sub">{t('ctaSubtitle')}</p>
             <div className="final-cta__actions">
               <Link href="/#contact" className="btn btn--solid">
-                Schedule a Consultation <span className="btn__arrow">→</span>
+                {t('ctaPrimary')} <span className="btn__arrow">→</span>
               </Link>
               <Link href="/learning-hub" className="btn btn--ghost btn--ghost-invert">
-                Visit Learning Hub
+                {t('ctaSecondary')}
               </Link>
             </div>
             <div className="final-cta__meta">
               <div>
-                <span className="label label--invert">Offices</span>
-                <p>Germany · Erbil</p>
+                <span className="label label--invert">{t('officesLabel')}</span>
+                <p>{t('officesValue')}</p>
               </div>
               <div>
-                <span className="label label--invert">Email</span>
+                <span className="label label--invert">{t('emailLabel')}</span>
                 <p>info@novusfy.com</p>
               </div>
               <div>
-                <span className="label label--invert">Web</span>
+                <span className="label label--invert">{t('webLabel')}</span>
                 <p>novusfy.com</p>
               </div>
             </div>

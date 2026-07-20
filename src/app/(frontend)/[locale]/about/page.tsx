@@ -35,9 +35,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             {t('eyebrow')}
           </p>
           <h1 className="phead__title">{t('title')}</h1>
-          <p className="phead__sub">
-            {t('subtitle')}
-          </p>
+          <p className="phead__sub">{t('subtitle')}</p>
         </div>
       </section>
 
@@ -53,29 +51,19 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           <div>
             <p className="label">{t('storyLabel')}</p>
             <h2 style={{ marginTop: 14 }}>{t('storyTitle')}</h2>
-            <p>
-              {t('storyP1')}
-            </p>
-            <p>
-              {t('storyP2')}
-            </p>
-            <p>
-              {t('storyP3')}
-            </p>
+            <p>{t('storyP1')}</p>
+            <p>{t('storyP2')}</p>
+            <p>{t('storyP3')}</p>
             <div className="mv">
               <div className="mv__card">
                 <p className="label">{t('missionLabel')}</p>
                 <h3>{t('missionTitle')}</h3>
-                <p>
-                  {t('missionBody')}
-                </p>
+                <p>{t('missionBody')}</p>
               </div>
               <div className="mv__card">
                 <p className="label">{t('visionLabel')}</p>
                 <h3>{t('visionTitle')}</h3>
-                <p>
-                  {t('visionBody')}
-                </p>
+                <p>{t('visionBody')}</p>
               </div>
             </div>
           </div>
@@ -93,9 +81,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           <p className="philosophy__quote">
             {t('philosophyQuotePre')} <span>{t('philosophyQuoteAccent')}</span>.
           </p>
-          <p className="philosophy__by">
-            {t('philosophyBy')}
-          </p>
+          <p className="philosophy__by">{t('philosophyBy')}</p>
         </div>
       </section>
 
@@ -141,12 +127,8 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             <div>
               <p className="founder__role">{t('founderRole')}</p>
               <h2 style={{ marginTop: 14 }}>{t('founderTitle')}</h2>
-              <p>
-                {t('founderP1')}
-              </p>
-              <p>
-                {t('founderP2')}
-              </p>
+              <p>{t('founderP1')}</p>
+              <p>{t('founderP2')}</p>
               <Link href="/#contact" className="link-arrow">
                 {t('founderLink')}
               </Link>
@@ -165,9 +147,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               {t('ctaLabel')}
             </p>
             <h2 style={{ marginTop: 16 }}>{t('ctaTitle')}</h2>
-            <p className="final-cta__sub">
-              {t('ctaSubtitle')}
-            </p>
+            <p className="final-cta__sub">{t('ctaSubtitle')}</p>
             <div className="final-cta__actions">
               <Link href="/#contact" className="btn btn--solid">
                 {t('ctaPrimary')} <span className="btn__arrow">→</span>

@@ -1,10 +1,12 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import React, { useState } from 'react'
 
 type Status = 'idle' | 'sending' | 'ok' | 'error'
 
 export default function ContactForm() {
+  const t = useTranslations('contactForm')
   const [status, setStatus] = useState<Status>('idle')
   const [error, setError] = useState('')
 
@@ -25,13 +27,13 @@ export default function ContactForm() {
       })
       if (!res.ok) {
         const body = await res.json().catch(() => ({}))
-        throw new Error(body.error || 'Something went wrong.')
+        throw new Error(body.error || t('genericError'))
       }
       setStatus('ok')
       form.reset()
     } catch (err) {
       setStatus('error')
-      setError(err instanceof Error ? err.message : 'Something went wrong.')
+      setError(err instanceof Error ? err.message : t('genericError'))
     }
   }
 
@@ -39,7 +41,7 @@ export default function ContactForm() {
     return (
       <div className="form">
         <p className="form__status form__status--ok" role="status">
-          Thanks — we&apos;ll be in touch shortly.
+          {t('success')}
         </p>
       </div>
     )
@@ -47,42 +49,48 @@ export default function ContactForm() {
 
   return (
     <form className="form" onSubmit={onSubmit} noValidate>
-      {/* Honeypot — bots fill this; humans never see it. */}
+      {/* Honeypot — bots fill this; humans never see it. Deliberately untranslated. */}
       <div className="form__hp" aria-hidden="true">
         <label htmlFor="company">Company</label>
         <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
       <div className="form__row">
-        <label htmlFor="c-name">Name</label>
-        <input id="c-name" name="name" type="text" placeholder="Your name" required />
+        <label htmlFor="c-name">{t('name')}</label>
+        <input id="c-name" name="name" type="text" placeholder={t('namePlaceholder')} required />
       </div>
       <div className="form__row">
-        <label htmlFor="c-email">Email</label>
-        <input id="c-email" name="email" type="email" placeholder="you@company.com" required />
+        <label htmlFor="c-email">{t('email')}</label>
+        <input
+          id="c-email"
+          name="email"
+          type="email"
+          placeholder={t('emailPlaceholder')}
+          required
+        />
       </div>
       <div className="form__row">
-        <label htmlFor="c-subject">Subject (optional)</label>
-        <input id="c-subject" name="subject" type="text" placeholder="What's this about?" />
+        <label htmlFor="c-subject">{t('subject')}</label>
+        <input id="c-subject" name="subject" type="text" placeholder={t('subjectPlaceholder')} />
       </div>
       <div className="form__row">
-        <label htmlFor="c-message">Message</label>
-        <textarea id="c-message" name="message" placeholder="Tell us about your next move…" required />
+        <label htmlFor="c-message">{t('message')}</label>
+        <textarea id="c-message" name="message" placeholder={t('messagePlaceholder')} required />
       </div>
 
       <button type="submit" className="btn btn--solid" disabled={status === 'sending'}>
         {status === 'sending' ? (
-          'Sending…'
+          t('sending')
         ) : (
           <>
-            Send message <span className="btn__arrow">→</span>
+            {t('send')} <span className="btn__arrow">→</span>
           </>
         )}
       </button>
 
       {status === 'error' && (
         <p className="form__status form__status--err" role="alert">
-          {error || "Couldn't send your message — please email info@novusfy.com directly."}
+          {error || t('fallbackError')}
         </p>
       )}
     </form>
