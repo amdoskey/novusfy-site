@@ -773,3 +773,44 @@ body[data-hero="dark"] .nav.is-stuck{animation:navSettle var(--dur-med) var(--ea
   .work__grid{grid-auto-rows:240px}
   .case-meta{gap:24px}
 }
+
+/* ============ LOCALE SWITCHER (EN / DE) ============ */
+/* min-width guard: a bare .nav__cta{display:flex} here would override the
+   ≤680px display:none (same specificity, later in source) and leak the
+   desktop CTA into mobile */
+@media (min-width:681px){
+  .nav__cta{display:flex;align-items:center;gap:14px}
+}
+.locale-switch{display:inline-flex;align-items:center;border:1px solid var(--outline);border-radius:999px;padding:3px}
+.locale-switch__opt{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;font-weight:600;
+  padding:4px 10px;border-radius:999px;color:var(--on-variant);text-decoration:none;
+  transition:color var(--dur-fast) var(--ease),background var(--dur-fast) var(--ease)}
+.locale-switch__opt:hover{color:var(--blue)}
+.locale-switch__opt.is-current{background:var(--blue);color:#fff}
+
+/* dark home hero: transparent nav until scrolled (mirrors .nav__links theming) */
+body[data-hero="dark"] .nav .locale-switch{border-color:rgba(255,255,255,.25)}
+body[data-hero="dark"] .nav .locale-switch__opt{color:rgba(255,255,255,.78)}
+body[data-hero="dark"] .nav .locale-switch__opt:hover{color:#fff}
+body[data-hero="dark"] .nav .locale-switch__opt.is-current{background:#fff;color:var(--ink)}
+body[data-hero="dark"] .nav.is-stuck .locale-switch{border-color:var(--outline)}
+body[data-hero="dark"] .nav.is-stuck .locale-switch__opt{color:var(--on-variant)}
+body[data-hero="dark"] .nav.is-stuck .locale-switch__opt:hover{color:var(--blue)}
+body[data-hero="dark"] .nav.is-stuck .locale-switch__opt.is-current{background:var(--blue);color:#fff}
+
+/* mobile menu: neutralize the generic .nav__mobile a rules on switcher links,
+   and restore the CTA styling that a:last-child no longer catches now that the
+   switcher div is the last child */
+.nav__mobile > a.btn{border:0;margin-top:10px;justify-content:center}
+.nav__mobile-locale{margin-top:14px;align-self:center}
+.nav__mobile-locale .locale-switch__opt,
+.nav__mobile .nav__mobile-locale a{padding:4px 10px;font-size:11px;font-weight:600;border-bottom:0}
+.nav__mobile-locale .locale-switch__opt.is-current{background:var(--blue);color:#fff}
+
+/* the mobile menu sits on a light surface even under the dark home hero, so the
+   dark-hero switcher theming must not reach the mobile instance (a white pill
+   on the white menu is invisible) */
+body[data-hero="dark"] .nav .nav__mobile-locale.locale-switch{border-color:var(--outline)}
+body[data-hero="dark"] .nav .nav__mobile-locale .locale-switch__opt{color:var(--on-variant)}
+body[data-hero="dark"] .nav .nav__mobile-locale .locale-switch__opt:hover{color:var(--blue)}
+body[data-hero="dark"] .nav .nav__mobile-locale .locale-switch__opt.is-current{background:var(--blue);color:#fff}
