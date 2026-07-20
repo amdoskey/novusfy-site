@@ -8,6 +8,7 @@ export const ROUTE_THEME: Record<string, RouteTheme> = {
   '/': { page: 'home', hero: 'dark' },
   '/about': { page: 'about' },
   '/services': { page: 'services' },
+  '/work': { page: 'work' },
   '/learning-hub': { page: 'learning' },
   '/contact': { page: 'contact' },
 }

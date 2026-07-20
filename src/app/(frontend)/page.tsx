@@ -2,6 +2,10 @@ import Link from 'next/link'
 import React from 'react'
 
 import HeroCanvas from './components/HeroCanvas'
+import { WorkTile } from './components/WorkTile'
+import { getFeaturedPortfolio } from '@/lib/portfolio'
+
+export const revalidate = 300
 
 export const metadata = {
   title: 'Novusfy — Your Next Begins Now',
@@ -9,7 +13,11 @@ export const metadata = {
     'Novusfy helps businesses, startups, and ambitious professionals grow, launch, and reinvent through strategy, marketing, digital systems, and practical learning.',
 }
 
-export default function HomePage() {
+/** Bento shape: first tile is the large feature, second spans wide. */
+const BENTO_MODIFIERS = ['tile--xl', 'tile--w tile--dark', '', 'tile--dark']
+
+export default async function HomePage() {
+  const featured = await getFeaturedPortfolio(4)
   return (
     <>
       {/* HERO — immersive "Birth of Next" motion field */}
@@ -289,49 +297,24 @@ export default function HomePage() {
             <p className="label">Selected work</p>
             <h2 className="sec-title">Next chapters we&apos;ve helped write.</h2>
           </div>
-          <div className="work__bento">
-            <div className="tile tile--xl">
-              <div className="tile__ph"></div>
-              <div className="tile__center">
-                <span>4 : 5 · feature image</span>
+          {featured.length > 0 ? (
+            <>
+              <div className="work__bento">
+                {featured.map((entry, i) => (
+                  <WorkTile
+                    key={entry.id}
+                    entry={entry}
+                    modifier={BENTO_MODIFIERS[i] ?? ''}
+                  />
+                ))}
               </div>
-              <div className="tile__cap">
-                <p className="label">Startup Launch</p>
-                <h4>Meridian Clinic Group</h4>
-              </div>
-            </div>
-            <div className="tile tile--w tile--dark">
-              <div className="tile__ph"></div>
-              <div className="tile__stat">
-                <b>+312%</b>
-                <small>qualified reach</small>
-              </div>
-              <div className="tile__cap">
-                <p className="label">Marketing-as-a-Service</p>
-                <h4>Atlas Logistics</h4>
-              </div>
-            </div>
-            <div className="tile">
-              <div className="tile__ph"></div>
-              <div className="tile__center">
-                <span>square · image</span>
-              </div>
-              <div className="tile__cap">
-                <p className="label">Reinvention</p>
-                <h4>Verda Travel</h4>
-              </div>
-            </div>
-            <div className="tile tile--dark">
-              <div className="tile__ph"></div>
-              <div className="tile__center">
-                <span>square · image</span>
-              </div>
-              <div className="tile__cap">
-                <p className="label">Digital Systems</p>
-                <h4>Nimbus Retail</h4>
-              </div>
-            </div>
-          </div>
+              <p className="work__more">
+                <Link href="/work" className="btn btn--ghost">
+                  See all work
+                </Link>
+              </p>
+            </>
+          ) : null}
         </div>
       </section>
 

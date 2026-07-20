@@ -9,7 +9,7 @@ const LINKS = [
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
   { href: '/learning-hub', label: 'Learning Hub' },
-  { href: '/#work', label: 'Work' },
+  { href: '/work', label: 'Work' },
   { href: '/contact', label: 'Contact' },
 ]
 
@@ -42,7 +42,9 @@ export default function Nav() {
 
   const isActive = (href: string) => {
     if (href.includes('#')) return false
-    return pathname === href
+    if (href === '/') return pathname === '/'
+    // Keep the parent link lit on nested routes, e.g. /work/erbil-hills.
+    return pathname === href || pathname.startsWith(`${href}/`)
   }
 
   const cta =
