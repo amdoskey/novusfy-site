@@ -105,7 +105,7 @@ export default function AboutPage() {
             <div className="why__cell">
               <b>02</b>
               <h3>Clarity first</h3>
-              <p>We define the real objective before spending a dirham on tactics.</p>
+              <p>We define the real objective before spending a single dinar on tactics.</p>
             </div>
             <div className="why__cell">
               <b>03</b>
