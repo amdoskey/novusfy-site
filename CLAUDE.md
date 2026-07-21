@@ -422,15 +422,38 @@ requirements do.
   Datenschutz links.
 - **Contact form:** add a privacy-consent checkbox linking to `/datenschutz`.
 
-**🔴 Highest-risk item:** the `/contact` page auto-loads **two Google Maps
-iframes**, transmitting visitor IPs to Google without consent — a known German
-Abmahnung risk. Fix with a **click-to-load placeholder** or consent gate.
+**✅ Google Maps consent gate — DONE (July 21, 2026).** `/contact` previously
+auto-loaded two Google Maps iframes, transmitting visitor IPs to Google without
+consent. Both are now behind a click-to-load gate (`components/MapEmbed.tsx`):
+no `<iframe>` and no Google embed URL exists in the document until the visitor
+clicks, plus a notice stating that loading transfers data to Google, and a
+"Route planen" link that opens Maps in a new tab for anyone who'd rather not
+embed. Consent is per-map and **deliberately not persisted** — storing it would
+make this a consent-management surface with its own disclosure duties, and the
+site's "stores nothing client-side" position is worth keeping.
+
+> 🔴 **The placeholder must stay request-free.** Do not "improve" it with
+> Google's Static Maps API or any remote tile image — that leaks the visitor IP
+> exactly like the iframe did, just less visibly, and silently undoes this fix.
+> It is pure CSS on purpose.
+
+Verified via `performance.getEntriesByType('resource')`: 27 resources on
+`/de/contact`, **zero external**, zero Google — then exactly one Google request
+after clicking, for that card only. (Note for future sessions: the MCP network
+monitor records **localhost only** — it showed "no requests" even for deliberate
+cross-origin fetches, so it cannot prove absence of third-party calls. Use the
+performance timeline.)
+
+**Still required despite the above:** the Datenschutzerklärung must still
+describe this Google Maps embed and its click-gate. Fixing the leak does not
+remove the duty to disclose it.
 
 **Already compliant:** Google Fonts — `next/font` self-hosts at build time, so no
 visitor IP reaches Google. ✅
 
-**Cookie banner:** probably not yet required (no analytics, no tracking cookies),
-but becomes required once analytics is added or if maps load without gating.
+**Cookie banner:** probably not yet required (no analytics, no tracking cookies,
+and the maps are gated — see above), but becomes required once analytics is
+added or if the map gate is ever removed.
 
 **Still needed from Karwan:** exact address (12 vs 15) · legal form
 (Einzelunternehmen vs UG/GmbH — a UG/GmbH needs Handelsregister, HRB number,

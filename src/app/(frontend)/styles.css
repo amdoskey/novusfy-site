@@ -814,3 +814,22 @@ body[data-hero="dark"] .nav .nav__mobile-locale.locale-switch{border-color:var(-
 body[data-hero="dark"] .nav .nav__mobile-locale .locale-switch__opt{color:var(--on-variant)}
 body[data-hero="dark"] .nav .nav__mobile-locale .locale-switch__opt:hover{color:var(--blue)}
 body[data-hero="dark"] .nav .nav__mobile-locale .locale-switch__opt.is-current{background:var(--blue);color:#fff}
+
+/* ============ CONSENT-GATED MAP (§7) ============ */
+/* Pure CSS — must issue zero network requests. Never swap in a Static Maps
+   image or remote tile here; that leaks the visitor IP the gate exists to
+   protect. Height matches .office__map iframe so loading causes no layout shift. */
+.office__map--gated{background:
+  repeating-linear-gradient(45deg,rgba(1,6,255,.05) 0 2px,transparent 2px 16px),
+  linear-gradient(150deg,var(--surface-high),var(--surface-low))}
+.mapgate{height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;padding:24px;text-align:center;line-height:1.5}
+.mapgate__art{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  background:var(--white);border:1px solid var(--outline)}
+.mapgate__pin{width:22px;height:22px;fill:none;stroke:var(--blue);stroke-width:1.6;
+  stroke-linecap:round;stroke-linejoin:round}
+.mapgate__body{display:flex;flex-direction:column;align-items:center;gap:12px}
+.mapgate__notice{font-family:var(--f-text);font-size:13.5px;color:var(--on-variant);max-width:34ch;margin:0}
+.mapgate__directions{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;
+  color:var(--on-variant);text-decoration:none;transition:color var(--dur-fast) var(--ease)}
+.mapgate__directions:hover{color:var(--blue);text-decoration:underline;text-underline-offset:3px}

@@ -7,6 +7,7 @@ import { localeAlternates } from '@/lib/metadata'
 import { getTranslations } from 'next-intl/server'
 
 import ContactForm from '../../components/ContactForm'
+import MapEmbed from '../../components/MapEmbed'
 import SocialLinks from '../../components/SocialLinks'
 
 export function generateStaticParams() {
@@ -23,6 +24,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   }
 }
 
+// `mapQuery` is a plain address, not an embed URL — MapEmbed builds the Google
+// URLs itself and only requests them after the visitor consents (§7).
 const OFFICES = [
   {
     nameKey: 'officeGermany',
@@ -30,8 +33,7 @@ const OFFICES = [
     tel: '+49 179 3412853',
     telHref: 'tel:+491793412853',
     whatsapp: 'https://wa.me/491793412853',
-    mapSrc:
-      'https://www.google.com/maps?q=Im+Staadergarten+12,+78343+Gaienhofen+OT+Horn,+Germany&output=embed',
+    mapQuery: 'Im Staadergarten 12, 78343 Gaienhofen OT Horn, Germany',
   },
   {
     nameKey: 'officeErbil',
@@ -39,7 +41,7 @@ const OFFICES = [
     tel: '+964 750 476 4327',
     telHref: 'tel:+9647504764327',
     whatsapp: 'https://wa.me/9647504764327',
-    mapSrc: 'https://www.google.com/maps?q=Gulan+St,+Boulevard,+Erbil,+Iraq&output=embed',
+    mapQuery: 'Gulan St, Boulevard, Erbil, Iraq',
   },
 ]
 
@@ -112,14 +114,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                     {t('whatsapp')}
                   </a>
                 </div>
-                <div className="office__map">
-                  <iframe
-                    src={o.mapSrc}
-                    title={t('mapTitle', { name: t(o.nameKey) })}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  ></iframe>
-                </div>
+                <MapEmbed query={o.mapQuery} officeName={t(o.nameKey)} />
               </div>
             ))}
           </div>
