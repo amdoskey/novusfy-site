@@ -8,7 +8,7 @@ doing any Payload-related work.
 Novusfy website project with full context. Written for a Claude that has no
 memory of prior sessions.
 
-**Last updated:** July 19, 2026
+**Last updated:** July 21, 2026
 **Owner:** DDTAJ (based in Erbil, Iraq)
 **Repo:** GitHub → `novusfy-site` · **Live:** `novusfy-site.vercel.app`
 
@@ -76,25 +76,28 @@ src/app/(frontend)/
     work/[slug]/page.tsx ← /work/erbil-hills etc.
   contact/send/route.ts ← ⚠️ OUTSIDE [locale] on purpose — see gotcha 10
   components/           ← Nav, Footer, HeroCanvas, ContactForm, LocaleSwitcher,
-                          ScrollReveal, WaitlistForm, SocialLinks,
-                          BodyAttributes, Interactions
+                          MapEmbed (🔴 consent gate — §7), WorkTile,
+                          CaseStudyBody, ScrollReveal, WaitlistForm,
+                          SocialLinks, BodyAttributes, Interactions
   fonts.ts · styles.css · routeTheme.ts
 
 src/app/(payload)/      ← Payload admin + API — DO NOT TOUCH
 src/i18n/               ← routing.ts (locales) · navigation.ts (locale-aware
                           Link/usePathname) · request.ts (message loading)
 src/middleware.ts       ← 🔴 locale routing — matcher MUST exclude Payload
-messages/               ← en.json (real copy) · de.json (English placeholders)
+messages/               ← en.json · de.json (both real copy, 332 keys each)
 
 src/collections/        ← Users · Media · CourseCategories · Courses
                           Portfolio · Articles
 src/access/index.ts     ← shared access helpers
                           (publishedOrAuthenticated · authenticated)
-src/lib/portfolio.ts    ← public Portfolio queries + SERVICE_LABELS map
-src/seed/               ← one-off seeding — portfolio.ts (runner)
-                          portfolio-data.ts (content) · lexical.ts
-                          (Markdown → Lexical converter). Reusable for the
-                          next content batch; see §6.
+src/lib/portfolio.ts    ← public Portfolio queries (locale-aware)
+src/lib/metadata.ts     ← localeAlternates(): hreflang + the /de noindex
+src/seed/               ← one-off seeding — portfolio.ts (EN runner)
+                          portfolio-de.ts (DE runner) · portfolio-data.ts
+                          portfolio-data-de.ts · lexical.ts (Markdown →
+                          Lexical converter). Reusable for the next content
+                          batch; see §6.
 assets/content/         ← source Markdown the seeds were transcribed from
 ```
 
@@ -108,16 +111,37 @@ at `/de/about`, so every pre-existing English URL still resolves. Static UI copy
 comes from `messages/*.json`; CMS content comes from Payload with the active
 locale passed through (`getPortfolioBySlug(slug, locale)`).
 
-⚠️ **`messages/de.json` currently holds English placeholder values** — `/de/*`
-renders English at German URLs, and is therefore `noindex` until real
-translations land (§7). Copy extraction is **complete (July 20, 2026)**: all six
-pages plus `ContactForm` and `WaitlistForm` are keyed — 322 keys across 11
-namespaces (`nav`, `footer`, `home`, `about`, `services`, `learningHub`,
-`contact`, `work`, `caseStudy`, `contactForm`, `waitlistForm`), with en/de key
-parity verified. **Translating the site = filling `messages/de.json` + entering
-DE field values in Payload.** No JSX changes needed. Not keyed on purpose: the
-`media-ph__tag` photo-placeholder markers on About (they get deleted when real
-photos land, §8) and the contact form's hidden honeypot label.
+Copy extraction is **complete**: all six pages plus `ContactForm`, `WaitlistForm`
+and `MapEmbed` are keyed — **332 keys across 12 namespaces** (`nav`, `footer`,
+`home`, `about`, `services`, `learningHub`, `contact`, `work`, `caseStudy`,
+`contactForm`, `waitlistForm`, `serviceLabels`), en/de key parity verified. No
+JSX changes are needed to translate anything. Not keyed on purpose: the
+`media-ph__tag` photo-placeholder markers on About (deleted when real photos
+land, §8) and the contact form's hidden honeypot label.
+
+✅ **German content is live (July 21, 2026).** `messages/de.json` holds a real
+first-pass translation (formal *Sie*), and all 5 Portfolio case studies carry
+German `title` / `summary` / `content` / result labels, written via
+`src/seed/portfolio-de.ts`. **Pending native-speaker review** — three items
+flagged for that reviewer:
+- `results.value` is **not** localized, so GAV TV's `"5x increase"` still renders
+  English on `/de`. Either reword it in `/admin` or localize the field (schema
+  change).
+- The Services page keeps *Discover · Define · Design · Deploy · Develop* in
+  English (the D-alliteration is the device); the homepage method steps *were*
+  translated. Deliberate, but a reviewer may want them consistent.
+- `about.philosophyQuotePre` was restructured — English ends on the accent word
+  "now", which German word order won't allow, so the lead-in ends with an em
+  dash to keep `jetzt` last.
+
+🔴 **`/de/*` is still `noindex`** (`localeAlternates()` in `src/lib/metadata.ts`).
+That gate is **legal, not linguistic** — translation quality does not lift it.
+It comes off only when the Impressum and Datenschutzerklärung exist (§7).
+
+**Translation conventions in use** (keep these if extending): `Learning Hub`,
+nav `Home`, and the branded noun `Next` stay untranslated (`Ihr Next beginnt
+jetzt.`); `Work → Projekte`; service-line names and English business terms
+standard in German (SEO, Paid Ads, Analytics, Coaching, Leadership) stay as-is.
 
 **Payload localization is ON:** `locales: ['en', 'de']`, `defaultLocale: 'en'`,
 `fallback: true`. Localized fields carry EN + DE; `slug` is deliberately **not**
@@ -295,6 +319,18 @@ this address is legally binding.
   Lexical nodes (headings / bullet lists / blockquotes / inline bold), verified
   structurally against the source. All share one placeholder Media image
   pending real photography. Draft access control verified at the same time.
+- **Portfolio wired to the frontend + published (July 20, 2026)** — homepage
+  bento, `/work`, `/work/[slug]`; all 5 entries published. The fake demo clients
+  and stats in §8 are gone.
+- **Frontend localization shipped (July 20–21, 2026)** — next-intl, `/[locale]`
+  routing, locale switcher, hreflang, Payload locale passthrough. Commits
+  `2fe3d0a`, `1bfcc3d`, `91c7bee`.
+- **German content live (July 21, 2026)** — `de.json` fully translated + DE
+  locale written on all 5 case studies (`d49859c`). English was snapshotted
+  before and after the write and verified byte-identical, because
+  `Portfolio.results` rows are shared across locales (see §6 schema notes).
+- **Google Maps consent gate (July 21, 2026)** — `6051ff3`, closes the
+  highest-risk item in §7. See that section; §7 itself stays open.
 
 ### 🗄️ Database strategy — single shared DB (deliberate)
 
@@ -324,16 +360,16 @@ builds against this DB, revisit both decisions together.
    form actually delivers email now that `RESEND_API_KEY` is populated.
 
 ### 📋 Next build phases (in order)
-2. **Finish the content load.** 5 Portfolio case studies are seeded as drafts
-   (July 20, 2026) — Erbil Hills, GAV TV, Korek Telecom, DDTAJ, Aral Hope.
-   Remaining: **~5 more portfolio entries** and **5 articles**. Re-run the seed
-   script with a new data file rather than hand-entering; it is idempotent
+2. **Finish the content load.** The first 5 Portfolio case studies (Erbil Hills,
+   GAV TV, Korek Telecom, DDTAJ, Aral Hope) are seeded, published, EN + DE, and
+   live. Remaining: **~5 more portfolio entries** and **5 articles**. Re-run the
+   seed script with a new data file rather than hand-entering; it is idempotent
    (skips existing slugs) and the Markdown → Lexical converter is already
-   written. Every localized field asks for EN **and** DE — the seeded 5 are
-   EN-only and fall back.
-   - All 5 seeded entries were **published July 20, 2026** and are live on the
-     homepage and `/work`. Still pending: replace the shared gray placeholder
-     image (Media id 1) with real photography per entry.
+   written. New entries need **both** locales — `portfolio-data.ts` for EN and
+   `portfolio-data-de.ts` for DE.
+   - Still pending on the live 5: replace the shared gray placeholder image
+     (Media id 1) with real photography per entry, in `/admin`. The frontend
+     picks new images up within the 5-minute ISR window — no deploy needed.
 3. **Wire the remaining frontend to Payload.** ✅ **Portfolio done**
    (July 20, 2026): homepage bento + `/work` + `/work/[slug]`, and the fake
    Selected Work content in §8 is gone. **Remaining:** Learning Hub → `Courses`
@@ -367,7 +403,21 @@ builds against this DB, revisit both decisions together.
   servicesProvided` *is* a select, because those six service lines are
   genuinely fixed.
 - **`Portfolio.results.value` is not localized** (figures like `+312%` read the
-  same in every locale); its `label` is localized.
+  same in every locale); its `label` is localized. ⚠️ The assumption that values
+  are pure figures already leaks once: GAV TV's `"5x increase"` renders English
+  on `/de` (§2).
+- 🔴 **`Portfolio.results` rows are SHARED across locales.** The array itself is
+  not localized — only `label` inside it is — so row identity is common to EN and
+  DE. When writing a non-default locale, **read the existing rows and pass their
+  `id`s back**; omitting them makes Payload recreate the rows and drop the other
+  locale's labels. `src/seed/portfolio-de.ts` does this, and refuses to run if
+  the label count doesn't match the row count rather than guessing alignment.
+  Snapshot the source locale before and diff after — that is what proved the
+  July 21 DE write was non-destructive.
+- **Display labels for `servicesProvided` live in `messages/*.json`**
+  (`serviceLabels` namespace), not in a map in `lib/`. A hardcoded map rendered
+  English tags on German pages. Keep those keys in sync with the select options
+  in `src/collections/Portfolio.ts`.
 - **Slugs are manual text fields.** Payload's `slugField()` auto-generate helper
   exists in the skill reference if hand-typing them becomes annoying.
 
@@ -396,7 +446,12 @@ builds against this DB, revisit both decisions together.
 >
 > **These must land before real German traffic — not indefinitely after.**
 > Concretely: before `novusfy.com` DNS points at Vercel (§6 item 6), and before
-> `/de/*` is de-noindexed once the German translations arrive.
+> `/de/*` is de-noindexed.
+>
+> ⚠️ **As of July 21, 2026 these pages are the *only* thing still gating the
+> German site.** The translations are done and the pages render real German
+> (§2) — so the temptation to lift the `noindex` is now real. Don't. The gate
+> was never about translation quality.
 >
 > Mitigation in place meanwhile: **every `/de/*` page carries `noindex, follow`**
 > (`localeAlternates()` in `src/lib/metadata.ts`), so German pages are not yet
@@ -472,9 +527,13 @@ bestellen*).
 
 ## 8. ⚠️ Placeholder content that must be replaced before launch
 
-The site currently contains **invented demo content** written to fill the layout.
-Karwan's audit correctly flags fake stats as *irreführende Werbung* (misleading
-advertising — legally risky in Germany). These must go:
+The site originally contained **invented demo content** written to fill the
+layout. Karwan's audit correctly flags fake stats as *irreführende Werbung*
+(misleading advertising — legally risky in Germany).
+
+**The fake copy is gone as of July 20, 2026** — what remains is missing
+*artwork*, not misleading text. History kept below so the audit trail is
+readable:
 
 - ✅ **Fake clients — REMOVED (July 20, 2026).** "Meridian Clinic Group",
   "Atlas Logistics", "Verda Travel", "Nimbus Retail" are gone from the codebase.
@@ -503,9 +562,19 @@ Owner has real case studies with photos prepared — swap them in.
 ```bash
 npm install --legacy-peer-deps   # after cloning or pulling new deps
 npm run dev                      # → localhost:3000  ·  /admin for CMS
+npx tsc --noEmit                 # real typecheck gate (npm run lint is broken, §6)
+npm run build                    # real build gate
 openssl rand -base64 32          # generate a PAYLOAD_SECRET
 
 git add . && git commit -m "..." && git push   # push → Vercel auto-deploys
+```
+
+Seed scripts (note the env var — `payload run` strips CLI args, gotcha 9):
+
+```bash
+SEED_DRY=1 npm run payload run src/seed/portfolio.ts    # preview, no writes
+npm run payload run src/seed/portfolio.ts               # EN content
+npm run payload run src/seed/portfolio-de.ts            # DE translations
 ```
 
 `.env` shape (values live only locally / in Vercel):
