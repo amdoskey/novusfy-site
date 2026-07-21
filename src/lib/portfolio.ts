@@ -86,12 +86,7 @@ export function mediaFrom(value: unknown): Media | null {
   return null
 }
 
-/** Maps the stored select values back to their human labels. */
-export const SERVICE_LABELS: Record<string, string> = {
-  branding: 'Branding',
-  'web-development': 'Web Development',
-  'ai-automation': 'AI & Automation',
-  'digital-strategy': 'Digital Strategy',
-  marketing: 'Marketing',
-  'software-development': 'Software Development',
-}
+// Display labels for Portfolio.servicesProvided live in messages/*.json under
+// the `serviceLabels` namespace — a hardcoded map here rendered English tags on
+// German pages. Keep those keys in sync with the select options in
+// src/collections/Portfolio.ts.

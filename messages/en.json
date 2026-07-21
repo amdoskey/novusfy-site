@@ -356,5 +356,13 @@
     "join": "Join the Waitlist",
     "joined": "You're on the list ✓",
     "note": "No spam. One email when your track opens."
+  },
+  "serviceLabels": {
+    "branding": "Branding",
+    "web-development": "Web Development",
+    "ai-automation": "AI & Automation",
+    "digital-strategy": "Digital Strategy",
+    "marketing": "Marketing",
+    "software-development": "Software Development"
   }
 }

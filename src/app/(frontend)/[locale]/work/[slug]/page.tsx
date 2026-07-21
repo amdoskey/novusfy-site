@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
-import { getPortfolioBySlug, getPortfolioSlugs, mediaFrom, SERVICE_LABELS } from '@/lib/portfolio'
+import { getPortfolioBySlug, getPortfolioSlugs, mediaFrom } from '@/lib/portfolio'
 import { Link } from '@/i18n/navigation'
 import { routing, type Locale } from '@/i18n/routing'
 import { localeAlternates } from '@/lib/metadata'
@@ -44,6 +44,9 @@ export default async function CaseStudyPage({
   setRequestLocale(locale)
 
   const t = await getTranslations('caseStudy')
+  // Portfolio.servicesProvided stores slugs; the display labels are UI copy, so
+  // they live in messages rather than in the CMS.
+  const tServices = await getTranslations('serviceLabels')
   const entry = await getPortfolioBySlug(slug, locale as Locale)
 
   if (!entry) notFound()
@@ -97,7 +100,7 @@ export default async function CaseStudyPage({
                   <ul className="case-tags">
                     {services.map((s) => (
                       <li key={s} className="case-tag">
-                        {SERVICE_LABELS[s] ?? s}
+                        {tServices.has(s) ? tServices(s) : s}
                       </li>
                     ))}
                   </ul>
