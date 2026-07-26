@@ -58,6 +58,8 @@ pairing them with the text span renders "NOVUSFY Novusfy" (bug already hit once)
 - **Next.js 16.x** (App Router) + **Payload CMS 3.x** (blank template)
 - **PostgreSQL** on **Neon**
 - **Vercel** hosting (auto-deploys on push to `main`)
+- **Cloudflare R2** for uploaded media, via `@payloadcms/storage-s3`
+  (S3-compatible API). Chosen over Vercel Blob for portability — see §5.
 - **Resend** for email (transactional + planned marketing)
 - **GitHub** for version control
 - Fonts self-hosted via `next/font` (Nexa via `next/font/local`, others via
@@ -102,8 +104,9 @@ assets/content/         ← source Markdown the seeds were transcribed from
 ```
 
 **Current Payload collections (verified July 2026):** `Users`, `Media`
-(scaffold defaults) + `CourseCategories`, `Courses`, `Portfolio`, `Articles`.
-`Portfolio` holds **5 seeded case studies, all drafts**; the rest are empty.
+(upload-enabled, backed by R2) + `CourseCategories`, `Courses`, `Portfolio`,
+`Articles`. `Portfolio` holds **5 seeded case studies, all published**;
+`Courses`, `CourseCategories` and `Articles` are still empty.
 
 **Frontend localization (next-intl, added July 20, 2026).** Routing is
 `localePrefix: 'as-needed'` — English stays unprefixed (`/about`), German lives
@@ -190,6 +193,18 @@ returns 200 rather than an error.
     English. Exception: `LocaleSwitcher` uses `next/link` with a `getPathname()`
     href on purpose, because next-intl's `Link` with an explicit `locale` always
     emits a prefix (`/en/about`), which then 307s to `/about`.
+13. 🔴 **`upload: true` alone is BROKEN on Vercel — a storage adapter is
+    mandatory.** Local-disk uploads land in `/var/task`, the read-only,
+    ephemeral Lambda bundle: writes fail (`/admin` shows "Something went
+    wrong") and reads 500. Signature in the Vercel function log:
+    `File <name> for collection media is missing on the disk. Expected path:
+    /var/task/media/<name>` — and Payload itself warns
+    `Collections with uploads enabled require a storage adapter` on **every
+    request**, so check startup output first. Fixed July 22, 2026 with
+    Cloudflare R2 (§2). **The absence of that warning is the signal the adapter
+    is wired correctly.** This also means files uploaded on localhost before the
+    adapter existed were only ever on the dev machine — the DB row referenced a
+    file production never had.
 
 ---
 
@@ -213,7 +228,8 @@ packs → "What's in each pack" → waitlist form *(front-end demo only — no b
 yet)*.
 
 **Contact** — page header → email + socials → contact form → two office cards
-(Germany + Erbil) with Call/WhatsApp buttons and embedded Google Maps.
+(Germany + Erbil) with Call/WhatsApp buttons and **consent-gated** Google Maps
+(click-to-load, no request to Google before consent — see §7).
 
 ### Design elevation pass (complete, 5 stages, pushed)
 
@@ -277,6 +293,14 @@ this address is legally binding.
   for the validation phase.
 - **Vercel for production, not cPanel.** cPanel *can* run Node + Postgres, but
   Next.js + Payload on Passenger is fragile. cPanel keeps email/DNS only.
+  ⚠️ **This rejected cPanel specifically, NOT self-hosting in general.** As of
+  July 22, 2026 the owner is standing up a **Hetzner VPS running Coolify** for
+  client apps, and self-hosting Novusfy there is under active consideration.
+  Do not cite this bullet to rule out a VPS. **Practical consequence: prefer
+  portable infrastructure over Vercel-native services.** That is exactly why
+  media storage went to Cloudflare R2 rather than Vercel Blob — R2 behaves
+  identically on Vercel and on a VPS, Blob does not travel. The same stack
+  recurs on a client project (DCD), so portable choices compound.
 - **Resend for both transactional and marketing email.** Free tier covers the
   validation phase (~3,000 emails/month, ~1,000 marketing contacts, unlimited
   broadcasts). Chosen over Brevo (300/day cap + branding on free plan),
@@ -331,6 +355,21 @@ this address is legally binding.
   `Portfolio.results` rows are shared across locales (see §6 schema notes).
 - **Google Maps consent gate (July 21, 2026)** — `6051ff3`, closes the
   highest-risk item in §7. See that section; §7 itself stays open.
+- **Media storage moved to Cloudflare R2 (July 22, 2026)** —
+  `@payloadcms/storage-s3` pinned to 3.85.1 (the default 3.86.0 peer-pins
+  `payload: 3.86.0` and would drag the whole stack up a version). Verified
+  end-to-end via the Local API: object lands in the bucket, `url` stays
+  relative (`/api/media/file/...`), **nothing** written to local disk, and
+  deleting the doc removes the object — no orphans. `next.config.ts` needed no
+  change because the bucket is private and files still serve through Payload.
+  ⚠️ **The R2 bucket is in the DEFAULT jurisdiction, not EU.** Verified: an
+  EU-jurisdiction bucket is only addressable at
+  `<acct>.eu.r2.cloudflarestorage.com`, and `HeadBucket` against the plain host
+  succeeded — which it could not if the bucket were EU. **Jurisdiction cannot
+  be changed after creation.** This matters for §7: the Datenschutzerklärung
+  must state where media is stored, and EU jurisdiction is a hard residency
+  guarantee where the default is not. Recreating the bucket is cheapest while
+  it holds little content.
 
 ### 🗄️ Database strategy — single shared DB (deliberate)
 
@@ -368,8 +407,11 @@ builds against this DB, revisit both decisions together.
    written. New entries need **both** locales — `portfolio-data.ts` for EN and
    `portfolio-data-de.ts` for DE.
    - Still pending on the live 5: replace the shared gray placeholder image
-     (Media id 1) with real photography per entry, in `/admin`. The frontend
-     picks new images up within the 5-minute ISR window — no deploy needed.
+     (Media id 1) with real photography per entry, in `/admin`. Uploading now
+     works (R2 adapter, §2 gotcha 13) — new images appear within the 5-minute
+     ISR window, no deploy needed. **Edit Media id 1 in place rather than
+     creating a new doc**: all 5 case studies reference it from both
+     `coverImage` and `gallery`, so a new id means re-pointing 10 fields.
 3. **Wire the remaining frontend to Payload.** ✅ **Portfolio done**
    (July 20, 2026): homepage bento + `/work` + `/work/[slug]`, and the fake
    Selected Work content in §8 is gone. **Remaining:** Learning Hub → `Courses`
@@ -470,9 +512,11 @@ requirements do.
   Footer-linked.
 - **`/datenschutz` page** (GDPR) — generate with a reputable German tool
   (e-recht24 / activeMind / Dr. Schwenke), but it **must describe the actual
-  stack**: **Vercel** (US host), **Neon** (database), **Resend** (US email
-  processor), **Google Maps** embeds, and the contact form (data, Art. 6 basis,
-  retention). Likely needs DPAs with Vercel and Resend.
+  stack**: **Vercel** (US host), **Neon** (database), **Cloudflare R2** (US
+  company; media storage — note the bucket is in R2's *default* jurisdiction,
+  not EU, see §6), **Resend** (US email processor), **Google Maps** embeds and
+  their click-gate, and the contact form (data, Art. 6 basis, retention).
+  Likely needs DPAs with Vercel, Cloudflare and Resend.
 - **Footer:** replace the dead `#` "Privacy" link with real Impressum +
   Datenschutz links.
 - **Contact form:** add a privacy-consent checkbox linking to `/datenschutz`.
@@ -548,8 +592,12 @@ readable:
   dinar on tactics"* (was "dirham", a leftover from an early Dubai assumption).
 - **Image placeholders** awaiting real photography: hero image slot, About
   team/office image, founder photo. **All 5 case studies share one gray
-  placeholder** (Media id 1) — replace per entry in `/admin`; the frontend picks
-  up new images automatically within the 5-minute ISR window.
+  placeholder** (Media id 1) — replace per entry in `/admin`.
+  ⚠️ **Media id 1's file does not currently exist in R2.** It was uploaded to a
+  dev machine's local disk in July 2026, before the storage adapter existed, so
+  production never had the bytes and the image 500s on live. The row is intact;
+  re-uploading a file to that doc fixes it. Do **not** create a new Media doc —
+  10 fields across the 5 case studies point at id 1.
 - **`public/og-image.png`** (1200×630) — social share preview, artwork needed.
   *Still missing, confirmed July 2026.*
 
@@ -584,7 +632,19 @@ DATABASE_URL=postgresql://...
 PAYLOAD_SECRET=...
 RESEND_API_KEY=re_...
 # CONTACT_FROM=Novusfy Website <info@novusfy.com>   ← enable after domain verify
+
+# Cloudflare R2 (media uploads — required, see §2 gotcha 13)
+R2_BUCKET=novusfy
+R2_ENDPOINT=https://<account-id>.r2.cloudflarestorage.com
+R2_ACCESS_KEY_ID=...
+R2_SECRET_ACCESS_KEY=...
 ```
+
+All four R2 vars must exist **locally and in Vercel**. `region` is not an env
+var — it is hardcoded to R2's required literal `'auto'` in `payload.config.ts`.
+Note the endpoint host: an **EU-jurisdiction** bucket uses
+`<account-id>.eu.r2.cloudflarestorage.com`; the plain host is the default
+jurisdiction (see §6).
 
 ---
 
@@ -596,5 +656,6 @@ RESEND_API_KEY=re_...
 - Ask Claude Code to **propose a plan before building** on anything substantial,
   and to **not push** until the owner has reviewed locally.
 - Collections are now modeled (§2), so the "keep everything static" rule has
-  served its purpose. The frontend is still hardcoded — wire it to Payload
-  deliberately, one section at a time (§6 item 4), not in one sweep.
+  served its purpose. Portfolio is wired; Learning Hub and Articles are not —
+  wire them to Payload deliberately, one section at a time (§6 item 3), not in
+  one sweep.
