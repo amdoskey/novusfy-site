@@ -362,14 +362,14 @@ this address is legally binding.
   relative (`/api/media/file/...`), **nothing** written to local disk, and
   deleting the doc removes the object — no orphans. `next.config.ts` needed no
   change because the bucket is private and files still serve through Payload.
-  ⚠️ **The R2 bucket is in the DEFAULT jurisdiction, not EU.** Verified: an
-  EU-jurisdiction bucket is only addressable at
-  `<acct>.eu.r2.cloudflarestorage.com`, and `HeadBucket` against the plain host
-  succeeded — which it could not if the bucket were EU. **Jurisdiction cannot
-  be changed after creation.** This matters for §7: the Datenschutzerklärung
-  must state where media is stored, and EU jurisdiction is a hard residency
-  guarantee where the default is not. Recreating the bucket is cheapest while
-  it holds little content.
+  ✅ **The bucket (`novusfy-media`) is in R2's EU jurisdiction** — a hard data
+  residency guarantee, not merely a location hint. Proven by a differential
+  test: `HeadBucket` **fails 403** on the plain host and **succeeds** on
+  `<acct>.eu.r2.cloudflarestorage.com`. Only an EU bucket behaves that way, so
+  the `.eu.` endpoint is mandatory — the plain host cannot reach this bucket at
+  all. **Jurisdiction cannot be changed after creation**; a wrong-jurisdiction
+  bucket means recreating it, which is cheapest while it holds little content.
+  (An earlier bucket was default-jurisdiction and was replaced on July 22.)
 
 ### 🗄️ Database strategy — single shared DB (deliberate)
 
@@ -512,11 +512,12 @@ requirements do.
   Footer-linked.
 - **`/datenschutz` page** (GDPR) — generate with a reputable German tool
   (e-recht24 / activeMind / Dr. Schwenke), but it **must describe the actual
-  stack**: **Vercel** (US host), **Neon** (database), **Cloudflare R2** (US
-  company; media storage — note the bucket is in R2's *default* jurisdiction,
-  not EU, see §6), **Resend** (US email processor), **Google Maps** embeds and
-  their click-gate, and the contact form (data, Art. 6 basis, retention).
-  Likely needs DPAs with Vercel, Cloudflare and Resend.
+  stack**: **Vercel** (US host), **Neon** (database), **Cloudflare R2** (media
+  storage — Cloudflare is a US company, but the bucket is in R2's **EU
+  jurisdiction**, so media objects stay in the EU; §6), **Resend** (US email
+  processor), **Google Maps** embeds and their click-gate, and the contact form
+  (data, Art. 6 basis, retention). Likely needs DPAs with Vercel, Cloudflare
+  and Resend.
 - **Footer:** replace the dead `#` "Privacy" link with real Impressum +
   Datenschutz links.
 - **Contact form:** add a privacy-consent checkbox linking to `/datenschutz`.
@@ -634,17 +635,22 @@ RESEND_API_KEY=re_...
 # CONTACT_FROM=Novusfy Website <info@novusfy.com>   ← enable after domain verify
 
 # Cloudflare R2 (media uploads — required, see §2 gotcha 13)
-R2_BUCKET=novusfy
-R2_ENDPOINT=https://<account-id>.r2.cloudflarestorage.com
+R2_BUCKET=novusfy-media
+R2_ENDPOINT=https://<account-id>.eu.r2.cloudflarestorage.com
 R2_ACCESS_KEY_ID=...
 R2_SECRET_ACCESS_KEY=...
 ```
 
 All four R2 vars must exist **locally and in Vercel**. `region` is not an env
 var — it is hardcoded to R2's required literal `'auto'` in `payload.config.ts`.
-Note the endpoint host: an **EU-jurisdiction** bucket uses
-`<account-id>.eu.r2.cloudflarestorage.com`; the plain host is the default
-jurisdiction (see §6).
+
+🔴 **The `.eu.` in the endpoint is mandatory, not cosmetic.** The bucket is in
+R2's EU jurisdiction, and such buckets are *only* reachable at
+`<account-id>.eu.r2.cloudflarestorage.com`. The plain host returns **403** —
+every upload fails. This is easy to get wrong when copying the endpoint out of
+the Cloudflare dashboard, and it already happened once: the bucket name was
+updated but the endpoint was left on the plain host, which would have failed
+silently at the next upload.
 
 ---
 
