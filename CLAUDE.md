@@ -8,7 +8,7 @@ doing any Payload-related work.
 Novusfy website project with full context. Written for a Claude that has no
 memory of prior sessions.
 
-**Last updated:** July 21, 2026
+**Last updated:** July 22, 2026
 **Owner:** DDTAJ (based in Erbil, Iraq)
 **Repo:** GitHub → `novusfy-site` · **Live:** `novusfy-site.vercel.app`
 
@@ -205,6 +205,23 @@ returns 200 rather than an error.
     is wired correctly.** This also means files uploaded on localhost before the
     adapter existed were only ever on the dev machine — the DB row referenced a
     file production never had.
+14. 🔴 **Any Payload plugin shipping client components needs
+    `npm run generate:importmap`, and the regenerated file MUST be committed.**
+    `src/app/(payload)/admin/importMap.js` is a committed build artifact mapping
+    client-component paths for the admin UI. Add a plugin without regenerating
+    *and staging* it and `/admin` becomes a **silent blank page that still
+    returns HTTP 200** — the server HTML is valid, `<title>` is correct, every
+    JS/CSS chunk 200s, and there is no error digest. The only evidence is in the
+    Vercel function log:
+    `getFromImportMap: PayloadComponent not found in importMap { key: '<pkg>/client#<Component>' }`.
+    🔴 **It fails in production while working locally**, because the file is
+    regenerated as a side effect of `npm run dev` / `npm run build` — so the
+    local copy has the entry and the deployed copy does not. Bit exactly once,
+    on the R2 rollout (July 22, 2026): the plugin commit staged an explicit file
+    list and omitted the regenerated importMap. **Applies to every future
+    storage/plugin addition.** After adding any plugin: run
+    `generate:importmap`, then check
+    `git status src/app/(payload)/admin/importMap.js` before committing.
 
 ---
 
@@ -613,6 +630,7 @@ npm install --legacy-peer-deps   # after cloning or pulling new deps
 npm run dev                      # → localhost:3000  ·  /admin for CMS
 npx tsc --noEmit                 # real typecheck gate (npm run lint is broken, §6)
 npm run build                    # real build gate
+npm run generate:importmap       # after adding ANY Payload plugin — see §2 gotcha 14
 openssl rand -base64 32          # generate a PAYLOAD_SECRET
 
 git add . && git commit -m "..." && git push   # push → Vercel auto-deploys
