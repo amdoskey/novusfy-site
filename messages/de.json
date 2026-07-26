@@ -260,7 +260,7 @@
     "officesTitle": "Zwei Zuhause, ein Team.",
     "officeGermany": "Deutschland",
     "officeErbil": "Erbil, Irak",
-    "call": "Anrufen: {tel}",
+    "call": "Anrufen: <n>{tel}</n>",
     "whatsapp": "WhatsApp",
     "mapTitle": "Karte des Novusfy-Standorts {name}",
     "mapNotice": "Beim Laden der Karte werden Daten an Google übertragen.",

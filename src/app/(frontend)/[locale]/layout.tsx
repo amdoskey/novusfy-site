@@ -9,8 +9,8 @@ import Interactions from '../components/Interactions'
 import Nav from '../components/Nav'
 import { ROUTE_THEME } from '../components/routeTheme'
 import ScrollReveal from '../components/ScrollReveal'
-import { jakarta, jetbrainsMono, nexa } from '../fonts'
-import { routing } from '@/i18n/routing'
+import { cairo, jakarta, jetbrainsMono, nexa, plexArabic } from '../fonts'
+import { dirFor, routing } from '@/i18n/routing'
 import '../styles.css'
 
 // Runs during HTML parsing, before the nav paints, so body[data-hero]/[data-page]
@@ -93,7 +93,9 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`scroll-smooth ${nexa.variable} ${jakarta.variable} ${jetbrainsMono.variable}`}
+      // Single switch for every RTL rule in styles.css. en/de resolve to 'ltr'.
+      dir={dirFor(locale)}
+      className={`scroll-smooth ${nexa.variable} ${jakarta.variable} ${jetbrainsMono.variable} ${cairo.variable} ${plexArabic.variable}`}
     >
       <body suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: bodyThemeScript }} />

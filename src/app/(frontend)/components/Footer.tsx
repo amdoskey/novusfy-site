@@ -34,9 +34,9 @@ export default function Footer() {
         </div>
         <div className="foot__col">
           <h4>{t('reachUs')}</h4>
-          <a href="mailto:info@novusfy.com">info@novusfy.com</a>
+          <a href="mailto:info@novusfy.com" dir="ltr">info@novusfy.com</a>
           <a href="#">{t('locations')}</a>
-          <a href="#">novusfy.com</a>
+          <a href="#" dir="ltr">novusfy.com</a>
         </div>
       </div>
       <div className="wrap foot__base">

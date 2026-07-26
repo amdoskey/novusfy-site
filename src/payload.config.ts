@@ -24,8 +24,9 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, CourseCategories, Courses, Portfolio, Articles],
+  // Keep in sync with routing.locales in src/i18n/routing.ts.
   localization: {
-    locales: ['en', 'de'],
+    locales: ['en', 'de', 'ar'],
     defaultLocale: 'en',
     fallback: true,
   },

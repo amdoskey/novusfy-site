@@ -123,7 +123,7 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:900;letter-spacing
 .brand__mark{height:26px;width:auto}
 .brand__word{font-family:var(--f-display);font-weight:900;font-size:21px;letter-spacing:-.04em;color:var(--ink)}
 .brand__word--invert{color:#fff}
-.nav__links{display:flex;gap:30px;margin-left:auto}
+.nav__links{display:flex;gap:30px;margin-inline-start:auto}
 .nav__links a{font-size:15px;font-weight:600;color:var(--on-variant);position:relative;padding:6px 0;transition:color var(--dur-fast) var(--ease)}
 .nav__links a:hover{color:var(--blue)}
 .nav__links a.is-active{color:var(--blue);font-weight:700}
@@ -132,8 +132,8 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:900;letter-spacing
   transition:transform var(--dur-med) var(--ease-out-expo)}
 .nav__links a:hover::after{transform:scaleX(1)}
 .nav__links a.is-active::after{transform:scaleX(1);transform-origin:center}
-.nav__cta{margin-left:8px}
-.nav__burger{display:none;background:none;border:0;flex-direction:column;gap:5px;padding:8px;cursor:pointer;margin-left:auto}
+.nav__cta{margin-inline-start:8px}
+.nav__burger{display:none;background:none;border:0;flex-direction:column;gap:5px;padding:8px;cursor:pointer;margin-inline-start:auto}
 .nav__burger span{width:24px;height:2px;background:var(--ink);transition:var(--dur-med) var(--ease)}
 .nav__burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .nav__burger[aria-expanded="true"] span:nth-child(2){opacity:0}
@@ -754,9 +754,9 @@ body[data-hero="dark"] .nav.is-stuck{animation:navSettle var(--dur-med) var(--ea
 .prose h4{font-family:var(--f-text);font-weight:700;font-size:17px;letter-spacing:.01em;
   margin:30px 0 10px;color:var(--blue)}
 .prose p{margin:0 0 18px;color:var(--on-variant)}
-.prose ul,.prose ol{margin:0 0 20px;padding-left:22px;color:var(--on-variant)}
+.prose ul,.prose ol{margin:0 0 20px;padding-inline-start:22px;color:var(--on-variant)}
 .prose li{margin-bottom:9px}
-.prose blockquote{margin:30px 0;padding:20px 26px;border-left:2px solid var(--blue);
+.prose blockquote{margin:30px 0;padding:20px 26px;border-inline-start:2px solid var(--blue);
   background:var(--surface-high);border-radius:0 var(--r-sm) var(--r-sm) 0;
   font-size:17px;color:var(--ink);font-style:italic}
 .prose strong{color:var(--ink);font-weight:700}
@@ -833,3 +833,93 @@ body[data-hero="dark"] .nav .nav__mobile-locale .locale-switch__opt.is-current{b
 .mapgate__directions{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;
   color:var(--on-variant);text-decoration:none;transition:color var(--dur-fast) var(--ease)}
 .mapgate__directions:hover{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+
+/* =========================================================
+   RTL (Arabic) — single scoped block, keyed off <html dir>
+   ---------------------------------------------------------
+   Physical L/R properties elsewhere in this file were converted to logical
+   (margin-inline-start etc.) and need nothing here. What remains is what
+   logical properties cannot express: absolute positioning, transform origins,
+   directional glyphs, and the font/tracking swap.
+   ========================================================= */
+
+/* --- 1. Font tokens -------------------------------------------------------
+   Redefining the three tokens re-points every existing rule that uses them,
+   so no per-rule Arabic overrides are needed. Nexa/Jakarta/JetBrains have no
+   Arabic glyphs at all — without this, /ar is tofu boxes. Arabic has no
+   monospace-metadata convention, so --f-mono maps to the body face. */
+[dir='rtl'] {
+  --f-display: var(--font-cairo), 'Noto Sans Arabic', sans-serif;
+  --f-text: var(--font-plex-arabic), 'Noto Sans Arabic', sans-serif;
+  --f-mono: var(--font-plex-arabic), 'Noto Sans Arabic', sans-serif;
+}
+
+/* --- 2. Letter-spacing ----------------------------------------------------
+   🔴 The most important rule here. Arabic is cursive — letters join. Tracking
+   forces gaps between joined letters and visually shatters words; negative
+   tracking (used on display headings) crushes them together. The stylesheet
+   carries ~60 letter-spacing declarations, all authored for Latin. Reset them
+   all, then allow back only elements that are always Latin. */
+[dir='rtl'] * {
+  letter-spacing: normal;
+}
+[dir='rtl'] .brand__word {
+  letter-spacing: -0.04em; /* always the Latin wordmark "Novusfy" */
+}
+
+/* --- 3. Absolute-position mirroring --------------------------------------- */
+[dir='rtl'] .nav__links a::after {
+  left: auto;
+  right: 0;
+  transform-origin: right;
+}
+[dir='rtl'] .hero__stat {
+  left: auto;
+  right: -22px;
+}
+[dir='rtl'] .mstep__no {
+  left: auto;
+  right: 14px;
+}
+[dir='rtl'] .fstep__no {
+  left: auto;
+  right: 10px;
+}
+[dir='rtl'] .tile__stat {
+  left: auto;
+  right: 20px;
+}
+/* sheen sweep + ambient glow — cosmetic, mirrored for consistency */
+[dir='rtl'] .btn--solid::after,
+[dir='rtl'] .tile__ph::after,
+[dir='rtl'] .story__visual::after,
+[dir='rtl'] .founder__photo::after {
+  left: auto;
+  right: 0;
+}
+
+/* --- 4. Directional glyphs ------------------------------------------------
+   The 9 hardcoded → spans flip via scaleX rather than swapping the character.
+   The hover rule must RE-STATE the flip, or `transform: translateX(4px)`
+   replaces it and the arrow snaps back to pointing right mid-hover. Composing
+   them also means +4px translates in the mirrored axis, i.e. visually leftward
+   — the correct "forward" direction in RTL. */
+[dir='rtl'] .btn__arrow {
+  display: inline-block;
+  transform: scaleX(-1);
+}
+[dir='rtl'] .btn:hover .btn__arrow {
+  transform: scaleX(-1) translateX(4px);
+}
+
+/* --- 5. Directional shapes ------------------------------------------------ */
+[dir='rtl'] .prose blockquote {
+  border-radius: var(--r-sm) 0 0 var(--r-sm);
+}
+/* stitch draw-in should sweep with the reading direction */
+[dir='rtl'] .stitch.rv {
+  clip-path: inset(-2px 0 -2px 100%);
+}
+[dir='rtl'] .stitch.rv-in {
+  clip-path: inset(-2px 0 -2px 0);
+}

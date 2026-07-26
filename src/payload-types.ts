@@ -94,10 +94,10 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'de') | ('en' | 'de')[];
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'de' | 'ar') | ('en' | 'de' | 'ar')[];
   globals: {};
   globalsSelect: {};
-  locale: 'en' | 'de';
+  locale: 'en' | 'de' | 'ar';
   widgets: {
     collections: CollectionsWidget;
   };

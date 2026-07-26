@@ -73,7 +73,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               {t('reachLabel')}
             </p>
             <h2>{t('reachTitle')}</h2>
-            <a className="contact__email" href="mailto:info@novusfy.com">
+            <a className="contact__email" href="mailto:info@novusfy.com" dir="ltr">
               info@novusfy.com
             </a>
             <div className="contact__follow">
@@ -103,7 +103,10 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 <p className="office__addr">{o.address}</p>
                 <div className="office__actions">
                   <a href={o.telHref} className="btn btn--ghost btn--sm">
-                    {t('call', { tel: o.tel })}
+                    {/* <bdi> isolates the number from the surrounding bidi run.
+                        Without it, the leading "+" on "+964 750..." resolves to
+                        the wrong end in RTL and renders as "964 750...+". */}
+                    {t.rich('call', { tel: o.tel, n: (chunks) => <bdi>{chunks}</bdi> })}
                   </a>
                   <a
                     href={o.whatsapp}
