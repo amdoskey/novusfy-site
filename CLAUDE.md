@@ -552,6 +552,24 @@ builds against this DB, revisit both decisions together.
   caused by any recent work. Typecheck (`npx tsc --noEmit`) and
   `npm run build` both pass — use those as the real gate until lint is fixed.
 
+### 🧹 Small cleanups (no rush, do when convenient)
+
+- **Pin `sslmode` explicitly on `DATABASE_URL`.** Every Payload/`payload run`
+  invocation prints:
+  *"SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are
+  treated as aliases for 'verify-full'. In the next major version
+  (pg-connection-string v3.0.0 / pg v9.0.0), these modes will adopt standard
+  libpq semantics, which have weaker security guarantees."*
+  ⚠️ **This is not just log noise.** The connection is currently getting
+  `verify-full` — the strongest mode — because today's driver aliases it that
+  way. After the pg v9 major, the same connection string silently drops to
+  weaker verification. Appending **`?sslmode=verify-full`** to the Neon URL
+  (local `.env` *and* Vercel) pins the behaviour we already have, so the
+  upgrade becomes a no-op instead of a silent downgrade. The alternative
+  the warning offers, `uselibpqcompat=true&sslmode=require`, is the *weaker*
+  option — don't take it by mistake.
+  Deferred deliberately, July 22, 2026; nothing is broken today.
+
 ---
 
 ## 7. 🇩🇪 German legal compliance (required before going live)
