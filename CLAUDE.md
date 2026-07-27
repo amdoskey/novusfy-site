@@ -80,14 +80,15 @@ src/app/(frontend)/
   components/           ← Nav, Footer, HeroCanvas, ContactForm, LocaleSwitcher,
                           MapEmbed (🔴 consent gate — §7), WorkTile,
                           CaseStudyBody, ScrollReveal, WaitlistForm,
-                          SocialLinks, BodyAttributes, Interactions
-  fonts.ts · styles.css · routeTheme.ts
+                          SocialLinks, Interactions
+  fonts.ts · styles.css · routeTheme.ts (stripLocale helper only)
 
 src/app/(payload)/      ← Payload admin + API — DO NOT TOUCH
 src/i18n/               ← routing.ts (locales) · navigation.ts (locale-aware
                           Link/usePathname) · request.ts (message loading)
 src/middleware.ts       ← 🔴 locale routing — matcher MUST exclude Payload
-messages/               ← en.json · de.json (both real copy, 332 keys each)
+messages/               ← en.json · de.json (real copy) · ar.json (English
+                          placeholders until the Arabic pass — 332 keys each)
 
 src/collections/        ← Users · Media · CourseCategories · Courses
                           Portfolio · Articles
@@ -137,6 +138,30 @@ flagged for that reviewer:
   "now", which German word order won't allow, so the lead-in ends with an em
   dash to keep `jetzt` last.
 
+🌍 **Arabic (`/ar`) — RTL infrastructure landed July 22, 2026; translation
+pending.** `messages/ar.json` currently holds English placeholders. Notes:
+- **`dir` comes from `dirFor(locale)`** in `src/i18n/routing.ts`, driven by
+  `RTL_LOCALES`. Adding another RTL locale means editing that array and nothing
+  in the CSS.
+- **Arabic needs its own fonts.** Nexa, Plus Jakarta Sans and JetBrains Mono all
+  lack Arabic glyphs, so `/ar` would render tofu. Cairo (display) and IBM Plex
+  Sans Arabic (body **and** mono — Arabic has no monospace-metadata convention)
+  are declared globally but applied only under `[dir='rtl']`, so en/de pages
+  never download them.
+- 🔴 **`letter-spacing` is reset to `normal` under `[dir='rtl']`.** Arabic is
+  cursive; the ~60 tracking declarations in `styles.css` are authored for Latin
+  and visually shatter Arabic words by breaking letter joining. Only the Latin
+  wordmark is allowed to keep its tracking.
+- **Physical L/R properties are banned** — the file has zero
+  `margin-left`/`padding-left`/`border-left`; use logical properties
+  (`margin-inline-start` etc.) so all three locales work from one declaration.
+  Only absolute positioning, `transform-origin` and directional glyphs need the
+  scoped `[dir='rtl']` block.
+- **Arrow glyphs flip via `scaleX(-1)`**, and the hover rule re-states it —
+  otherwise `transform: translateX(4px)` replaces the flip mid-hover.
+- **Phone numbers are wrapped in `<bdi>`** via a rich-text tag; a leading `+`
+  in an RTL run otherwise renders as `964 750...+`.
+
 🔴 **`/de/*` is still `noindex`** (`localeAlternates()` in `src/lib/metadata.ts`).
 That gate is **legal, not linguistic** — translation quality does not lift it.
 It comes off only when the Impressum and Datenschutzerklärung exist (§7).
@@ -146,7 +171,7 @@ nav `Home`, and the branded noun `Next` stay untranslated (`Ihr Next beginnt
 jetzt.`); `Work → Projekte`; service-line names and English business terms
 standard in German (SEO, Paid Ads, Analytics, Coaching, Leadership) stay as-is.
 
-**Payload localization is ON:** `locales: ['en', 'de']`, `defaultLocale: 'en'`,
+**Payload localization is ON:** `locales: ['en', 'de', 'ar']`, `defaultLocale: 'en'`,
 `fallback: true`. Localized fields carry EN + DE; `slug` is deliberately **not**
 localized (one URL per doc across locales). API takes `?locale=de` — note that
 Payload does **not** reject unknown locales, it falls back, so `?locale=fr`
@@ -184,10 +209,11 @@ returns 200 rather than an error.
     404s. It also excludes `/contact/send`, because `ContactForm` posts to that
     absolute path from every locale and must not become `/de/contact/send`.
     **Any change to that regex needs `/admin` + `/api/portfolio` re-tested.**
-11. **`ROUTE_THEME` is keyed by unprefixed path** (`/about`, not `/de/about`).
-    Both consumers — `BodyAttributes.tsx` and the pre-hydration inline script in
-    `[locale]/layout.tsx` — run the path through `stripLocale()` first. Skip that
-    and every German page silently loses its nav theming on first paint.
+11. **`stripLocale()` exists because `usePathname()` from next/navigation keeps
+    the locale prefix.** `Nav` runs paths through it so `/de/about` and
+    `/ar/about` compare equal to `/about`. (This helper formerly also backed a
+    `ROUTE_THEME` map for nav theming; that mechanism was replaced by CSS —
+    see gotcha 15.)
 12. **Use `Link` from `@/i18n/navigation`, never `next/link`,** for internal
     links — a raw `next/link href="/about"` drops a German visitor back into
     English. Exception: `LocaleSwitcher` uses `next/link` with a `getPathname()`
@@ -222,6 +248,28 @@ returns 200 rather than an error.
     storage/plugin addition.** After adding any plugin: run
     `generate:importmap`, then check
     `git status src/app/(payload)/admin/importMap.js` before committing.
+15. 🔴 **Never render a `<script>` element inside a React component tree.**
+    React 19 logs a console **error** — *"Encountered a script tag while
+    rendering React component. Scripts inside React components are never
+    executed when rendering on the client"* — every time the tree is rendered
+    client-side. It does **not** fire on hard load (the script ships in the SSR
+    HTML and runs at parse time), only on client-side navigation that remounts
+    the owning layout — e.g. any locale switch, since that changes `[locale]`.
+    `next/script` with `strategy="beforeInteractive"` does **not** fix it; Next
+    still puts a script element in the tree. **Verified July 22, 2026.**
+    Nav theming previously used such a script (plus a `BodyAttributes` client
+    component to cover the client-nav case the script couldn't). Both were
+    deleted in favour of `body:has(.herox)` in CSS — the immersive hero only
+    exists on the home route, so the dark-nav treatment is pure CSS: correct at
+    first paint, correct after client navigation, and impossible to desync.
+    `:has()` carries the specificity of its argument, so `body:has(.herox) .nav`
+    ties exactly with the old `body[data-hero="dark"] .nav` and the cascade is
+    unchanged. **Prefer a CSS expression of state over a pre-hydration script.**
+16. **`npm run build` and `npm run dev` share `.next` and corrupt each other.**
+    Running a build while a dev server has been using the directory leaves the
+    dev server throwing `SyntaxError: Unexpected end of JSON input` on routes
+    that were fine moments earlier — it looks like a code bug and is not.
+    `rm -rf .next` and restart. Cost real debugging time on July 22, 2026.
 
 ---
 

@@ -40,7 +40,15 @@ next-env.d.ts
 
 .env
 
+# Payload uploads. /media was the pre-R2 local-disk target; public/media holds
+# source photography staged for upload. Neither belongs in git — media lives in
+# Cloudflare R2 via the storage adapter (CLAUDE.md §2 gotcha 13).
 /media
+/public/media/
+
+# stray .env backups — .env alone does not cover these
+.env.bak*
+.env.backup*
 
 # Playwright
 node_modules/

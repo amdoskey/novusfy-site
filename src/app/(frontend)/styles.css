@@ -503,24 +503,24 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:900;letter-spacing
 @keyframes scrolldot{0%{opacity:0;transform:translateY(-4px)}40%{opacity:1}80%{opacity:0;transform:translateY(8px)}}
 
 /* dark-hero transparent nav that solidifies on scroll */
-body[data-hero="dark"] .nav{background:transparent;background-image:none;border-bottom:1px solid transparent;
+body:has(.herox) .nav{background:transparent;background-image:none;border-bottom:1px solid transparent;
   transition:background var(--dur-med) var(--ease),border-color var(--dur-med) var(--ease)}
-body[data-hero="dark"] .nav .brand__word{color:#fff}
-body[data-hero="dark"] .nav__links a{color:rgba(255,255,255,.78)}
-body[data-hero="dark"] .nav__links a:hover,
-body[data-hero="dark"] .nav__links a.is-active{color:#fff}
-body[data-hero="dark"] .nav__links a::after{background:#fff}
-body[data-hero="dark"] .nav__burger span{background:#fff}
-body[data-hero="dark"] .nav.is-stuck{background:rgba(249,249,255,.85);backdrop-filter:blur(14px);
+body:has(.herox) .nav .brand__word{color:#fff}
+body:has(.herox) .nav__links a{color:rgba(255,255,255,.78)}
+body:has(.herox) .nav__links a:hover,
+body:has(.herox) .nav__links a.is-active{color:#fff}
+body:has(.herox) .nav__links a::after{background:#fff}
+body:has(.herox) .nav__burger span{background:#fff}
+body:has(.herox) .nav.is-stuck{background:rgba(249,249,255,.85);backdrop-filter:blur(14px);
   background-image:linear-gradient(rgba(249,249,255,.85),rgba(249,249,255,.85)),
     linear-gradient(to right,var(--outline) 50%,transparent 50%);
   background-size:auto,8px 1px;background-position:0 0,0 100%;background-repeat:no-repeat,repeat-x}
-body[data-hero="dark"] .nav.is-stuck .brand__word{color:var(--ink)}
-body[data-hero="dark"] .nav.is-stuck .nav__links a{color:var(--on-variant)}
-body[data-hero="dark"] .nav.is-stuck .nav__links a:hover,
-body[data-hero="dark"] .nav.is-stuck .nav__links a.is-active{color:var(--blue)}
-body[data-hero="dark"] .nav.is-stuck .nav__links a::after{background:var(--blue)}
-body[data-hero="dark"] .nav.is-stuck .nav__burger span{background:var(--ink)}
+body:has(.herox) .nav.is-stuck .brand__word{color:var(--ink)}
+body:has(.herox) .nav.is-stuck .nav__links a{color:var(--on-variant)}
+body:has(.herox) .nav.is-stuck .nav__links a:hover,
+body:has(.herox) .nav.is-stuck .nav__links a.is-active{color:var(--blue)}
+body:has(.herox) .nav.is-stuck .nav__links a::after{background:var(--blue)}
+body:has(.herox) .nav.is-stuck .nav__burger span{background:var(--ink)}
 
 /* =========================================================
    WHAT KIND OF NEXT
@@ -654,7 +654,7 @@ body[data-hero="dark"] .nav.is-stuck .nav__burger span{background:var(--ink)}
 
 /* 3c — the stuck nav settles in rather than snapping */
 @keyframes navSettle{from{transform:translateY(-8px)}to{transform:translateY(0)}}
-body[data-hero="dark"] .nav.is-stuck{animation:navSettle var(--dur-med) var(--ease-out-expo)}
+body:has(.herox) .nav.is-stuck{animation:navSettle var(--dur-med) var(--ease-out-expo)}
 
 /* 3d — stitch dividers draw in on first reveal */
 .stitch.rv{opacity:1;transform:none;clip-path:inset(-2px 100% -2px 0)}
@@ -789,14 +789,14 @@ body[data-hero="dark"] .nav.is-stuck{animation:navSettle var(--dur-med) var(--ea
 .locale-switch__opt.is-current{background:var(--blue);color:#fff}
 
 /* dark home hero: transparent nav until scrolled (mirrors .nav__links theming) */
-body[data-hero="dark"] .nav .locale-switch{border-color:rgba(255,255,255,.25)}
-body[data-hero="dark"] .nav .locale-switch__opt{color:rgba(255,255,255,.78)}
-body[data-hero="dark"] .nav .locale-switch__opt:hover{color:#fff}
-body[data-hero="dark"] .nav .locale-switch__opt.is-current{background:#fff;color:var(--ink)}
-body[data-hero="dark"] .nav.is-stuck .locale-switch{border-color:var(--outline)}
-body[data-hero="dark"] .nav.is-stuck .locale-switch__opt{color:var(--on-variant)}
-body[data-hero="dark"] .nav.is-stuck .locale-switch__opt:hover{color:var(--blue)}
-body[data-hero="dark"] .nav.is-stuck .locale-switch__opt.is-current{background:var(--blue);color:#fff}
+body:has(.herox) .nav .locale-switch{border-color:rgba(255,255,255,.25)}
+body:has(.herox) .nav .locale-switch__opt{color:rgba(255,255,255,.78)}
+body:has(.herox) .nav .locale-switch__opt:hover{color:#fff}
+body:has(.herox) .nav .locale-switch__opt.is-current{background:#fff;color:var(--ink)}
+body:has(.herox) .nav.is-stuck .locale-switch{border-color:var(--outline)}
+body:has(.herox) .nav.is-stuck .locale-switch__opt{color:var(--on-variant)}
+body:has(.herox) .nav.is-stuck .locale-switch__opt:hover{color:var(--blue)}
+body:has(.herox) .nav.is-stuck .locale-switch__opt.is-current{background:var(--blue);color:#fff}
 
 /* mobile menu: neutralize the generic .nav__mobile a rules on switcher links,
    and restore the CTA styling that a:last-child no longer catches now that the
@@ -810,10 +810,10 @@ body[data-hero="dark"] .nav.is-stuck .locale-switch__opt.is-current{background:v
 /* the mobile menu sits on a light surface even under the dark home hero, so the
    dark-hero switcher theming must not reach the mobile instance (a white pill
    on the white menu is invisible) */
-body[data-hero="dark"] .nav .nav__mobile-locale.locale-switch{border-color:var(--outline)}
-body[data-hero="dark"] .nav .nav__mobile-locale .locale-switch__opt{color:var(--on-variant)}
-body[data-hero="dark"] .nav .nav__mobile-locale .locale-switch__opt:hover{color:var(--blue)}
-body[data-hero="dark"] .nav .nav__mobile-locale .locale-switch__opt.is-current{background:var(--blue);color:#fff}
+body:has(.herox) .nav .nav__mobile-locale.locale-switch{border-color:var(--outline)}
+body:has(.herox) .nav .nav__mobile-locale .locale-switch__opt{color:var(--on-variant)}
+body:has(.herox) .nav .nav__mobile-locale .locale-switch__opt:hover{color:var(--blue)}
+body:has(.herox) .nav .nav__mobile-locale .locale-switch__opt.is-current{background:var(--blue);color:#fff}
 
 /* ============ CONSENT-GATED MAP (§7) ============ */
 /* Pure CSS — must issue zero network requests. Never swap in a Static Maps

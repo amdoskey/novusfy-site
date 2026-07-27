@@ -3,34 +3,24 @@ import { notFound } from 'next/navigation'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 
-import BodyAttributes from '../components/BodyAttributes'
 import Footer from '../components/Footer'
 import Interactions from '../components/Interactions'
 import Nav from '../components/Nav'
-import { ROUTE_THEME } from '../components/routeTheme'
 import ScrollReveal from '../components/ScrollReveal'
 import { cairo, jakarta, jetbrainsMono, nexa, plexArabic } from '../fonts'
 import { dirFor, routing } from '@/i18n/routing'
 import '../styles.css'
 
-// Runs during HTML parsing, before the nav paints, so body[data-hero]/[data-page]
-// are already correct on first frame — no flash of the wrong nav theme. Kept in
-// sync with BodyAttributes via the shared ROUTE_THEME map.
-//
-// The locale prefix is stripped before lookup: ROUTE_THEME is keyed by
-// unprefixed path, so /de/about must resolve to the '/about' entry. Without
-// this, every German page loses its nav theming on first paint.
-const bodyThemeScript = `(function(){try{
-var m=${JSON.stringify(ROUTE_THEME)};
-var L=${JSON.stringify(routing.locales)};
-var p=location.pathname.replace(/\\/+$/,'')||'/';
-var s=p.split('/');
-if(s.length>1&&L.indexOf(s[1])>-1){p='/'+s.slice(2).join('/');}
-if(p!=='/'&&p.length>1&&p.endsWith('/'))p=p.slice(0,-1);
-if(p==='')p='/';
-var c=m[p];
-if(c){document.body.setAttribute('data-page',c.page);if(c.hero)document.body.setAttribute('data-hero',c.hero);}
-}catch(e){}})();`
+// Nav theming used to run through a pre-hydration inline <script> that set
+// body[data-hero], mirrored by a BodyAttributes client component. Both are gone:
+// React 19 errors on any <script> element rendered in a component tree
+// ("Scripts inside React components are never executed when rendering on the
+// client"), which fired on every client-side navigation that remounted this
+// layout. The stylesheet now selects `body:has(.herox)` — the immersive hero
+// only exists on the home route — so the dark nav treatment is pure CSS:
+// correct at first paint, correct after client navigation, and impossible to
+// desync. Same specificity as the old attribute selector, so cascade is
+// unchanged. See §2 gotcha 15.
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -97,10 +87,8 @@ export default async function LocaleLayout({
       dir={dirFor(locale)}
       className={`scroll-smooth ${nexa.variable} ${jakarta.variable} ${jetbrainsMono.variable} ${cairo.variable} ${plexArabic.variable}`}
     >
-      <body suppressHydrationWarning>
-        <script dangerouslySetInnerHTML={{ __html: bodyThemeScript }} />
+      <body>
         <NextIntlClientProvider>
-          <BodyAttributes />
           <Nav />
           <main>{children}</main>
           <Footer />
