@@ -87,8 +87,8 @@ src/app/(payload)/      ← Payload admin + API — DO NOT TOUCH
 src/i18n/               ← routing.ts (locales) · navigation.ts (locale-aware
                           Link/usePathname) · request.ts (message loading)
 src/middleware.ts       ← 🔴 locale routing — matcher MUST exclude Payload
-messages/               ← en.json · de.json (real copy) · ar.json (English
-                          placeholders until the Arabic pass — 332 keys each)
+messages/               ← en.json · de.json · ar.json (all real copy,
+                          332 keys each)
 
 src/collections/        ← Users · Media · CourseCategories · Courses
                           Portfolio · Articles
@@ -96,10 +96,10 @@ src/access/index.ts     ← shared access helpers
                           (publishedOrAuthenticated · authenticated)
 src/lib/portfolio.ts    ← public Portfolio queries (locale-aware)
 src/lib/metadata.ts     ← localeAlternates(): hreflang + the /de noindex
-src/seed/               ← one-off seeding — portfolio.ts (EN runner)
-                          portfolio-de.ts (DE runner) · portfolio-data.ts
-                          portfolio-data-de.ts · lexical.ts (Markdown →
-                          Lexical converter). Reusable for the next content
+src/seed/               ← one-off seeding — portfolio.ts (EN) ·
+                          portfolio-de.ts · portfolio-ar.ts (locale runners)
+                          portfolio-data{,-de,-ar}.ts · lexical.ts (Markdown
+                          → Lexical converter). Reusable for the next content
                           batch; see §6.
 assets/content/         ← source Markdown the seeds were transcribed from
 ```
@@ -118,8 +118,8 @@ locale passed through (`getPortfolioBySlug(slug, locale)`).
 Copy extraction is **complete**: all six pages plus `ContactForm`, `WaitlistForm`
 and `MapEmbed` are keyed — **332 keys across 12 namespaces** (`nav`, `footer`,
 `home`, `about`, `services`, `learningHub`, `contact`, `work`, `caseStudy`,
-`contactForm`, `waitlistForm`, `serviceLabels`), en/de key parity verified. No
-JSX changes are needed to translate anything. Not keyed on purpose: the
+`contactForm`, `waitlistForm`, `serviceLabels`), en/de/ar key parity verified.
+No JSX changes are needed to translate anything. Not keyed on purpose: the
 `media-ph__tag` photo-placeholder markers on About (deleted when real photos
 land, §8) and the contact form's hidden honeypot label.
 
@@ -138,8 +138,9 @@ flagged for that reviewer:
   "now", which German word order won't allow, so the lead-in ends with an em
   dash to keep `jetzt` last.
 
-🌍 **Arabic (`/ar`) — RTL infrastructure landed July 22, 2026; translation
-pending.** `messages/ar.json` currently holds English placeholders. Notes:
+🌍 **Arabic (`/ar`) is live (July 22, 2026)** — RTL infrastructure plus a
+first-pass MSA translation of all 332 keys and all 5 case studies, **pending
+native-speaker review**. Notes:
 - **`dir` comes from `dirFor(locale)`** in `src/i18n/routing.ts`, driven by
   `RTL_LOCALES`. Adding another RTL locale means editing that array and nothing
   in the CSS.
@@ -161,6 +162,20 @@ pending.** `messages/ar.json` currently holds English placeholders. Notes:
   otherwise `transform: translateX(4px)` replaces the flip mid-hover.
 - **Phone numbers are wrapped in `<bdi>`** via a rich-text tag; a leading `+`
   in an RTL run otherwise renders as `964 750...+`.
+- **Directional arrows live in the translated strings**, not in CSS: in RTL
+  *forward* points left and *back* points right, so `caseStudy.backShort` in
+  Arabic carries `→` where English carries `←`. Only the 9 hardcoded
+  `.btn__arrow` spans flip via `scaleX(-1)`.
+- **Kept in Latin script** (standard in Arabic business writing): brand and
+  product names, the six service-line names, the Services page D-alliteration
+  steps, and terms with no settled Arabic equivalent in this register — SEO,
+  CRM, ERP, MVP, Paid Ads, Analytics, Coaching, Leadership, Go-to-Market,
+  Branding.
+- ⚠️ **For the Arabic reviewer:** the branded noun `Next` is kept in Latin
+  mid-sentence (`Next الخاص بك يبدأ الآن.`), mirroring the German decision. It
+  is defensible but reads foreign — a reviewer may prefer a translated form.
+  Nav `Home` **was** translated to `الرئيسية`, unlike German where it stayed
+  `Home`, because Arabic web convention overwhelmingly favours the translation.
 
 🔴 **`/de/*` is still `noindex`** (`localeAlternates()` in `src/lib/metadata.ts`).
 That gate is **legal, not linguistic** — translation quality does not lift it.
