@@ -8,7 +8,7 @@ doing any Payload-related work.
 Novusfy website project with full context. Written for a Claude that has no
 memory of prior sessions.
 
-**Last updated:** July 22, 2026
+**Last updated:** July 29, 2026
 **Owner:** DDTAJ (based in Erbil, Iraq)
 **Repo:** GitHub → `novusfy-site` · **Live:** `novusfy-site.vercel.app`
 
@@ -137,6 +137,11 @@ flagged for that reviewer:
 - `about.philosophyQuotePre` was restructured — English ends on the accent word
   "now", which German word order won't allow, so the lead-in ends with an em
   dash to keep `jetzt` last.
+- The six service-line **titles** were translated to German (July 29, 2026).
+  Five are straightforward; **"Marketing als Dienstleistung"** (for
+  "Marketing-as-a-Service") is flagged for the reviewer — it is a direct
+  calque of the "as-a-Service" pattern and reads naturally, but a reviewer
+  may prefer the English original or a different German phrasing.
 
 🌍 **Arabic (`/ar`) is live (July 22, 2026)** — RTL infrastructure plus a
 first-pass MSA translation of all 332 keys and all 5 case studies, **pending
@@ -167,10 +172,11 @@ native-speaker review**. Notes:
   Arabic carries `→` where English carries `←`. Only the 9 hardcoded
   `.btn__arrow` spans flip via `scaleX(-1)`.
 - **Kept in Latin script** (standard in Arabic business writing): brand and
-  product names, the six service-line names, the Services page D-alliteration
-  steps, and terms with no settled Arabic equivalent in this register — SEO,
-  CRM, ERP, MVP, Paid Ads, Analytics, Coaching, Leadership, Go-to-Market,
-  Branding.
+  product names, the Services page D-alliteration steps, and terms with no
+  settled Arabic equivalent in this register — SEO, CRM, ERP, MVP, Paid Ads,
+  Analytics, Coaching, Leadership, Go-to-Market, Branding. ✅ The six
+  service-line names were **translated to Arabic** (July 29, 2026) — they are
+  full descriptive phrases, not established loanwords.
 - ⚠️ **For the Arabic reviewer:** the branded noun `Next` is kept in Latin
   mid-sentence (`Next الخاص بك يبدأ الآن.`), mirroring the German decision. It
   is defensible but reads foreign — a reviewer may prefer a translated form.
@@ -183,8 +189,11 @@ It comes off only when the Impressum and Datenschutzerklärung exist (§7).
 
 **Translation conventions in use** (keep these if extending): `Learning Hub`,
 nav `Home`, and the branded noun `Next` stay untranslated (`Ihr Next beginnt
-jetzt.`); `Work → Projekte`; service-line names and English business terms
-standard in German (SEO, Paid Ads, Analytics, Coaching, Leadership) stay as-is.
+jetzt.`); `Work → Projekte`; the six service-line **titles** are translated
+(full descriptive phrases, not established loanwords); short English business
+terms standard in German (SEO, Paid Ads, Analytics, Coaching, Leadership) stay
+as-is; the Services page D-alliteration steps (Discover · Define · Design ·
+Deploy · Develop) stay in English.
 
 **Payload localization is ON:** `locales: ['en', 'de', 'ar']`, `defaultLocale: 'en'`,
 `fallback: true`. Localized fields carry EN + DE; `slug` is deliberately **not**
@@ -348,7 +357,7 @@ Lexical renderer or add a package for it.
 Email:      info@novusfy.com
 Website:    novusfy.com
 
-Germany:    Im Staadergarten 12, 78343 Gaienhofen OT Horn, Germany
+Germany:    Im Staadergarten 15, 78343 Gaienhofen OT Horn, Germany
             +49 179 3412853        (WhatsApp: wa.me/491793412853)
 
 Iraq:       Gulan St, Boulevard, Erbil, Iraq
@@ -359,9 +368,8 @@ Facebook:   https://www.facebook.com/novusfy/
 LinkedIn:   https://www.linkedin.com/company/novusfy
 ```
 
-⚠️ **Unresolved:** the German legal document from Karwan says **Im Staadergarten
-15**, the site uses **12**. Must be confirmed before the Impressum is published —
-this address is legally binding.
+✅ **Address confirmed (July 29, 2026):** **Im Staadergarten 15** is correct.
+The site previously used 12; corrected here.
 
 ---
 
@@ -486,12 +494,7 @@ builds against this DB, revisit both decisions together.
    (skips existing slugs) and the Markdown → Lexical converter is already
    written. New entries need **both** locales — `portfolio-data.ts` for EN and
    `portfolio-data-de.ts` for DE.
-   - Still pending on the live 5: replace the shared gray placeholder image
-     (Media id 1) with real photography per entry, in `/admin`. Uploading now
-     works (R2 adapter, §2 gotcha 13) — new images appear within the 5-minute
-     ISR window, no deploy needed. **Edit Media id 1 in place rather than
-     creating a new doc**: all 5 case studies reference it from both
-     `coverImage` and `gallery`, so a new id means re-pointing 10 fields.
+   - ✅ Real photography uploaded for all 5 live case studies (July 29, 2026).
 3. **Wire the remaining frontend to Payload.** ✅ **Portfolio done**
    (July 20, 2026): homepage bento + `/work` + `/work/[slug]`, and the fake
    Selected Work content in §8 is gone. **Remaining:** Learning Hub → `Courses`
@@ -653,10 +656,15 @@ visitor IP reaches Google. ✅
 and the maps are gated — see above), but becomes required once analytics is
 added or if the map gate is ever removed.
 
-**Still needed from Karwan:** exact address (12 vs 15) · legal form
-(Einzelunternehmen vs UG/GmbH — a UG/GmbH needs Handelsregister, HRB number,
-Registergericht, Geschäftsführer in the Impressum) · Kleinunternehmer §19 yes/no
-(decides whether a USt-IdNr line appears).
+**✅ All Karwan questions settled (July 29, 2026):**
+- **Address:** Im Staadergarten **15** (confirmed, corrected in §4).
+- **Legal form:** **Einzelunternehmen** — no Handelsregister, no HRB, no
+  Geschäftsführer line needed in the Impressum.
+- **Kleinunternehmer §19:** **yes, applies** — no VAT charged, no USt-IdNr.
+  The Impressum must **not** show a USt-IdNr line.
+
+These were the last open prerequisites for drafting the Impressum. Remaining
+blockers for §7 are authoring the actual `/impressum` and `/datenschutz` pages.
 
 **Later, when selling courses to EU consumers:** AGB (terms),
 Widerrufsbelehrung (withdrawal right + digital-download waiver), VAT-inclusive
@@ -689,14 +697,11 @@ readable:
   overstating what remained.
 - ✅ **Currency reference — FIXED.** About now reads *"before spending a single
   dinar on tactics"* (was "dirham", a leftover from an early Dubai assumption).
-- **Image placeholders** awaiting real photography: hero image slot, About
-  team/office image, founder photo. **All 5 case studies share one gray
-  placeholder** (Media id 1) — replace per entry in `/admin`.
-  ⚠️ **Media id 1's file does not currently exist in R2.** It was uploaded to a
-  dev machine's local disk in July 2026, before the storage adapter existed, so
-  production never had the bytes and the image 500s on live. The row is intact;
-  re-uploading a file to that doc fixes it. Do **not** create a new Media doc —
-  10 fields across the 5 case studies point at id 1.
+- ✅ **Case-study photography — DONE (July 29, 2026).** Real images uploaded
+  via `/admin` and confirmed rendering on `/work`. The shared gray placeholder
+  (Media id 1) is no longer in use.
+- **Image placeholders still awaiting real photography:** hero image slot, About
+  team/office image, founder photo.
 - **`public/og-image.png`** (1200×630) — social share preview, artwork needed.
   *Still missing, confirmed July 2026.*
 
