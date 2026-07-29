@@ -22,6 +22,7 @@
     "learningHub": "Learning Hub",
     "contact": "تواصل معنا",
     "privacy": "الخصوصية",
+    "impressum": "Impressum",
     "reachUs": "للتواصل",
     "locations": "ألمانيا · أربيل",
     "copyright": "© 2026 Novusfy. جميع الحقوق محفوظة.",
@@ -343,7 +344,8 @@
     "sending": "جارٍ الإرسال …",
     "success": "شكراً — سنتواصل معك قريباً.",
     "genericError": "حدث خطأ ما.",
-    "fallbackError": "تعذّر إرسال رسالتك — يرجى المراسلة مباشرة على info@novusfy.com."
+    "fallbackError": "تعذّر إرسال رسالتك — يرجى المراسلة مباشرة على info@novusfy.com.",
+    "privacy": "أوافق على معالجة بياناتي وفقاً لـ<a>سياسة الخصوصية</a>."
   },
   "waitlistForm": {
     "fullName": "الاسم الكامل",

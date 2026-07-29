@@ -607,21 +607,24 @@ specific fixes (OMGF, Complianz, fake theme testimonials, demo images from
 `bizzen-wp.nayonacademy.com`) do **not** apply to the Next.js site. The legal
 requirements do.
 
-**Required:**
-- **`/impressum` page** (§5 DDG) — Karwan Jameel, Novusfy, address, phone,
-  info@novusfy.com, §18(2) MStV responsibility line, consumer-dispute statement.
-  Footer-linked.
-- **`/datenschutz` page** (GDPR) — generate with a reputable German tool
-  (e-recht24 / activeMind / Dr. Schwenke), but it **must describe the actual
-  stack**: **Vercel** (US host), **Neon** (database), **Cloudflare R2** (media
-  storage — Cloudflare is a US company, but the bucket is in R2's **EU
-  jurisdiction**, so media objects stay in the EU; §6), **Resend** (US email
-  processor), **Google Maps** embeds and their click-gate, and the contact form
-  (data, Art. 6 basis, retention). Likely needs DPAs with Vercel, Cloudflare
-  and Resend.
-- **Footer:** replace the dead `#` "Privacy" link with real Impressum +
-  Datenschutz links.
-- **Contact form:** add a privacy-consent checkbox linking to `/datenschutz`.
+**✅ Impressum + Datenschutz — DONE (July 29, 2026).** Both pages live at
+`/impressum` and `/datenschutz` inside the `[locale]` route group. Content is
+hardcoded German (same text at `/impressum`, `/de/impressum`, `/ar/impressum`),
+not pulled from `messages/*.json`. Each page sets `canonical` to the unprefixed
+URL and emits **no hreflang** — they are not translations, just one page at
+three URLs. Footer links and the contact form privacy checkbox are wired.
+
+⚠️ **Removing `noindex` from `/de/*` and `/ar/*` is an owner decision** — the
+legal pages existing does not automatically lift the gate. The `noindex` was
+the last *technical* prerequisite; whether to flip it is a business/timing call.
+
+**Still required by owner/Karwan (not engineering):**
+- Have Karwan or a lawyer **review both pages** before going live.
+- **DPA confirmation** — the Datenschutzerklärung references Vercel, Neon,
+  Cloudflare, and Resend as processors. Auftragsverarbeitungsverträge are
+  legally required with each.
+- **§7 supervisory authority** — filled with the LfDI Baden-Württemberg
+  (correct for Gaienhofen), but confirm the current postal address.
 
 **✅ Google Maps consent gate — DONE (July 21, 2026).** `/contact` previously
 auto-loaded two Google Maps iframes, transmitting visitor IPs to Google without

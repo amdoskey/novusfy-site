@@ -9,10 +9,9 @@ import { routing } from '@/i18n/routing'
  * and `/ar/about` all point at each other. The languages map is derived from
  * `routing.locales`, so adding a locale there is enough — nothing to update here.
  *
- * 🔴 Every non-default locale carries `noindex, follow`. That gate is **legal,
- * not linguistic**: it comes off only when the Impressum and
- * Datenschutzerklärung exist (§7). Translation quality does not lift it, and
- * the German copy being finished is not a reason to remove it.
+ * 🔴 Every non-default locale carries `noindex, follow`. The Impressum and
+ * Datenschutzerklärung now exist (§7), so the technical prerequisite is met.
+ * Removing `noindex` is an **owner decision** — do not flip it automatically.
  */
 export function localeAlternates(locale: string, path = '/'): Metadata {
   const clean = path === '/' ? '' : path

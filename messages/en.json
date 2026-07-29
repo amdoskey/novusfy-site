@@ -22,6 +22,7 @@
     "learningHub": "Learning Hub",
     "contact": "Contact",
     "privacy": "Privacy",
+    "impressum": "Impressum",
     "reachUs": "Reach us",
     "locations": "Germany · Erbil",
     "copyright": "© 2026 Novusfy. All rights reserved.",
@@ -343,7 +344,8 @@
     "sending": "Sending…",
     "success": "Thanks — we'll be in touch shortly.",
     "genericError": "Something went wrong.",
-    "fallbackError": "Couldn't send your message — please email info@novusfy.com directly."
+    "fallbackError": "Couldn't send your message — please email info@novusfy.com directly.",
+    "privacy": "I agree to the processing of my data as described in the <a>Privacy Policy</a>."
   },
   "waitlistForm": {
     "fullName": "Full name",

@@ -29,8 +29,8 @@ export default function Footer() {
           <h4>{t('explore')}</h4>
           <Link href="/learning-hub">{t('learningHub')}</Link>
           <Link href="/contact">{t('contact')}</Link>
-          {/* TODO: point at /datenschutz once the German legal pages land (CLAUDE.md §7) */}
-          <Link href="#">{t('privacy')}</Link>
+          <Link href="/datenschutz">{t('privacy')}</Link>
+          <Link href="/impressum">{t('impressum')}</Link>
         </div>
         <div className="foot__col">
           <h4>{t('reachUs')}</h4>

@@ -78,6 +78,13 @@ export default function ContactForm() {
         <textarea id="c-message" name="message" placeholder={t('messagePlaceholder')} required />
       </div>
 
+      <label className="form__consent">
+        <input type="checkbox" name="privacy" required />
+        {t.rich('privacy', {
+          a: (chunks) => <a href="/datenschutz" target="_blank" rel="noopener noreferrer">{chunks}</a>,
+        })}
+      </label>
+
       <button type="submit" className="btn btn--solid" disabled={status === 'sending'}>
         {status === 'sending' ? (
           t('sending')

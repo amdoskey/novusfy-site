@@ -43,9 +43,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       canonical: isDefault ? '/' : `/${locale}`,
       languages: { en: '/', de: '/de' },
     },
-    // German pages currently serve English placeholder copy. Indexing them
-    // would register duplicate English content under /de — remove this block
-    // once real translations land in messages/de.json.
     ...(isDefault ? {} : { robots: { index: false, follow: true } }),
     openGraph: {
       title: 'Novusfy — Your Next Begins Now',
