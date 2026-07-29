@@ -29,11 +29,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 const OFFICES = [
   {
     nameKey: 'officeGermany',
-    address: 'Im Staadergarten 12, 78343 Gaienhofen OT Horn, Germany',
+    address: 'Im Staadergarten 15, 78343 Gaienhofen OT Horn, Germany',
     tel: '+49 179 3412853',
     telHref: 'tel:+491793412853',
     whatsapp: 'https://wa.me/491793412853',
-    mapQuery: 'Im Staadergarten 12, 78343 Gaienhofen OT Horn, Germany',
+    mapQuery: 'Im Staadergarten 15, 78343 Gaienhofen OT Horn, Germany',
   },
   {
     nameKey: 'officeErbil',
