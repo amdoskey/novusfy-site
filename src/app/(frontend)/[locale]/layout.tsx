@@ -41,9 +41,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       'Novusfy helps businesses, startups, and ambitious professionals grow, launch, and reinvent through strategy, marketing, digital systems, and practical learning.',
     alternates: {
       canonical: isDefault ? '/' : `/${locale}`,
-      languages: { en: '/', de: '/de' },
+      languages: { en: '/', de: '/de', ar: '/ar' },
     },
-    ...(isDefault ? {} : { robots: { index: false, follow: true } }),
     openGraph: {
       title: 'Novusfy — Your Next Begins Now',
       description:

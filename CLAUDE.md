@@ -183,9 +183,9 @@ native-speaker review**. Notes:
   Nav `Home` **was** translated to `الرئيسية`, unlike German where it stayed
   `Home`, because Arabic web convention overwhelmingly favours the translation.
 
-🔴 **`/de/*` is still `noindex`** (`localeAlternates()` in `src/lib/metadata.ts`).
-That gate is **legal, not linguistic** — translation quality does not lift it.
-It comes off only when the Impressum and Datenschutzerklärung exist (§7).
+✅ **`/de/*` and `/ar/*` are indexable** (July 29, 2026). The `noindex` gate was
+removed after the Impressum and Datenschutzerklärung went live (§7). All three
+locales are now fully indexable.
 
 **Translation conventions in use** (keep these if extending): `Learning Hub`,
 nav `Home`, and the branded noun `Next` stay untranslated (`Ihr Next beginnt
@@ -575,31 +575,13 @@ builds against this DB, revisit both decisions together.
 
 ---
 
-## 7. 🇩🇪 German legal compliance (required before going live)
+## 7. 🇩🇪 German legal compliance
 
-> ### 🔺 PRIORITY RAISED — July 20, 2026
->
-> The site now ships a **German-language version** at `/de/*` (see §2). That
-> materially changes the risk profile: an English-only site aimed at an
-> international audience is a weak trigger for German consumer/DDG obligations,
-> but a site actively serving German at German URLs is a **strong** one. It is
-> evidence of targeting the German market, which is the test that matters for
-> Impressum (§5 DDG), the Datenschutzerklärung, and the Google Maps consent
-> issue below.
->
-> **These must land before real German traffic — not indefinitely after.**
-> Concretely: before `novusfy.com` DNS points at Vercel (§6 item 6), and before
-> `/de/*` is de-noindexed.
->
-> ⚠️ **As of July 21, 2026 these pages are the *only* thing still gating the
-> German site.** The translations are done and the pages render real German
-> (§2) — so the temptation to lift the `noindex` is now real. Don't. The gate
-> was never about translation quality.
->
-> Mitigation in place meanwhile: **every `/de/*` page carries `noindex, follow`**
-> (`localeAlternates()` in `src/lib/metadata.ts`), so German pages are not yet
-> being indexed or surfaced to German searchers. That is a holding measure, not
-> compliance — remove it only together with the legal pages, not before.
+> ✅ **All technical prerequisites met (July 29, 2026).** Impressum and
+> Datenschutzerklärung are live, `noindex` has been removed from `/de/*` and
+> `/ar/*`, and all three locales are fully indexable. DPA confirmation and
+> legal review of the published pages remain open (owner/Karwan items, not
+> engineering).
 
 Karwan (the registered company contact in Germany) supplied an audit. **Note: he
 reviewed the OLD WordPress site still live at novusfy.com**, so his WordPress-
@@ -614,9 +596,7 @@ not pulled from `messages/*.json`. Each page sets `canonical` to the unprefixed
 URL and emits **no hreflang** — they are not translations, just one page at
 three URLs. Footer links and the contact form privacy checkbox are wired.
 
-⚠️ **Removing `noindex` from `/de/*` and `/ar/*` is an owner decision** — the
-legal pages existing does not automatically lift the gate. The `noindex` was
-the last *technical* prerequisite; whether to flip it is a business/timing call.
+✅ **`noindex` removed (July 29, 2026)** — all three locales are now indexable.
 
 **Still required by owner/Karwan (not engineering):**
 - Have Karwan or a lawyer **review both pages** before going live.
