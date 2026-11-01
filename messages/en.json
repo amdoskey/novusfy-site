@@ -1,4 +1,10 @@
 {
+  "meta": {
+    "title": "Novusfy — Your Next Begins Now",
+    "description": "Novusfy helps businesses, startups, and ambitious professionals grow, launch, and reinvent through strategy, marketing, digital systems, and practical learning.",
+    "ogDescription": "Strategy, marketing, digital systems, and practical learning — one partner for your next move.",
+    "ogAlt": "Novusfy — Your Next Begins Now"
+  },
   "nav": {
     "home": "Home",
     "about": "About Novusfy",
@@ -147,6 +153,8 @@
     }
   },
   "about": {
+    "metaTitle": "About Novusfy",
+    "metaDescription": "The bridge to your next chapter. Novusfy is built around clarity, strategy, presence, and meaningful action.",
     "eyebrow": "About Novusfy",
     "title": "The bridge to your next chapter.",
     "subtitle": "We're a consulting, marketing, and digital solutions company built around one idea: meaningful progress starts the moment you get clear about what's next.",
@@ -181,15 +189,17 @@
     "founderP2": "Our team blends strategy, brand, performance marketing, and product thinking, so the advice you get is grounded in what actually ships and grows.",
     "founderLink": "Meet the team →",
     "ctaLabel": "Let's begin",
-    "ctaTitle": "Your next begins now.",
+    "ctaTitle": "Let's talk about your next move.",
     "ctaSubtitle": "If you're ready to grow, launch, or reinvent — we're ready to build it with you.",
-    "ctaPrimary": "Start Your Next Chapter",
-    "ctaSecondary": "Explore Services",
+    "ctaPrimary": "Book a free call",
+    "ctaSecondary": "Explore our expertise",
     "officesLabel": "Offices",
     "officesValue": "Germany · Erbil",
     "emailLabel": "Email"
   },
   "services": {
+    "metaTitle": "Expertise — Novusfy",
+    "metaDescription": "Strategy, marketing, digital systems, and execution — built around your next move.",
     "eyebrow": "What we do",
     "title": "Strategy, marketing, digital systems, and execution — built around your next move.",
     "subtitle": "Six core capabilities, one operating partner. Engage one or stack them into a complete growth system.",
@@ -249,15 +259,17 @@
     "f5Body": "We measure and refine so results compound long after launch day.",
     "ctaLabel": "Ready when you are",
     "ctaTitle": "Schedule a consultation.",
-    "ctaSubtitle": "Bring your next move. We'll map the path and the system to get there — in 45 minutes.",
-    "ctaPrimary": "Schedule a Consultation",
-    "ctaSecondary": "Visit Learning Hub",
+    "ctaSubtitle": "Bring your next move. Start with a free 15-minute call — we'll map the path from there.",
+    "ctaPrimary": "Book a free call",
+    "ctaSecondary": "Explore Learning",
     "officesLabel": "Offices",
     "officesValue": "Germany · Erbil",
     "emailLabel": "Email",
     "webLabel": "Web"
   },
   "contact": {
+    "metaTitle": "Contact — Novusfy",
+    "metaDescription": "Get in touch with Novusfy. Two offices — Germany and Erbil, Iraq — one team. Reach us directly or send a message and we’ll reply within one business day.",
     "eyebrow": "Get in touch",
     "title": "Let's start your next chapter.",
     "subtitle": "Two offices, one team. Reach us directly, or send a message and we'll get back to you within one business day.",
@@ -275,11 +287,11 @@
     "mapLoad": "Load map",
     "mapAria": "Load the map for {name}",
     "mapDirections": "Get directions",
-    "ctaLabel": "Your next begins now",
+    "ctaLabel": "Prefer to talk first?",
     "ctaTitle": "Ready when you are.",
     "ctaSubtitle": "Tell us where you want to go. We'll show you the path and walk it with you.",
     "ctaPrimary": "Email us",
-    "ctaSecondary": "Explore Services",
+    "ctaSecondary": "Book a free call",
     "metaOfficesLabel": "Offices",
     "metaOfficesValue": "Germany · Erbil",
     "metaEmailLabel": "Email",

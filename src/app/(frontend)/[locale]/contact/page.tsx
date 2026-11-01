@@ -16,10 +16,10 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'contact' })
   return {
-    title: 'Contact — Novusfy',
-    description:
-      'Get in touch with Novusfy. Two offices — Germany and Erbil, Iraq — one team. Reach us directly or send a message and we’ll reply within one business day.',
+    title: t('metaTitle'),
+    description: t('metaDescription'),
     ...localeAlternates(locale, '/contact'),
   }
 }
@@ -139,7 +139,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               <a href="mailto:info@novusfy.com" className="btn btn--solid">
                 {t('ctaPrimary')} <span className="btn__arrow">→</span>
               </a>
-              <Link href="/expertise" className="btn btn--ghost btn--ghost-invert">
+              <Link href="/consultation" className="btn btn--ghost btn--ghost-invert">
                 {t('ctaSecondary')}
               </Link>
             </div>

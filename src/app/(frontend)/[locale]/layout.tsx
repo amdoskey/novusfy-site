@@ -1,7 +1,7 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 import Footer from '../components/Footer'
 import Interactions from '../components/Interactions'
@@ -30,30 +30,29 @@ export const viewport = {
   themeColor: '#0A0A0F', // midnight, globally — matches the brand's dark sections
 }
 
+const OG_LOCALE: Record<string, string> = { en: 'en_US', de: 'de_DE', ar: 'ar_AR' }
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const isDefault = locale === routing.defaultLocale
+  const t = await getTranslations({ locale, namespace: 'meta' })
 
   return {
     metadataBase: new URL('https://novusfy.com'),
-    title: 'Novusfy — Your Next Begins Now',
-    description:
-      'Novusfy helps businesses, startups, and ambitious professionals grow, launch, and reinvent through strategy, marketing, digital systems, and practical learning.',
+    title: t('title'),
+    description: t('description'),
     alternates: {
       canonical: isDefault ? '/' : `/${locale}`,
       languages: { en: '/', de: '/de', ar: '/ar' },
     },
     openGraph: {
-      title: 'Novusfy — Your Next Begins Now',
-      description:
-        'Strategy, marketing, digital systems, and practical learning — one partner for your next move.',
+      title: t('title'),
+      description: t('ogDescription'),
       url: isDefault ? 'https://novusfy.com' : `https://novusfy.com/${locale}`,
       siteName: 'Novusfy',
-      locale: locale === 'de' ? 'de_DE' : 'en_US',
+      locale: OG_LOCALE[locale] ?? 'en_US',
       // Placeholder slot — drop the final artwork in public/og-image.png (1200x630).
-      images: [
-        { url: '/og-image.png', width: 1200, height: 630, alt: 'Novusfy — Your Next Begins Now' },
-      ],
+      images: [{ url: '/og-image.png', width: 1200, height: 630, alt: t('ogAlt') }],
     },
     icons: {
       icon: '/icon-blue.png',

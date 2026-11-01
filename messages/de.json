@@ -1,4 +1,10 @@
 {
+  "meta": {
+    "title": "Novusfy — Ihr Next beginnt jetzt",
+    "description": "Novusfy hilft Unternehmen, Startups und ambitionierten Berufstätigen, durch Strategie, Marketing, digitale Systeme und praxisnahes Lernen zu wachsen, zu starten und sich neu zu erfinden.",
+    "ogDescription": "Strategie, Marketing, digitale Systeme und praxisnahes Lernen – ein Partner für Ihren nächsten Schritt.",
+    "ogAlt": "Novusfy — Ihr Next beginnt jetzt"
+  },
   "nav": {
     "home": "Home",
     "about": "Über Novusfy",
@@ -147,6 +153,8 @@
     }
   },
   "about": {
+    "metaTitle": "Über Novusfy",
+    "metaDescription": "Die Brücke zu Ihrem nächsten Kapitel. Novusfy steht für Klarheit, Strategie, Präsenz und wirksames Handeln.",
     "eyebrow": "Über Novusfy",
     "title": "Die Brücke zu Ihrem nächsten Kapitel.",
     "subtitle": "Wir sind ein Unternehmen für Consulting, Marketing und digitale Lösungen — gebaut auf einer Idee: Echter Fortschritt beginnt in dem Moment, in dem Sie Klarheit über Ihr Next gewinnen.",
@@ -181,15 +189,17 @@
     "founderP2": "Unser Team vereint Strategie, Marke, Performance-Marketing und Produktdenken — damit jeder Rat in dem verankert ist, was wirklich live geht und wächst.",
     "founderLink": "Das Team kennenlernen →",
     "ctaLabel": "Legen wir los",
-    "ctaTitle": "Ihr Next beginnt jetzt.",
+    "ctaTitle": "Lassen Sie uns über Ihren nächsten Schritt sprechen.",
     "ctaSubtitle": "Wenn Sie bereit sind zu wachsen, zu starten oder sich neu zu erfinden — wir sind bereit, es mit Ihnen zu bauen.",
-    "ctaPrimary": "Starten Sie Ihr nächstes Kapitel",
-    "ctaSecondary": "Leistungen entdecken",
+    "ctaPrimary": "Kostenloses Gespräch buchen",
+    "ctaSecondary": "Unsere Expertise entdecken",
     "officesLabel": "Standorte",
     "officesValue": "Deutschland · Erbil",
     "emailLabel": "E-Mail"
   },
   "services": {
+    "metaTitle": "Expertise — Novusfy",
+    "metaDescription": "Strategie, Marketing, digitale Systeme und Umsetzung – ausgerichtet auf Ihren nächsten Schritt.",
     "eyebrow": "Was wir tun",
     "title": "Strategie, Marketing, digitale Systeme und Umsetzung — gebaut um Ihren nächsten Schritt.",
     "subtitle": "Sechs Kernkompetenzen, ein Partner. Einzeln buchbar oder kombiniert zu einem kompletten Wachstumssystem.",
@@ -249,15 +259,17 @@
     "f5Body": "Wir messen und verfeinern, damit Ergebnisse weit über den Launch-Tag hinaus wachsen.",
     "ctaLabel": "Bereit, wenn Sie es sind",
     "ctaTitle": "Vereinbaren Sie eine Beratung.",
-    "ctaSubtitle": "Bringen Sie Ihren nächsten Schritt mit. Wir skizzieren den Weg und das System dorthin — in 45 Minuten.",
-    "ctaPrimary": "Beratung vereinbaren",
-    "ctaSecondary": "Zum Learning Hub",
+    "ctaSubtitle": "Bringen Sie Ihren nächsten Schritt mit. Starten Sie mit einem kostenlosen 15-minütigen Gespräch – den Weg skizzieren wir von dort aus.",
+    "ctaPrimary": "Kostenloses Gespräch buchen",
+    "ctaSecondary": "Weiterbildung entdecken",
     "officesLabel": "Standorte",
     "officesValue": "Deutschland · Erbil",
     "emailLabel": "E-Mail",
     "webLabel": "Web"
   },
   "contact": {
+    "metaTitle": "Kontakt — Novusfy",
+    "metaDescription": "Nehmen Sie Kontakt mit Novusfy auf. Zwei Standorte – Deutschland und Erbil, Irak – ein Team. Schreiben Sie uns direkt oder senden Sie eine Nachricht; wir antworten innerhalb eines Werktags.",
     "eyebrow": "Kontakt",
     "title": "Starten wir Ihr nächstes Kapitel.",
     "subtitle": "Zwei Standorte, ein Team. Erreichen Sie uns direkt — oder senden Sie eine Nachricht, wir melden uns innerhalb eines Werktags.",
@@ -275,11 +287,11 @@
     "mapLoad": "Karte laden",
     "mapAria": "Karte für {name} laden",
     "mapDirections": "Route planen",
-    "ctaLabel": "Ihr Next beginnt jetzt",
+    "ctaLabel": "Lieber zuerst sprechen?",
     "ctaTitle": "Bereit, wenn Sie es sind.",
     "ctaSubtitle": "Sagen Sie uns, wohin Sie wollen. Wir zeigen Ihnen den Weg — und gehen ihn mit Ihnen.",
     "ctaPrimary": "E-Mail schreiben",
-    "ctaSecondary": "Leistungen entdecken",
+    "ctaSecondary": "Kostenloses Gespräch buchen",
     "metaOfficesLabel": "Standorte",
     "metaOfficesValue": "Deutschland · Erbil",
     "metaEmailLabel": "E-Mail",
