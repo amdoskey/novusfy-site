@@ -73,28 +73,34 @@ src/app/(frontend)/
     layout.tsx          ← root layout: <html lang>, NextIntlClientProvider
     page.tsx            ← /            + /de
     about/page.tsx      ← /about       + /de/about
-    services/page.tsx · learning-hub/page.tsx · contact/page.tsx
-    work/page.tsx       ← /work  (all published case studies)
-    work/[slug]/page.tsx ← /work/erbil-hills etc.
-  contact/send/route.ts ← ⚠️ OUTSIDE [locale] on purpose — see gotcha 10
-  components/           ← Nav, Footer, HeroCanvas, ContactForm, LocaleSwitcher,
-                          MapEmbed (🔴 consent gate — §7), WorkTile,
-                          CaseStudyBody, ScrollReveal, WaitlistForm,
-                          SocialLinks, Interactions
+    expertise/page.tsx · learning/page.tsx · contact/page.tsx
+    consultation/page.tsx ← booking formats (links out to Cal.com)
+    impressum/ · datenschutz/  ← German legal pages (same text in every locale)
+  contact/send/route.ts ← ⚠️ OUTSIDE [locale] on purpose — see gotcha 10.
+                          Handles both forms via an allow-listed `type`
+                          (contact · learning-interest); email only, no DB.
+  components/           ← Nav, Footer, HeroCanvas, ContactForm, InterestForm,
+                          PrivacyAck (+ FormError), BookingCards, ClientStrip,
+                          LocaleSwitcher, MapEmbed (🔴 consent gate — §7),
+                          ScrollReveal, SocialLinks, Interactions
   fonts.ts · styles.css · routeTheme.ts (stripLocale helper only)
 
 src/app/(payload)/      ← Payload admin + API — DO NOT TOUCH
 src/i18n/               ← routing.ts (locales) · navigation.ts (locale-aware
                           Link/usePathname) · request.ts (message loading)
-src/middleware.ts       ← 🔴 locale routing — matcher MUST exclude Payload
+src/proxy.ts            ← 🔴 locale routing (Next 16 name for middleware) —
+                          matcher MUST exclude Payload
+src/config/             ← booking.ts (Cal.com URLs + prices) · clients.ts
+                          (logo strip) · learning.ts (interest-form options)
+next.config.ts          ← 308 redirects for retired URLs (services,
+                          learning-hub, work, kontakt) in every locale
 messages/               ← en.json · de.json · ar.json (all real copy,
-                          332 keys each)
+                          329 keys each)
 
 src/collections/        ← Users · Media · CourseCategories · Courses
                           Portfolio · Articles
 src/access/index.ts     ← shared access helpers
                           (publishedOrAuthenticated · authenticated)
-src/lib/portfolio.ts    ← public Portfolio queries (locale-aware)
 src/lib/metadata.ts     ← localeAlternates(): hreflang + the /de noindex
 src/seed/               ← one-off seeding — portfolio.ts (EN) ·
                           portfolio-de.ts · portfolio-ar.ts (locale runners)
@@ -115,10 +121,10 @@ at `/de/about`, so every pre-existing English URL still resolves. Static UI copy
 comes from `messages/*.json`; CMS content comes from Payload with the active
 locale passed through (`getPortfolioBySlug(slug, locale)`).
 
-Copy extraction is **complete**: all six pages plus `ContactForm`, `WaitlistForm`
-and `MapEmbed` are keyed — **332 keys across 12 namespaces** (`nav`, `footer`,
-`home`, `about`, `services`, `learningHub`, `contact`, `work`, `caseStudy`,
-`contactForm`, `waitlistForm`, `serviceLabels`), en/de/ar key parity verified.
+Copy extraction is **complete**: every page and form is keyed — **329 keys
+across 12 namespaces** (`meta`, `nav`, `footer`, `home`, `about`, `services`
+(the /expertise page), `contact`, `learning`, `contactForm`, `interestForm`,
+`booking`, `consultation`), en/de/ar key parity verified (Nov 1, 2026).
 No JSX changes are needed to translate anything. Not keyed on purpose: the
 `media-ph__tag` photo-placeholder markers on About (deleted when real photos
 land, §8) and the contact form's hidden honeypot label.
@@ -227,7 +233,8 @@ returns 200 rather than an error.
    `--dry` guard checked this way silently evaluates false and the script runs
    **live**. Use an env var instead (`SEED_DRY=1 npm run payload run ...`).
    Gotchas 8 + 9 together cost most of a session on July 20, 2026.
-10. 🔴 **The next-intl middleware matcher must exclude Payload.** `src/middleware.ts`
+10. 🔴 **The next-intl proxy matcher must exclude Payload.** `src/proxy.ts`
+    (renamed from `src/middleware.ts` for Next 16, Nov 1, 2026)
     rewrites paths for locale routing. If its matcher catches `/admin` or
     `/api/*`, the CMS breaks outright — admin stops loading, every REST endpoint
     404s. It also excludes `/contact/send`, because `ContactForm` posts to that
@@ -330,14 +337,19 @@ draw-in) · Section craft (ambient glow drift, ghost numerals, `text-wrap:
 balance`, seam stitches) · Page-load settle. All respect
 `prefers-reduced-motion`. ~165fps, no dependencies added.
 
-**Work** *(added July 20, 2026)* — `/work` lists all published case studies;
-`/work/[slug]` renders the full case study (meta, cover, results grid, richText
-body, gallery, external link). Both read live from Payload.
+**Phase 3 restructure (Nov 1, 2026).** The site now centres on consultation
+bookings. `/work`, `/work/[slug]`, the home bento, `WorkTile`, `CaseStudyBody`
+and `src/lib/portfolio.ts` were **removed**; old URLs 308 to the locale home.
+The `Portfolio` collection and its seeds are untouched — the data stays in the
+CMS, but **no frontend page reads Payload any more**. The home page's client
+challenges are static, anonymised copy in `messages/*.json` (no names, no
+metrics). `/services` → `/expertise`, `/learning-hub` → `/learning` (waitlist
+and course packs gone; an interest form replaces them). Booking prices and
+Cal.com links live only in `src/config/booking.ts` (EUR on /de, USD elsewhere).
 
-**Frontend note — partially wired to Payload.** The homepage "Selected Work"
-bento and the `/work` routes query the `Portfolio` collection. Everything else
-(hero, services, Learning Hub, About, Contact) is still hardcoded. Wiring the
-remaining sections is §6 item 3.
+*Historical (July 20 – Oct 2026):* `/work` listed the published case studies
+and `/work/[slug]` rendered them from Payload. The data-fetch pattern below is
+kept as the reference for wiring any future section to Payload.
 
 **Data-fetch pattern (follow this for the next section):** Local API via
 `getPayload({ config })` in Server Components, query helpers isolated in

@@ -129,7 +129,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               <h2 style={{ marginTop: 14 }}>{t('founderTitle')}</h2>
               <p>{t('founderP1')}</p>
               <p>{t('founderP2')}</p>
-              <Link href="/#contact" className="link-arrow">
+              <Link href="/contact" className="link-arrow">
                 {t('founderLink')}
               </Link>
             </div>

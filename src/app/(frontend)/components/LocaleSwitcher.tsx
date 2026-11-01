@@ -11,7 +11,7 @@ const LABELS: Record<string, string> = { en: 'EN', de: 'DE' }
  * EN / DE toggle.
  *
  * `usePathname` from next-intl returns the locale-free path (and for dynamic
- * routes the resolved segment, e.g. /work/gav-tv), so switching preserves where
+ * routes the resolved segment), so switching preserves where
  * the visitor is rather than dumping them at the homepage.
  *
  * Uses getPathname + next/link rather than next-intl's Link: passing an explicit

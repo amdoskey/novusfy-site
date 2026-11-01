@@ -12,13 +12,16 @@ export default function PrivacyAck() {
   return (
     <label className="form__consent">
       <input type="checkbox" name="privacy" required />
-      {t.rich('privacy', {
-        a: (chunks) => (
-          <a href="/datenschutz" target="_blank" rel="noopener noreferrer">
-            {chunks}
-          </a>
-        ),
-      })}
+      {/* One span so the label is a single flex item (no gaps around the link). */}
+      <span>
+        {t.rich('privacy', {
+          a: (chunks) => (
+            <a href="/datenschutz" target="_blank" rel="noopener noreferrer">
+              {chunks}
+            </a>
+          ),
+        })}
+      </span>
     </label>
   )
 }
