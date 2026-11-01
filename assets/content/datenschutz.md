@@ -10,8 +10,9 @@
 >
 > **Updated November 2026 (Phase 2a):** the text now states that DPAs
 > (Auftragsverarbeitungsverträge) are concluded with Vercel, Neon, Cloudflare
-> and Resend — the owner must make sure that is true. The mailbox provider in
-> §4 is still a visible `[TODO]`.
+> and Resend — the owner must make sure that is true. The mailbox provider
+> (Verpex) is filled in; the Cal.com subsection in §4 still has a visible
+> `[TODO]`.
 
 ---
 
@@ -126,9 +127,12 @@ EU-Standardvertragsklauseln; Resend ist zudem nach dem EU-US Data Privacy
 Framework zertifiziert.
 
 **E-Mail-Postfach**
-Unser E-Mail-Postfach wird bei [TODO: Firmenname, Anschrift] betrieben; die
-Server befinden sich in [TODO: Land/Stadt]. Wir haben mit dem Anbieter einen
-Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO geschlossen.
+Unser E-Mail-Postfach wird bei der Verpex Limited, 87 North Road, Poole,
+Dorset BH14 0LT, Vereinigtes Königreich, betrieben; die Server befinden sich
+in Frankfurt am Main (Deutschland). Wir haben mit dem Anbieter einen
+Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO geschlossen. Für das
+Vereinigte Königreich besteht ein Angemessenheitsbeschluss der
+EU-Kommission (Art. 45 DSGVO).
 
 **Terminbuchung über Cal.com**
 Für die Buchung von Terminen verlinken wir auf den Dienst Cal.com (Cal.com,
@@ -237,8 +241,6 @@ Art. 22 DSGVO findet nicht statt.
 
 - **DPAs** — the text asserts they are concluded (see banner). This is
   Karwan's/the owner's task to confirm, not something to infer from code.
-- **§4 E-Mail-Postfach** — `[TODO]` markers for the mailbox provider and
-  server location must be filled before publishing.
 - **§4 Cal.com** — `[TODO]` for server location / transfer basis (DPF or
   SCCs) must be confirmed before publishing.
 - Like the Impressum, recommend one `/datenschutz` route (German text

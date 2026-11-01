@@ -200,10 +200,13 @@ export default async function DatenschutzPage({
 
             <h4>E-Mail-Postfach</h4>
             <p>
-              Unser E-Mail-Postfach wird bei [TODO: Firmenname, Anschrift]
-              betrieben; die Server befinden sich in [TODO: Land/Stadt]. Wir
-              haben mit dem Anbieter einen Auftragsverarbeitungsvertrag gemäß
-              Art. 28 DSGVO geschlossen.
+              Unser E-Mail-Postfach wird bei der Verpex Limited, 87 North
+              Road, Poole, Dorset BH14 0LT, Vereinigtes Königreich,
+              betrieben; die Server befinden sich in Frankfurt am Main
+              (Deutschland). Wir haben mit dem Anbieter einen
+              Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO geschlossen.
+              Für das Vereinigte Königreich besteht ein
+              Angemessenheitsbeschluss der EU-Kommission (Art. 45 DSGVO).
             </p>
 
             <h4>Terminbuchung über Cal.com</h4>
