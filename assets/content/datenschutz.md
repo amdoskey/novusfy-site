@@ -10,9 +10,8 @@
 >
 > **Updated November 2026 (Phase 2a):** the text now states that DPAs
 > (Auftragsverarbeitungsverträge) are concluded with Vercel, Neon, Cloudflare
-> and Resend — the owner must make sure that is true. The mailbox provider
-> (Verpex) is filled in; the Cal.com subsection in §4 still has a visible
-> `[TODO]`.
+> and Resend (and Verpex and Cal.com) — the owner must make sure that is true.
+> No `[TODO]` markers remain.
 
 ---
 
@@ -142,8 +141,9 @@ verarbeitet Cal.com in unserem Auftrag die von Ihnen eingegebenen Daten
 (z. B. Name, E-Mail-Adresse, Termin, Nachricht). Rechtsgrundlage ist
 Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen). Wir haben mit Cal.com
 einen Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO geschlossen.
-[TODO: Serverstandort / Übermittlungsgrundlage (DPF oder
-Standardvertragsklauseln) bestätigen.] Die Daten werden gelöscht, sobald sie
+Die Daten werden auf Servern in den USA verarbeitet. Die Übermittlung erfolgt
+auf Grundlage der EU-Standardvertragsklauseln (Art. 46 Abs. 2 lit. c DSGVO),
+die Bestandteil des Auftragsverarbeitungsvertrags mit Cal.com sind. Die Daten werden gelöscht, sobald sie
 für die Durchführung des Termins nicht mehr erforderlich sind und keine
 gesetzlichen Aufbewahrungspflichten entgegenstehen.
 
@@ -241,8 +241,6 @@ Art. 22 DSGVO findet nicht statt.
 
 - **DPAs** — the text asserts they are concluded (see banner). This is
   Karwan's/the owner's task to confirm, not something to infer from code.
-- **§4 Cal.com** — `[TODO]` for server location / transfer basis (DPF or
-  SCCs) must be confirmed before publishing.
 - Like the Impressum, recommend one `/datenschutz` route (German text
   regardless of site locale), linked from the footer on all three locales,
   and referenced from the Contact page's Maps consent-gate notice text and

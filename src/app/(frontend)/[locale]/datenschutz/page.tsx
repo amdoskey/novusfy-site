@@ -220,8 +220,10 @@ export default async function DatenschutzPage({
               Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO
               (vorvertragliche Maßnahmen). Wir haben mit Cal.com einen
               Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO geschlossen.
-              [TODO: Serverstandort / Übermittlungsgrundlage (DPF oder
-              Standardvertragsklauseln) bestätigen.] Die Daten werden
+              Die Daten werden auf Servern in den USA verarbeitet. Die
+              Übermittlung erfolgt auf Grundlage der
+              EU-Standardvertragsklauseln (Art. 46 Abs. 2 lit. c DSGVO), die
+              Bestandteil des Auftragsverarbeitungsvertrags mit Cal.com sind. Die Daten werden
               gelöscht, sobald sie für die Durchführung des Termins nicht
               mehr erforderlich sind und keine gesetzlichen
               Aufbewahrungspflichten entgegenstehen.
