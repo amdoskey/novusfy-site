@@ -15,6 +15,8 @@ const GROUPS = [
   '.pillars__grid',
   '.method__steps',
   '.learn-cards',
+  '.challenges__grid',
+  '.offers__grid',
   '.why__grid',
   '.cats__grid',
   '.courses__grid',

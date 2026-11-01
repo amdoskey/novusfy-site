@@ -29,21 +29,20 @@
   "home": {
     "hero": {
       "eyebrow": "Novusfy Strategy Group",
-      "titleLine1": "Your Next",
-      "titleLine2Prefix": "Begins",
-      "titleLine2Accent": "Now.",
-      "subtitle": "We help businesses grow, launch, and reinvent through strategy, marketing, digital systems, and practical learning.",
-      "ctaPrimary": "Start Your Next Chapter",
-      "ctaSecondary": "Explore Services",
-      "tagStrategy": "Strategy",
-      "tagMarketing": "Marketing",
-      "tagDigital": "Digital",
-      "tagLearning": "Learning"
+      "titleLine1": "What's your",
+      "titleLine2Prefix": "next",
+      "titleLine2Accent": "move?",
+      "subtitle": "We help companies and professionals see where they stand, decide what matters, and build what moves them forward.",
+      "ctaPrimary": "Book a free 15-min call",
+      "ctaSecondary": "Explore our expertise"
+    },
+    "clients": {
+      "label": "Trusted by"
     },
     "nextKind": {
       "label": "Where you are now",
       "title": "What kind of next are you building?",
-      "lede": "Wherever you are now, Novusfy helps you define the next move — and build the path to reach it.",
+      "lede": "Every business is at a different point. We start from yours — and build the path to what comes next.",
       "launchTitle": "Launch",
       "launchBody": "For startups, new brands, new products, and new ideas that need structure.",
       "growTitle": "Grow",
@@ -68,7 +67,8 @@
       "p5Title": "Experiential & Travel Business Solutions",
       "p5Body": "Enhancing customer journeys through powerful, memorable experiences.",
       "p6Title": "Personal & Professional Development",
-      "p6Body": "Growth begins within — we help you unlock your potential."
+      "p6Body": "Growth begins within — we help you unlock your potential.",
+      "link": "Explore all six in detail →"
     },
     "method": {
       "label": "The Novusfy Method",
@@ -82,14 +82,45 @@
       "s4Title": "Move",
       "s4Body": "We support execution, measure progress, improve what works, and help you keep momentum.",
       "ctaTitle": "Not sure where you stand?",
-      "ctaBody": "Start with a business readiness consultation. We'll map your next move in 45 minutes.",
-      "ctaButton": "Book a consultation"
+      "ctaBody": "Start with a free 15-minute call. Tell us where you are — we'll tell you honestly if and how we can help.",
+      "ctaButton": "Book a free call"
+    },
+    "challenges": {
+      "label": "What clients come to us with",
+      "title": "Where we've helped.",
+      "challengeLabel": "The challenge",
+      "didLabel": "What we did",
+      "telecom": {
+        "sector": "A telecom provider in Iraq",
+        "challenge": "Its website, app and digital touchpoints had grown apart, and a major technology decision needed clear direction at executive level.",
+        "did": "We set the omnichannel strategy, led the selection of global technology partners and oversaw the rollout with regular executive reporting."
+      },
+      "broadcaster": {
+        "sector": "A regional news broadcaster",
+        "challenge": "A slow, hard-to-manage website was losing readers exactly when breaking news drove the most traffic.",
+        "did": "We rebuilt the platform for speed and scale, and gave the editorial team tools they can run without developers."
+      },
+      "medical": {
+        "sector": "A new medical complex and pharmacy",
+        "challenge": "Opening in a new market, it had to earn trust and recognition from the first day.",
+        "did": "We led the brand launch and now run the ongoing digital communication for both the complex and its pharmacy."
+      },
+      "realEstate": {
+        "sector": "A residential real-estate developer",
+        "challenge": "In a crowded market, the project was being sold on features rather than on the life it offers.",
+        "did": "We repositioned the brand around lifestyle value and built the campaigns that turn interest into qualified buyer enquiries."
+      }
+    },
+    "waysToWork": {
+      "label": "Ways to work with us",
+      "title": "Choose how we start.",
+      "link": "See all options →"
     },
     "learnPreview": {
-      "label": "Coming soon",
-      "title": "The Learning Hub.",
+      "label": "Learning",
+      "title": "Learning at Novusfy.",
       "body": "Short, action-focused courses for the next generation of business builders — videos, guides, templates, and practical systems you can use.",
-      "link": "Preview the Hub →",
+      "link": "Show your interest →",
       "c1Label": "Course",
       "c1Title": "AI & Automation",
       "c1Body": "Put AI to work in real workflows — not as a gimmick, as a system.",
@@ -107,8 +138,8 @@
       "label": "Ready for your next?",
       "title": "Your next begins now.",
       "subtitle": "Tell us where you want to go. We'll show you the path and walk it with you.",
-      "ctaPrimary": "Start Your Next Chapter",
-      "ctaSecondary": "Explore Services",
+      "ctaPrimary": "Book a free call",
+      "ctaSecondary": "Explore our expertise",
       "officesLabel": "Offices",
       "officesValue": "Germany · Erbil",
       "emailLabel": "Email",

@@ -1,6 +1,8 @@
 import React from 'react'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
+import BookingCards from '../components/BookingCards'
+import ClientStrip from '../components/ClientStrip'
 import HeroCanvas from '../components/HeroCanvas'
 import { Link } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
@@ -14,6 +16,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params
   return localeAlternates(locale, '/')
 }
+
+/** Keys under home.challenges — one card each. */
+const CHALLENGES = ['telecom', 'broadcaster', 'medical', 'realEstate'] as const
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -41,24 +46,20 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </h1>
           <p className="herox__sub">{t('hero.subtitle')}</p>
           <div className="herox__actions">
-            <Link href="/#contact" className="btn btn--solid">
+            <Link href="/consultation" className="btn btn--solid">
               {t('hero.ctaPrimary')} <span className="btn__arrow">→</span>
             </Link>
             <Link href="/expertise" className="btn btn--glass">
               {t('hero.ctaSecondary')}
             </Link>
           </div>
-          <ul className="herox__tags">
-            <li>{t('hero.tagStrategy')}</li>
-            <li>{t('hero.tagMarketing')}</li>
-            <li>{t('hero.tagDigital')}</li>
-            <li>{t('hero.tagLearning')}</li>
-          </ul>
         </div>
         <div className="herox__scroll" aria-hidden="true">
           <span></span>
         </div>
       </section>
+
+      <ClientStrip />
 
       {/* WHAT KIND OF NEXT */}
       <section className="nextkind">
@@ -177,6 +178,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <div className="pillar__rule"></div>
             </article>
           </div>
+          <p className="pillars__more">
+            <Link href="/expertise" className="link-arrow">
+              {t('pillars.link')}
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -219,10 +225,47 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <h3>{t('method.ctaTitle')}</h3>
               <p>{t('method.ctaBody')}</p>
             </div>
-            <Link href="/#contact" className="btn btn--solid">
+            <Link href="/consultation" className="btn btn--solid">
               {t('method.ctaButton')} <span className="btn__arrow">→</span>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* CLIENT CHALLENGES — anonymised by sector, no metrics */}
+      <section className="challenges">
+        <div className="wrap">
+          <div className="sec-head">
+            <p className="label">{t('challenges.label')}</p>
+            <h2 className="sec-title">{t('challenges.title')}</h2>
+          </div>
+          <div className="challenges__grid">
+            {CHALLENGES.map((k) => (
+              <article key={k} className="challenge">
+                <p className="challenge__sector">{t(`challenges.${k}.sector`)}</p>
+                <h3>{t('challenges.challengeLabel')}</h3>
+                <p>{t(`challenges.${k}.challenge`)}</p>
+                <h3>{t('challenges.didLabel')}</h3>
+                <p>{t(`challenges.${k}.did`)}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WAYS TO WORK WITH US — same cards as /consultation */}
+      <section className="ways">
+        <div className="wrap">
+          <div className="sec-head">
+            <p className="label">{t('waysToWork.label')}</p>
+            <h2 className="sec-title">{t('waysToWork.title')}</h2>
+          </div>
+          <BookingCards />
+          <p className="ways__more">
+            <Link href="/consultation" className="link-arrow">
+              {t('waysToWork.link')}
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -234,7 +277,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <p className="label">{t('learnPreview.label')}</p>
               <h2>{t('learnPreview.title')}</h2>
               <p>{t('learnPreview.body')}</p>
-              <Link href="/learning" className="link-arrow">
+              <Link href="/learning#interest" className="link-arrow">
                 {t('learnPreview.link')}
               </Link>
             </div>
@@ -277,9 +320,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <h2 style={{ marginTop: 16 }}>{t('finalCta.title')}</h2>
             <p className="final-cta__sub">{t('finalCta.subtitle')}</p>
             <div className="final-cta__actions">
-              <a href="mailto:info@novusfy.com" className="btn btn--solid">
+              <Link href="/consultation" className="btn btn--solid">
                 {t('finalCta.ctaPrimary')} <span className="btn__arrow">→</span>
-              </a>
+              </Link>
               <Link href="/expertise" className="btn btn--ghost btn--ghost-invert">
                 {t('finalCta.ctaSecondary')}
               </Link>

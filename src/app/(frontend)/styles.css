@@ -460,10 +460,6 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:900;letter-spacing
 .btn--glass{background:rgba(255,255,255,.06);color:#fff;border-color:rgba(255,255,255,.22);
   backdrop-filter:blur(8px)}
 .btn--glass:hover{background:rgba(255,255,255,.13);transform:translateY(-2px)}
-.herox__tags{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:44px}
-.herox__tags li{font-family:var(--f-text);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-  font-weight:600;color:#9da0c8;padding:8px 16px;border:1px solid rgba(255,255,255,.12);
-  border-radius:999px;background:rgba(255,255,255,.02)}
 .herox__scroll{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;
   width:24px;height:38px;border:1.5px solid rgba(255,255,255,.25);border-radius:14px;display:flex;justify-content:center;padding-top:8px}
 .herox__scroll span{width:3px;height:8px;border-radius:2px;background:rgba(255,255,255,.7);
@@ -583,7 +579,6 @@ body:has(.herox) .nav.is-stuck .nav__burger span{background:var(--ink)}
 .herox__title .hx-line:last-of-type{animation-delay:.78s}
 .herox__sub{animation:heroRise var(--dur-slow) var(--ease-out-expo) 1.05s backwards}
 .herox__actions{animation:heroRise var(--dur-slow) var(--ease-out-expo) 1.18s backwards}
-.herox__tags{animation:heroRise var(--dur-slow) var(--ease-out-expo) 1.32s backwards}
 .herox__scroll{transition:opacity var(--dur-med) var(--ease);
   animation:heroRise var(--dur-slow) var(--ease-out-expo) 1.7s backwards}
 .herox__scroll.is-hidden{opacity:0}
@@ -707,6 +702,47 @@ body:has(.herox) .nav.is-stuck{animation:navSettle var(--dur-med) var(--ease-out
 .form__consent{display:flex;align-items:flex-start;gap:10px;font-family:var(--f-text);font-size:14px;color:var(--muted-invert);line-height:1.5;cursor:pointer}
 .form__consent input[type="checkbox"]{flex-shrink:0;width:18px;height:18px;margin-top:2px;accent-color:var(--blue);cursor:pointer}
 .form__consent a{color:var(--blue-tint);text-decoration:underline;text-underline-offset:2px}
+
+/* ============ HOME: CLIENT STRIP ============ */
+.clients{padding:clamp(28px,4vw,44px) 0;border-bottom:1px dashed var(--outline)}
+.clients__label{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);text-align:center;margin-bottom:20px}
+.clients__list{display:flex;align-items:center;gap:clamp(36px,6vw,80px);list-style:none;margin:0;padding:0}
+.clients__item{flex-shrink:0;line-height:0}
+.clients__logo{height:28px;width:auto;filter:grayscale(1);opacity:.55}
+.clients__word{display:inline-block;line-height:28px;font-family:var(--f-display);font-weight:900;font-size:18px;
+  letter-spacing:-.01em;white-space:nowrap;color:var(--muted);opacity:.7}
+.clients__list--static{flex-wrap:wrap;justify-content:center;row-gap:16px}
+/* Marquee: two identical lists side by side; sliding by -50% loops seamlessly.
+   The end padding equals the gap so the seam spacing matches. */
+.clients__viewport{overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.clients__track{display:flex;width:max-content;animation:clientsScroll 50s linear infinite}
+.clients__viewport .clients__list{padding-inline-end:clamp(36px,6vw,80px)}
+@keyframes clientsScroll{to{transform:translateX(-50%)}}
+@keyframes clientsScrollRtl{to{transform:translateX(50%)}}
+[dir='rtl'] .clients__track{animation-name:clientsScrollRtl}
+@media (prefers-reduced-motion:reduce){
+  .clients__viewport{-webkit-mask-image:none;mask-image:none;padding:0 var(--pad)}
+  .clients__track{width:auto;animation:none;justify-content:center}
+  .clients__viewport .clients__list{flex-wrap:wrap;justify-content:center;row-gap:16px;padding-inline-end:0}
+  .clients__list--dup{display:none}
+}
+
+/* ============ HOME: CHALLENGES + WAYS TO WORK ============ */
+.pillars__more,.ways__more{margin-top:34px}
+.challenges{padding:clamp(56px,7vw,96px) 0;background:var(--surface-highest)}
+.challenges__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.challenge{background:var(--white);border:1px solid var(--outline);border-radius:var(--r-lg);padding:clamp(26px,3vw,36px)}
+.challenge__sector{font-family:var(--f-display);font-weight:900;font-size:clamp(20px,2.2vw,24px);
+  letter-spacing:-.02em;line-height:1.15;color:var(--ink);margin-bottom:20px}
+.challenge h3{font-family:var(--f-mono);font-weight:400;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue);margin:0 0 6px}
+.challenge p{font-family:var(--f-text);font-size:15.5px;color:var(--on-variant)}
+.challenge p + h3{margin-top:18px;padding-top:18px;border-top:1px dashed var(--outline)}
+@media (max-width:680px){.challenges__grid{grid-template-columns:1fr}}
+.ways{padding:clamp(56px,7vw,96px) 0;background:var(--surface-low)}
 
 /* ============ BOOKING FORMATS (/consultation + home) ============ */
 .consult{padding:clamp(48px,6vw,88px) 0 clamp(64px,8vw,120px)}

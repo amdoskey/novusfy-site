@@ -29,21 +29,20 @@
   "home": {
     "hero": {
       "eyebrow": "Novusfy Strategy Group",
-      "titleLine1": "Ihr Next",
-      "titleLine2Prefix": "beginnt",
-      "titleLine2Accent": "jetzt.",
-      "subtitle": "Wir helfen Unternehmen, durch Strategie, Marketing, digitale Systeme und praxisnahes Lernen zu wachsen, zu starten und sich neu zu erfinden.",
-      "ctaPrimary": "Starten Sie Ihr nächstes Kapitel",
-      "ctaSecondary": "Leistungen entdecken",
-      "tagStrategy": "Strategie",
-      "tagMarketing": "Marketing",
-      "tagDigital": "Digital",
-      "tagLearning": "Lernen"
+      "titleLine1": "Was ist Ihr",
+      "titleLine2Prefix": "nächster",
+      "titleLine2Accent": "Schritt?",
+      "subtitle": "Wir helfen Unternehmen und Berufstätigen zu erkennen, wo sie stehen, zu entscheiden, worauf es ankommt, und aufzubauen, was sie voranbringt.",
+      "ctaPrimary": "Kostenloses 15-Min.-Gespräch buchen",
+      "ctaSecondary": "Unsere Expertise entdecken"
+    },
+    "clients": {
+      "label": "Sie vertrauen uns"
     },
     "nextKind": {
       "label": "Wo Sie heute stehen",
       "title": "Welches Next bauen Sie gerade?",
-      "lede": "Wo immer Sie heute stehen — Novusfy hilft Ihnen, den nächsten Schritt zu definieren und den Weg dorthin zu bauen.",
+      "lede": "Jedes Unternehmen steht an einem anderen Punkt. Wir setzen bei Ihrem an – und bauen den Weg zu dem, was als Nächstes kommt.",
       "launchTitle": "Starten",
       "launchBody": "Für Startups, neue Marken, neue Produkte und neue Ideen, die Struktur brauchen.",
       "growTitle": "Wachsen",
@@ -68,7 +67,8 @@
       "p5Title": "Erlebnis- & Tourismuslösungen",
       "p5Body": "Kundenerlebnisse, die wirken und in Erinnerung bleiben.",
       "p6Title": "Persönliche & berufliche Entwicklung",
-      "p6Body": "Wachstum beginnt im Inneren — wir helfen Ihnen, Ihr Potenzial zu entfalten."
+      "p6Body": "Wachstum beginnt im Inneren — wir helfen Ihnen, Ihr Potenzial zu entfalten.",
+      "link": "Alle sechs Bereiche im Detail →"
     },
     "method": {
       "label": "Die Novusfy-Methode",
@@ -82,14 +82,45 @@
       "s4Title": "Momentum",
       "s4Body": "Wir begleiten die Umsetzung, messen Fortschritt, verbessern, was funktioniert — und halten Sie in Bewegung.",
       "ctaTitle": "Unsicher, wo Sie stehen?",
-      "ctaBody": "Starten Sie mit einer Business-Readiness-Beratung. In 45 Minuten skizzieren wir Ihren nächsten Schritt.",
-      "ctaButton": "Beratung vereinbaren"
+      "ctaBody": "Starten Sie mit einem kostenlosen 15-minütigen Gespräch. Erzählen Sie uns, wo Sie stehen – wir sagen Ihnen ehrlich, ob und wie wir helfen können.",
+      "ctaButton": "Kostenloses Gespräch buchen"
+    },
+    "challenges": {
+      "label": "Womit Kunden zu uns kommen",
+      "title": "Wo wir geholfen haben.",
+      "challengeLabel": "Die Herausforderung",
+      "didLabel": "Was wir getan haben",
+      "telecom": {
+        "sector": "Ein Telekommunikationsanbieter im Irak",
+        "challenge": "Website, App und digitale Kontaktpunkte hatten sich auseinanderentwickelt, und eine große Technologieentscheidung brauchte eine klare Steuerung auf Führungsebene.",
+        "did": "Wir haben die Omnichannel-Strategie festgelegt, die Auswahl globaler Technologiepartner geleitet und die Einführung mit regelmäßigem Reporting an die Geschäftsführung begleitet."
+      },
+      "broadcaster": {
+        "sector": "Ein regionaler Nachrichtensender",
+        "challenge": "Eine langsame, schwer zu pflegende Website verlor Leser genau dann, wenn Eilmeldungen den meisten Traffic brachten.",
+        "did": "Wir haben die Plattform auf Geschwindigkeit und Skalierbarkeit neu aufgebaut und dem Redaktionsteam Werkzeuge gegeben, die es ohne Entwickler nutzen kann."
+      },
+      "medical": {
+        "sector": "Ein neues medizinisches Zentrum mit Apotheke",
+        "challenge": "Beim Start in einem neuen Markt musste es vom ersten Tag an Vertrauen und Bekanntheit gewinnen.",
+        "did": "Wir haben den Markenlaunch geleitet und verantworten die laufende digitale Kommunikation für das Zentrum und seine Apotheke."
+      },
+      "realEstate": {
+        "sector": "Ein Wohnimmobilienentwickler",
+        "challenge": "In einem umkämpften Markt wurde das Projekt über Ausstattungsmerkmale verkauft statt über das Leben, das es bietet.",
+        "did": "Wir haben die Marke auf den Lebensstil-Mehrwert ausgerichtet und die Kampagnen entwickelt, die Interesse in qualifizierte Kaufanfragen verwandeln."
+      }
+    },
+    "waysToWork": {
+      "label": "So arbeiten wir zusammen",
+      "title": "Wählen Sie, wie wir starten.",
+      "link": "Alle Optionen ansehen →"
     },
     "learnPreview": {
-      "label": "Bald verfügbar",
-      "title": "Der Learning Hub.",
+      "label": "Weiterbildung",
+      "title": "Weiterbildung bei Novusfy.",
       "body": "Kurze, umsetzungsorientierte Kurse für die nächste Generation von Unternehmensmachern — Videos, Leitfäden, Vorlagen und praxisnahe Systeme, die Sie direkt anwenden können.",
-      "link": "Zum Learning Hub →",
+      "link": "Interesse bekunden →",
       "c1Label": "Kurs",
       "c1Title": "KI & Automatisierung",
       "c1Body": "KI in echten Arbeitsabläufen — kein Gimmick, sondern ein System.",
@@ -107,8 +138,8 @@
       "label": "Bereit für Ihr Next?",
       "title": "Ihr Next beginnt jetzt.",
       "subtitle": "Sagen Sie uns, wohin Sie wollen. Wir zeigen Ihnen den Weg — und gehen ihn mit Ihnen.",
-      "ctaPrimary": "Starten Sie Ihr nächstes Kapitel",
-      "ctaSecondary": "Leistungen entdecken",
+      "ctaPrimary": "Kostenloses Gespräch buchen",
+      "ctaSecondary": "Unsere Expertise entdecken",
       "officesLabel": "Standorte",
       "officesValue": "Deutschland · Erbil",
       "emailLabel": "E-Mail",
