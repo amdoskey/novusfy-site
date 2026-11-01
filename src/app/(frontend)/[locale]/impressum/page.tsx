@@ -76,6 +76,10 @@ export default async function ImpressumPage({
               Gemäß § 19 UStG (Kleinunternehmerregelung) wird keine
               Umsatzsteuer berechnet und ausgewiesen.
             </p>
+            <p>
+              Wirtschafts-Identifikationsnummer gemäß § 139c AO:{' '}
+              <span dir="ltr">DE465613507-00001</span>
+            </p>
 
             <h4>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h4>
             <p>
