@@ -8,10 +8,10 @@
 > change — including the planned future migration to a self-hosted VPS —
 > this page must be updated at that time.
 >
-> **Still needs confirmation before publishing:** whether Data Processing
-> Agreements (DPAs / Auftragsverarbeitungsverträge) are in place with
-> Vercel, Neon, Cloudflare, and Resend — these are legally required, not
-> optional, for GDPR compliance when using processors.
+> **Updated November 2026 (Phase 2a):** the text now states that DPAs
+> (Auftragsverarbeitungsverträge) are concluded with Vercel, Neon, Cloudflare
+> and Resend — the owner must make sure that is true. The mailbox provider in
+> §4 is still a visible `[TODO]`.
 
 ---
 
@@ -54,54 +54,78 @@ Unsere Website wird bei Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA
 91789, USA, gehostet. Vercel verarbeitet in diesem Zusammenhang
 Server-Logdaten. Die Verarbeitung erfolgt auf Grundlage unseres berechtigten
 Interesses an einer zuverlässigen und performanten Bereitstellung unseres
-Online-Angebots (Art. 6 Abs. 1 lit. f DSGVO). Da Vercel Inc. ein
-US-amerikanisches Unternehmen ist, kann eine Datenübermittlung in die USA
-erfolgen; dies erfolgt auf Grundlage von EU-Standardvertragsklauseln
-(Art. 46 DSGVO), sofern zwischen uns und Vercel vereinbart.
+Online-Angebots (Art. 6 Abs. 1 lit. f DSGVO).
+
+Wir haben mit Vercel einen Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO
+geschlossen. Die Übermittlung personenbezogener Daten in die USA erfolgt auf
+Grundlage dieses Auftragsverarbeitungsvertrags und der
+EU-Standardvertragsklauseln. Vercel ist zudem nach dem EU-US Data Privacy
+Framework zertifiziert; die Übermittlung stützt sich damit auch auf den
+Angemessenheitsbeschluss der EU-Kommission vom 10. Juli 2023.
+
+**Server-Logfiles**
+Beim Aufruf dieser Website erhebt unser Hosting-Anbieter Vercel automatisch
+Informationen, die Ihr Browser übermittelt: IP-Adresse, Datum und Uhrzeit des
+Zugriffs, aufgerufene Seite bzw. Datei, Referrer-URL, Browsertyp und -version
+sowie Betriebssystem. Eine Zusammenführung mit anderen Datenquellen findet
+nicht statt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unser
+berechtigtes Interesse liegt in der sicheren, stabilen und fehlerfreien
+Bereitstellung der Website. Die Logfiles werden in der Regel nach spätestens
+30 Tagen gelöscht. Daten, deren weitere Aufbewahrung zu Beweiszwecken
+erforderlich ist (z. B. bei Sicherheitsvorfällen), sind bis zur endgültigen
+Klärung des Vorfalls von der Löschung ausgenommen.
 
 **Datenbank: Neon (Neon, Inc.)**
-Inhaltsdaten der Website (u. a. Texte, Portfolio-Einträge) werden in einer
-von Neon, Inc. bereitgestellten PostgreSQL-Datenbank gespeichert. Die
-Datenbank wird im Rechenzentrum **AWS Europe Central 1 (Frankfurt am Main,
-Deutschland)** betrieben, sodass die Daten innerhalb der EU verbleiben.
+Die Inhalte dieser Website (z. B. Texte und Projektbeschreibungen) sowie die
+Zugangsdaten der Redaktionskonten werden in einer Datenbank der Neon, Inc.
+(USA) gespeichert, deren Server sich in Frankfurt am Main befinden. Wir haben
+mit Neon einen Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO geschlossen;
+Übermittlungen in die USA stützen sich auf das EU-US Data Privacy Framework.
+Über das Kontaktformular übermittelte Nachrichten werden nicht in dieser
+Datenbank gespeichert.
 
 **Objektspeicher: Cloudflare R2 (Cloudflare, Inc.)**
-Von uns hochgeladene Bilddateien (z. B. Fallstudien-Fotos) werden über
-Cloudflare R2 gespeichert. Der genutzte Speicher-Bucket ist auf die
-Jurisdiktion **Europäische Union** festgelegt, sodass die gespeicherten
-Dateien innerhalb der EU verbleiben. Cloudflare, Inc. selbst ist ein
-US-amerikanisches Unternehmen; die Verarbeitung erfolgt auf Grundlage
-unseres berechtigten Interesses an einer performanten und sicheren
-Bereitstellung von Medieninhalten (Art. 6 Abs. 1 lit. f DSGVO).
+Bilder und andere Mediendateien dieser Website werden im Speicherdienst R2
+der Cloudflare, Inc. (USA) gespeichert; der Speicher ist der EU-Datenregion
+zugeordnet. Die Dateien werden ausschließlich über unseren eigenen Server
+ausgeliefert. Beim Laden von Bildern wird Ihre IP-Adresse daher nicht an
+Cloudflare übermittelt. Wir haben mit Cloudflare einen
+Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO geschlossen. Soweit ein
+Zugriff aus den USA nicht ausgeschlossen werden kann, erfolgt dieser auf
+Grundlage der EU-Standardvertragsklauseln; Cloudflare ist zudem nach dem
+EU-US Data Privacy Framework zertifiziert. Rechtsgrundlage ist Art. 6 Abs. 1
+lit. f DSGVO (Interesse an einer zuverlässigen Speicherung der
+Website-Inhalte).
 
 ---
 
 ## 4. Kontaktformular
 
-Wenn Sie uns über das Kontaktformular Anfragen zukommen lassen, werden Ihre
-Angaben aus dem Anfrageformular — Name, E-Mail-Adresse, optionales Betreff-
-Feld und Nachrichtentext — zum Zwecke der Bearbeitung Ihrer Anfrage und für
-den Fall von Anschlussfragen bei uns gespeichert.
+Wenn Sie uns über das Kontaktformular Anfragen zukommen lassen, verarbeiten
+wir Ihre Angaben aus dem Anfrageformular — Name, E-Mail-Adresse, optionales
+Betreff-Feld und Nachrichtentext — zum Zwecke der Bearbeitung Ihrer Anfrage.
 
-**Rechtsgrundlage:** Die Verarbeitung dieser Daten erfolgt auf Grundlage
-unseres berechtigten Interesses an der Beantwortung Ihrer Anfrage
-(Art. 6 Abs. 1 lit. f DSGVO), bzw. sofern Ihre Anfrage auf den Abschluss
-eines Vertrags gerichtet ist, zur Durchführung vorvertraglicher Maßnahmen
-(Art. 6 Abs. 1 lit. b DSGVO).
+Die Nachricht wird per E-Mail an unser Postfach info@novusfy.com übermittelt
+und dort gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO
+(berechtigtes Interesse an der Beantwortung Ihrer Anfrage) bzw. Art. 6 Abs. 1
+lit. b DSGVO, sofern Ihre Anfrage auf den Abschluss eines Vertrags gerichtet
+ist. Die Daten werden gelöscht, sobald die Anfrage abschließend bearbeitet
+ist, spätestens nach 6 Monaten, sofern kein Vertrag zustande kommt und keine
+gesetzlichen Aufbewahrungspflichten entgegenstehen.
 
 **E-Mail-Versand: Resend**
-Der Versand der über das Kontaktformular ausgelösten E-Mails erfolgt über
-den Dienst Resend (Resend, Inc., USA). Dabei werden die von Ihnen
-eingegebenen Daten sowie technische Metadaten der E-Mail (Zeitstempel,
-Zustellstatus) durch Resend verarbeitet. Da Resend, Inc. ein
-US-amerikanisches Unternehmen ist, kann eine Datenübermittlung in die USA
-erfolgen; dies erfolgt auf Grundlage von EU-Standardvertragsklauseln
-(Art. 46 DSGVO), sofern zwischen uns und Resend vereinbart.
+Für den Versand der über das Kontaktformular übermittelten Nachrichten nutzen
+wir den Dienst Resend (Resend, Inc., USA). Der Versand erfolgt über Server in
+der EU (Irland). Wir haben mit Resend einen Auftragsverarbeitungsvertrag gemäß
+Art. 28 DSGVO geschlossen. Soweit Daten in die USA übermittelt werden, erfolgt
+dies auf Grundlage dieses Auftragsverarbeitungsvertrags und der
+EU-Standardvertragsklauseln; Resend ist zudem nach dem EU-US Data Privacy
+Framework zertifiziert.
 
-**Speicherdauer:** Die über das Kontaktformular übermittelten Daten
-verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung
-zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt.
-Zwingende gesetzliche Aufbewahrungsfristen bleiben unberührt.
+**E-Mail-Postfach**
+Unser E-Mail-Postfach wird bei [TODO: Firmenname, Anschrift] betrieben; die
+Server befinden sich in [TODO: Land/Stadt]. Wir haben mit dem Anbieter einen
+Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO geschlossen.
 
 ---
 
@@ -111,18 +135,15 @@ Auf unserer Kontaktseite verwenden wir den Kartendienst „Google Maps" des
 Anbieters Google Ireland Limited, Gordon House, Barrow Street, Dublin 4,
 Irland.
 
-**Diese Karte wird nicht automatisch beim Seitenaufruf geladen.** Stattdessen
-wird zunächst nur eine statische Platzhalter-Grafik angezeigt. Erst wenn Sie
-aktiv auf die Schaltfläche „Karte laden" klicken, wird die eigentliche
-Google-Maps-Karte eingebunden und geladen. Mit diesem Klick willigen Sie in
-die Übertragung Ihrer Daten (insbesondere Ihrer IP-Adresse) an Google ein.
-
-**Rechtsgrundlage:** Ihre Einwilligung durch aktives Klicken
-(Art. 6 Abs. 1 lit. a DSGVO). Sie können diese Einwilligung jederzeit für die
-Zukunft widerrufen, indem Sie die Karte nicht laden bzw. die Seite ohne
-Kartenaufruf verlassen. Alternativ steht Ihnen ein Link „Route planen" zur
-Verfügung, der Sie direkt zu Google Maps weiterleitet, ohne dass die Karte
-auf unserer Seite eingebettet wird.
+Die Karte wird erst geladen, wenn Sie auf „Karte laden" klicken (Einwilligung
+gemäß Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG). Erst dann wird eine
+Verbindung zu Servern von Google hergestellt und u. a. Ihre IP-Adresse
+übermittelt. Vor dem Klick werden keine Daten an Google übermittelt; der
+Platzhalter ist Bestandteil unserer Website. Ihre Einwilligung gilt nur für
+den aktuellen Seitenaufruf und wird nicht gespeichert; beim nächsten Besuch
+ist die Karte wieder blockiert. Google kann Daten in die USA übermitteln;
+Google LLC ist nach dem EU-US Data Privacy Framework zertifiziert. Die Links
+„Route planen" öffnen Google Maps erst nach Anklicken.
 
 Weitere Informationen zum Umgang mit Nutzerdaten durch Google finden Sie in
 der Datenschutzerklärung von Google:
@@ -132,14 +153,10 @@ der Datenschutzerklärung von Google:
 
 ## 6. Cookies
 
-Diese Website verwendet derzeit **keine Cookies** zu Tracking- oder
-Analysezwecken. Es werden keine Cookie-Banner benötigt, da keine
-einwilligungspflichtigen Cookies gesetzt werden.
-
-*Hinweis: Sollte künftig Analyse-Software (z. B. Google Analytics) oder
-Marketing-Tracking eingebunden werden, ist diese Datenschutzerklärung
-entsprechend zu ergänzen und ein Cookie-Consent-Banner einzurichten, bevor
-solche Technologien aktiv geschaltet werden.*
+Diese Website setzt keine Cookies und speichert keine Informationen in Ihrem
+Browser (z. B. Local Storage oder Session Storage). Lediglich im
+passwortgeschützten Redaktionsbereich werden für angemeldete Mitarbeitende
+technisch notwendige Cookies gesetzt (§ 25 Abs. 2 Nr. 2 TDDDG).
 
 ---
 
@@ -153,14 +170,32 @@ folgende Rechte zu:
 - **Recht auf Einschränkung der Verarbeitung** (Art. 18 DSGVO)
 - **Recht auf Widerspruch gegen die Verarbeitung** (Art. 21 DSGVO)
 - **Recht auf Datenübertragbarkeit** (Art. 20 DSGVO)
+- **Recht auf Widerruf Ihrer Einwilligung** (Art. 7 Abs. 3 DSGVO): Eine
+  erteilte Einwilligung können Sie jederzeit mit Wirkung für die Zukunft
+  widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung
+  bleibt unberührt.
+
+> **Widerspruchsrecht gemäß Art. 21 DSGVO**
+>
+> Wenn die Datenverarbeitung auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO
+> erfolgt, haben Sie jederzeit das Recht, aus Gründen, die sich aus Ihrer
+> besonderen Situation ergeben, gegen die Verarbeitung Ihrer
+> personenbezogenen Daten Widerspruch einzulegen. Legen Sie Widerspruch ein,
+> verarbeiten wir Ihre Daten nicht mehr, es sei denn, wir können zwingende
+> schutzwürdige Gründe für die Verarbeitung nachweisen, die Ihre Interessen,
+> Rechte und Freiheiten überwiegen, oder die Verarbeitung dient der
+> Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen. Den
+> Widerspruch können Sie formlos an info@novusfy.com richten.
 
 Sie haben zudem das Recht, sich bei einer Datenschutz-Aufsichtsbehörde über
 die Verarbeitung Ihrer personenbezogenen Daten durch uns zu beschweren. Die
 für uns zuständige Aufsichtsbehörde ist:
 
-**Der Landesbeauftragte für den Datenschutz Baden-Württemberg**
-*[Adresse/Kontaktdaten der zuständigen Behörde ergänzen — richtet sich nach
-dem Bundesland des Firmensitzes.]*
+**Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit
+Baden-Württemberg**
+Lautenschlagerstraße 20
+70173 Stuttgart
+www.baden-wuerttemberg.datenschutz.de
 
 ---
 
@@ -173,13 +208,21 @@ Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von
 
 ---
 
+## 9. Automatisierte Entscheidungsfindung
+
+Eine automatisierte Entscheidungsfindung einschließlich Profiling gemäß
+Art. 22 DSGVO findet nicht statt.
+
+*Stand: November 2026*
+
+---
+
 ## Notes for Claude Code (remove before publishing)
 
-- **DPA confirmation needed** — flagged in the banner above. This is
-  Karwan's/the owner's task, not something to infer from code.
-- **§7 supervisory authority** — filled with the likely Baden-Württemberg
-  authority based on the Gaienhofen address, but needs the exact current
-  contact details confirmed, not assumed.
+- **DPAs** — the text asserts they are concluded (see banner). This is
+  Karwan's/the owner's task to confirm, not something to infer from code.
+- **§4 E-Mail-Postfach** — `[TODO]` markers for the mailbox provider and
+  server location must be filled before publishing.
 - Like the Impressum, recommend one `/datenschutz` route (German text
   regardless of site locale), linked from the footer on all three locales,
   and referenced from the Contact page's Maps consent-gate notice text and

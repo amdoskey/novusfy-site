@@ -345,7 +345,7 @@
     "success": "Danke — wir melden uns in Kürze.",
     "genericError": "Etwas ist schiefgelaufen.",
     "fallbackError": "Ihre Nachricht konnte nicht gesendet werden — bitte schreiben Sie direkt an info@novusfy.com.",
-    "privacy": "Ich stimme der Verarbeitung meiner Daten gemäß der <a>Datenschutzerklärung</a> zu."
+    "privacy": "Ich habe die <a>Datenschutzerklärung</a> zur Kenntnis genommen."
   },
   "waitlistForm": {
     "fullName": "Vollständiger Name",

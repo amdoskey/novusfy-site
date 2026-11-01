@@ -765,6 +765,10 @@ body:has(.herox) .nav.is-stuck{animation:navSettle var(--dur-med) var(--ease-out
 
 .legal{padding:0 0 clamp(60px,8vw,120px)}
 .legal__body{max-width:72ch}
+.legal__box{margin:28px 0 32px;padding:22px 26px;border:1px solid var(--blue);border-radius:var(--r);background:var(--surface-low)}
+.legal__box h4{margin-top:0}
+.legal__box p:last-child{margin-bottom:0}
+.legal__stand{margin-top:40px;font-size:14px}
 
 .form__consent{display:flex;align-items:flex-start;gap:10px;font-family:var(--f-text);font-size:14px;color:var(--muted-invert);line-height:1.5;cursor:pointer}
 .form__consent input[type="checkbox"]{flex-shrink:0;width:18px;height:18px;margin-top:2px;accent-color:var(--blue);cursor:pointer}

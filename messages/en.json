@@ -345,7 +345,7 @@
     "success": "Thanks — we'll be in touch shortly.",
     "genericError": "Something went wrong.",
     "fallbackError": "Couldn't send your message — please email info@novusfy.com directly.",
-    "privacy": "I agree to the processing of my data as described in the <a>Privacy Policy</a>."
+    "privacy": "I have read the <a>Privacy Policy</a>."
   },
   "waitlistForm": {
     "fullName": "Full name",

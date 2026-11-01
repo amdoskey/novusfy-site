@@ -16,6 +16,9 @@ export const routing = defineRouting({
   // visitors saw German-URL placeholder content at the root. German is reached
   // only explicitly: /de or the nav switcher.
   localeDetection: false,
+  // No NEXT_LOCALE cookie. With detection off the cookie is never read, and
+  // the Datenschutzerklärung promises the public site sets no cookies.
+  localeCookie: false,
 })
 
 export type Locale = (typeof routing.locales)[number]
