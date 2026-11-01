@@ -152,7 +152,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               <Link href="/#contact" className="btn btn--solid">
                 {t('ctaPrimary')} <span className="btn__arrow">→</span>
               </Link>
-              <Link href="/services" className="btn btn--ghost btn--ghost-invert">
+              <Link href="/expertise" className="btn btn--ghost btn--ghost-invert">
                 {t('ctaSecondary')}
               </Link>
             </div>

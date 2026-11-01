@@ -13,14 +13,14 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   return {
-    title: 'Services — Novusfy',
+    title: 'Expertise — Novusfy',
     description:
       'Strategy, marketing, digital systems, and execution — built around your next move.',
-    ...localeAlternates(locale, '/services'),
+    ...localeAlternates(locale, '/expertise'),
   }
 }
 
-export default async function ServicesPage({ params }: { params: Promise<{ locale: string }> }) {
+export default async function ExpertisePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   setRequestLocale(locale)
 
@@ -214,7 +214,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
               <Link href="/#contact" className="btn btn--solid">
                 {t('ctaPrimary')} <span className="btn__arrow">→</span>
               </Link>
-              <Link href="/learning-hub" className="btn btn--ghost btn--ghost-invert">
+              <Link href="/learning" className="btn btn--ghost btn--ghost-invert">
                 {t('ctaSecondary')}
               </Link>
             </div>

@@ -22,12 +22,12 @@ export default function Footer() {
         <div className="foot__col">
           <h4>{t('company')}</h4>
           <Link href="/about">{t('about')}</Link>
-          <Link href="/services">{t('services')}</Link>
-          <Link href="/work">{t('work')}</Link>
+          <Link href="/expertise">{t('expertise')}</Link>
+          <Link href="/consultation">{t('consultation')}</Link>
         </div>
         <div className="foot__col">
           <h4>{t('explore')}</h4>
-          <Link href="/learning-hub">{t('learningHub')}</Link>
+          <Link href="/learning">{t('learning')}</Link>
           <Link href="/contact">{t('contact')}</Link>
           <Link href="/datenschutz">{t('privacy')}</Link>
           <Link href="/impressum">{t('impressum')}</Link>

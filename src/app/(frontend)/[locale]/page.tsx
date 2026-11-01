@@ -52,7 +52,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <Link href="/#contact" className="btn btn--solid">
               {t('hero.ctaPrimary')} <span className="btn__arrow">→</span>
             </Link>
-            <Link href="/services" className="btn btn--glass">
+            <Link href="/expertise" className="btn btn--glass">
               {t('hero.ctaSecondary')}
             </Link>
           </div>
@@ -242,7 +242,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <p className="label">{t('learnPreview.label')}</p>
               <h2>{t('learnPreview.title')}</h2>
               <p>{t('learnPreview.body')}</p>
-              <Link href="/learning-hub" className="link-arrow">
+              <Link href="/learning" className="link-arrow">
                 {t('learnPreview.link')}
               </Link>
             </div>
@@ -312,7 +312,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <a href="mailto:info@novusfy.com" className="btn btn--solid">
                 {t('finalCta.ctaPrimary')} <span className="btn__arrow">→</span>
               </a>
-              <Link href="/services" className="btn btn--ghost btn--ghost-invert">
+              <Link href="/expertise" className="btn btn--ghost btn--ghost-invert">
                 {t('finalCta.ctaSecondary')}
               </Link>
             </div>

@@ -15,14 +15,14 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   return {
-    title: 'Learning Hub — Novusfy',
+    title: 'Learning — Novusfy',
     description:
       'Downloadable course packs for the next generation of business builders. AI, automation, websites, apps, paid ads, SEO, and modern marketing. Coming soon.',
-    ...localeAlternates(locale, '/learning-hub'),
+    ...localeAlternates(locale, '/learning'),
   }
 }
 
-export default async function LearningHubPage({ params }: { params: Promise<{ locale: string }> }) {
+export default async function LearningPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   setRequestLocale(locale)
 

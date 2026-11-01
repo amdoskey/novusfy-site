@@ -13,9 +13,8 @@ import LocaleSwitcher from './LocaleSwitcher'
 const LINKS = [
   { href: '/', key: 'home' },
   { href: '/about', key: 'about' },
-  { href: '/services', key: 'services' },
-  { href: '/learning-hub', key: 'learningHub' },
-  { href: '/work', key: 'work' },
+  { href: '/expertise', key: 'expertise' },
+  { href: '/learning', key: 'learning' },
   { href: '/contact', key: 'contact' },
 ] as const
 
@@ -54,14 +53,11 @@ export default function Nav() {
   const isActive = (href: string) => {
     if (href.includes('#')) return false
     if (href === '/') return pathname === '/'
-    // Keep the parent link lit on nested routes, e.g. /work/erbil-hills.
+    // Keep the parent link lit on nested routes.
     return pathname === href || pathname.startsWith(`${href}/`)
   }
 
-  const cta =
-    pathname === '/learning-hub'
-      ? { href: '#waitlist', label: t('joinWaitlist') }
-      : { href: '/#contact', label: t('getStarted') }
+  const cta = { href: '/consultation', label: t('bookCall') }
 
   return (
     <header className="nav" id="nav" ref={navRef}>
