@@ -3,37 +3,35 @@
 import { useTranslations } from 'next-intl'
 import React, { useState } from 'react'
 
+import PrivacyAck, { FormError } from './PrivacyAck'
+
 type Status = 'idle' | 'sending' | 'ok' | 'error'
 
 export default function ContactForm() {
   const t = useTranslations('contactForm')
   const [status, setStatus] = useState<Status>('idle')
-  const [error, setError] = useState('')
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (status === 'sending') return
-    setStatus('sending')
-    setError('')
-
     const form = e.currentTarget
+    // noValidate keeps our own styling; still enforce required fields here.
+    if (!form.reportValidity()) return
+    setStatus('sending')
+
     const data = Object.fromEntries(new FormData(form).entries())
 
     try {
       const res = await fetch('/contact/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, type: 'contact' }),
       })
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}))
-        throw new Error(body.error || t('genericError'))
-      }
+      if (!res.ok) throw new Error(String(res.status))
       setStatus('ok')
       form.reset()
-    } catch (err) {
+    } catch {
       setStatus('error')
-      setError(err instanceof Error ? err.message : t('genericError'))
     }
   }
 
@@ -78,12 +76,7 @@ export default function ContactForm() {
         <textarea id="c-message" name="message" placeholder={t('messagePlaceholder')} required />
       </div>
 
-      <label className="form__consent">
-        <input type="checkbox" name="privacy" required />
-        {t.rich('privacy', {
-          a: (chunks) => <a href="/datenschutz" target="_blank" rel="noopener noreferrer">{chunks}</a>,
-        })}
-      </label>
+      <PrivacyAck />
 
       <button type="submit" className="btn btn--solid" disabled={status === 'sending'}>
         {status === 'sending' ? (
@@ -95,11 +88,7 @@ export default function ContactForm() {
         )}
       </button>
 
-      {status === 'error' && (
-        <p className="form__status form__status--err" role="alert">
-          {error || t('fallbackError')}
-        </p>
-      )}
+      {status === 'error' && <FormError />}
     </form>
   )
 }

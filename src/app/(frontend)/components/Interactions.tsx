@@ -11,7 +11,7 @@ import { useEffect } from 'react'
   Mouse-only; skipped on touch and under prefers-reduced-motion.
 */
 const CARD_SEL =
-  '.pillar,.nextcard,.learn-card,.cat,.course,.svc-card,.why__cell,.mv__card,.office'
+  '.pillar,.nextcard,.learn-card,.cat,.svc-card,.why__cell,.mv__card,.office'
 
 export default function Interactions() {
   useEffect(() => {
