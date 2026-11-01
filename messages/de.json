@@ -338,5 +338,29 @@
     "join": "Auf die Warteliste",
     "joined": "Sie stehen auf der Liste ✓",
     "note": "Kein Spam. Eine E-Mail, sobald Ihr Track startet."
+  },
+  "booking": {
+    "freeTitle": "Discovery Call",
+    "freeMeta": "Kostenlos · 15 Min.",
+    "freeBody": "Ein kurzes, ehrliches Gespräch darüber, wo Sie stehen und was Sie brauchen. Wenn wir helfen können, sagen wir Ihnen, wie. Wenn nicht, zeigen wir Ihnen, wo Sie die richtige Unterstützung finden.",
+    "freeCta": "Kostenloses Gespräch buchen",
+    "strategyTitle": "Strategy Session",
+    "strategyMeta": "{price} · 45 Min.",
+    "strategyBody": "Eine fokussierte Arbeitssitzung zu einer konkreten Herausforderung – Positionierung, Markteinführung, Marketing oder Digitales. Sie gehen mit einem klaren Plan für Ihren nächsten Schritt.",
+    "strategyCta": "Sitzung anfragen",
+    "programTitle": "Momentum Program",
+    "programMeta": "{price} · 4 × 60 Min. innerhalb eines Monats",
+    "programBody": "Vier wöchentliche Sitzungen, die Ihren Plan in Fortschritt verwandeln – mit einem klaren Ziel für jede Woche. Mit Ihrer Anfrage buchen Sie die Auftaktsitzung; die übrigen drei Termine vereinbaren wir gemeinsam, sobald Ihr Projekt bestätigt ist.",
+    "programCta": "Programm anfragen",
+    "note": "Kostenpflichtige Formate werden als Anfrage gebucht. Sobald wir bestätigt haben, dass Ihr Projekt zu uns passt, senden wir Ihnen eine Rechnung über Stripe. Bei der Buchung wird keine Zahlung fällig.",
+    "vatNote": "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.",
+    "newTab": "(öffnet in neuem Tab)"
+  },
+  "consultation": {
+    "metaTitle": "Beratung buchen — Novusfy",
+    "metaDescription": "Starten Sie mit einem kostenlosen 15-minütigen Gespräch, einer fokussierten Strategy Session oder dem vierwöchigen Momentum Program.",
+    "eyebrow": "Beratung",
+    "title": "Alles beginnt mit einem Gespräch.",
+    "subtitle": "Wählen Sie das Format, das zu Ihrer Situation passt. Jede Zusammenarbeit beginnt damit, Ihre Lage zu verstehen – das erste Gespräch ist kostenlos."
   }
 }

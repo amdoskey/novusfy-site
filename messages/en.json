@@ -338,5 +338,29 @@
     "join": "Join the Waitlist",
     "joined": "You're on the list ✓",
     "note": "No spam. One email when your track opens."
+  },
+  "booking": {
+    "freeTitle": "Discovery Call",
+    "freeMeta": "Free · 15 min",
+    "freeBody": "A short, honest conversation about where you are and what you need. If we can help, we'll tell you how. If not, we'll point you in the right direction.",
+    "freeCta": "Book free call",
+    "strategyTitle": "Strategy Session",
+    "strategyMeta": "{price} · 45 min",
+    "strategyBody": "A focused working session on one challenge — positioning, launch, marketing or digital. You leave with a clear plan for your next step.",
+    "strategyCta": "Request a session",
+    "programTitle": "Momentum Program",
+    "programMeta": "{price} · 4 × 60-min sessions over one month",
+    "programBody": "Four weekly sessions that turn your plan into progress, with a clear goal for every week. Your request books the kickoff session; we schedule the remaining three together once your project is confirmed.",
+    "programCta": "Request the program",
+    "note": "Paid formats are booked as a request. Once we confirm your project is a fit, we'll send an invoice via Stripe. No payment is taken at booking.",
+    "vatNote": "No VAT is charged under § 19 UStG (German small-business rule).",
+    "newTab": "(opens in a new tab)"
+  },
+  "consultation": {
+    "metaTitle": "Book a consultation — Novusfy",
+    "metaDescription": "Start with a free 15-minute call, a focused strategy session or a four-week Momentum Program.",
+    "eyebrow": "Consultation",
+    "title": "Start with a conversation.",
+    "subtitle": "Pick the format that fits where you are. Every engagement starts with understanding your situation — the first call is free."
   }
 }
