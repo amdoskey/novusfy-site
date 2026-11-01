@@ -81,7 +81,7 @@ Zugangsdaten der Redaktionskonten werden in einer Datenbank der Neon, Inc.
 (USA) gespeichert, deren Server sich in Frankfurt am Main befinden. Wir haben
 mit Neon einen Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO geschlossen;
 Übermittlungen in die USA stützen sich auf das EU-US Data Privacy Framework.
-Über das Kontaktformular übermittelte Nachrichten werden nicht in dieser
+Über die Formulare übermittelte Nachrichten werden nicht in dieser
 Datenbank gespeichert.
 
 **Objektspeicher: Cloudflare R2 (Cloudflare, Inc.)**
@@ -99,11 +99,14 @@ Website-Inhalte).
 
 ---
 
-## 4. Kontaktformular
+## 4. Kontakt- und Interessensformular
 
-Wenn Sie uns über das Kontaktformular Anfragen zukommen lassen, verarbeiten
-wir Ihre Angaben aus dem Anfrageformular — Name, E-Mail-Adresse, optionales
-Betreff-Feld und Nachrichtentext — zum Zwecke der Bearbeitung Ihrer Anfrage.
+Wenn Sie uns über das Kontaktformular oder über das Interessensformular auf
+der Seite „Weiterbildung" Anfragen zukommen lassen, verarbeiten wir Ihre
+Angaben — Name, E-Mail-Adresse und Nachrichtentext, beim Kontaktformular
+zusätzlich ein optionales Betreff-Feld, beim Interessensformular das
+gewünschte Thema und Format (die Nachricht ist dort optional) — zum Zwecke
+der Bearbeitung Ihrer Anfrage.
 
 Die Nachricht wird per E-Mail an unser Postfach info@novusfy.com übermittelt
 und dort gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO
@@ -114,7 +117,7 @@ ist, spätestens nach 6 Monaten, sofern kein Vertrag zustande kommt und keine
 gesetzlichen Aufbewahrungspflichten entgegenstehen.
 
 **E-Mail-Versand: Resend**
-Für den Versand der über das Kontaktformular übermittelten Nachrichten nutzen
+Für den Versand der über die Formulare übermittelten Nachrichten nutzen
 wir den Dienst Resend (Resend, Inc., USA). Der Versand erfolgt über Server in
 der EU (Irland). Wir haben mit Resend einen Auftragsverarbeitungsvertrag gemäß
 Art. 28 DSGVO geschlossen. Soweit Daten in die USA übermittelt werden, erfolgt
@@ -126,6 +129,19 @@ Framework zertifiziert.
 Unser E-Mail-Postfach wird bei [TODO: Firmenname, Anschrift] betrieben; die
 Server befinden sich in [TODO: Land/Stadt]. Wir haben mit dem Anbieter einen
 Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO geschlossen.
+
+**Terminbuchung über Cal.com**
+Für die Buchung von Terminen verlinken wir auf den Dienst Cal.com (Cal.com,
+Inc., USA). Auf unserer Website werden keine Inhalte von Cal.com geladen; eine
+Verbindung entsteht erst, wenn Sie den Link anklicken. Bei der Buchung
+verarbeitet Cal.com in unserem Auftrag die von Ihnen eingegebenen Daten
+(z. B. Name, E-Mail-Adresse, Termin, Nachricht). Rechtsgrundlage ist
+Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen). Wir haben mit Cal.com
+einen Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO geschlossen.
+[TODO: Serverstandort / Übermittlungsgrundlage (DPF oder
+Standardvertragsklauseln) bestätigen.] Die Daten werden gelöscht, sobald sie
+für die Durchführung des Termins nicht mehr erforderlich sind und keine
+gesetzlichen Aufbewahrungspflichten entgegenstehen.
 
 ---
 
@@ -223,6 +239,8 @@ Art. 22 DSGVO findet nicht statt.
   Karwan's/the owner's task to confirm, not something to infer from code.
 - **§4 E-Mail-Postfach** — `[TODO]` markers for the mailbox provider and
   server location must be filled before publishing.
+- **§4 Cal.com** — `[TODO]` for server location / transfer basis (DPF or
+  SCCs) must be confirmed before publishing.
 - Like the Impressum, recommend one `/datenschutz` route (German text
   regardless of site locale), linked from the footer on all three locales,
   and referenced from the Contact page's Maps consent-gate notice text and

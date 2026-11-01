@@ -141,8 +141,7 @@ export default async function DatenschutzPage({
               gespeichert, deren Server sich in Frankfurt am Main befinden.
               Wir haben mit Neon einen Auftragsverarbeitungsvertrag gemäß
               Art. 28 DSGVO geschlossen; Übermittlungen in die USA stützen
-              sich auf das EU-US Data Privacy Framework. Über das
-              Kontaktformular übermittelte Nachrichten werden nicht in dieser
+              sich auf das EU-US Data Privacy Framework. Über die Formulare übermittelte Nachrichten werden nicht in dieser
               Datenbank gespeichert.
             </p>
 
@@ -165,12 +164,16 @@ export default async function DatenschutzPage({
 
             <hr />
 
-            <h3>4. Kontaktformular</h3>
+            <h3>4. Kontakt- und Interessensformular</h3>
             <p>
-              Wenn Sie uns über das Kontaktformular Anfragen zukommen
-              lassen, verarbeiten wir Ihre Angaben aus dem Anfrageformular —
-              Name, E-Mail-Adresse, optionales Betreff-Feld und
-              Nachrichtentext — zum Zwecke der Bearbeitung Ihrer Anfrage.
+              Wenn Sie uns über das Kontaktformular oder über das
+              Interessensformular auf der Seite „Weiterbildung" Anfragen
+              zukommen lassen, verarbeiten wir Ihre Angaben — Name,
+              E-Mail-Adresse und Nachrichtentext, beim Kontaktformular
+              zusätzlich ein optionales Betreff-Feld, beim
+              Interessensformular das gewünschte Thema und Format (die
+              Nachricht ist dort optional) — zum Zwecke der Bearbeitung
+              Ihrer Anfrage.
             </p>
             <p>
               Die Nachricht wird per E-Mail an unser Postfach
@@ -186,8 +189,7 @@ export default async function DatenschutzPage({
 
             <h4>E-Mail-Versand: Resend</h4>
             <p>
-              Für den Versand der über das Kontaktformular übermittelten
-              Nachrichten nutzen wir den Dienst Resend (Resend, Inc., USA).
+              Für den Versand der über die Formulare übermittelten Nachrichten nutzen wir den Dienst Resend (Resend, Inc., USA).
               Der Versand erfolgt über Server in der EU (Irland). Wir haben
               mit Resend einen Auftragsverarbeitungsvertrag gemäß Art. 28
               DSGVO geschlossen. Soweit Daten in die USA übermittelt werden,
@@ -202,6 +204,24 @@ export default async function DatenschutzPage({
               betrieben; die Server befinden sich in [TODO: Land/Stadt]. Wir
               haben mit dem Anbieter einen Auftragsverarbeitungsvertrag gemäß
               Art. 28 DSGVO geschlossen.
+            </p>
+
+            <h4>Terminbuchung über Cal.com</h4>
+            <p>
+              Für die Buchung von Terminen verlinken wir auf den Dienst
+              Cal.com (Cal.com, Inc., USA). Auf unserer Website werden keine
+              Inhalte von Cal.com geladen; eine Verbindung entsteht erst,
+              wenn Sie den Link anklicken. Bei der Buchung verarbeitet
+              Cal.com in unserem Auftrag die von Ihnen eingegebenen Daten
+              (z.&nbsp;B. Name, E-Mail-Adresse, Termin, Nachricht).
+              Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO
+              (vorvertragliche Maßnahmen). Wir haben mit Cal.com einen
+              Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO geschlossen.
+              [TODO: Serverstandort / Übermittlungsgrundlage (DPF oder
+              Standardvertragsklauseln) bestätigen.] Die Daten werden
+              gelöscht, sobald sie für die Durchführung des Termins nicht
+              mehr erforderlich sind und keine gesetzlichen
+              Aufbewahrungspflichten entgegenstehen.
             </p>
 
             <hr />
