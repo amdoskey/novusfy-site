@@ -72,8 +72,7 @@ export default async function LocaleLayout({
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
 
-  // Opts this branch into static rendering — without it every page goes dynamic
-  // and the ISR settings on the work routes stop meaning anything.
+  // Opts this branch into static rendering — without it every page goes dynamic.
   setRequestLocale(locale)
 
   return (

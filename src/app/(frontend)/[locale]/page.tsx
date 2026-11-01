@@ -2,13 +2,9 @@ import React from 'react'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 import HeroCanvas from '../components/HeroCanvas'
-import { WorkTile } from '../components/WorkTile'
-import { getFeaturedPortfolio } from '@/lib/portfolio'
 import { Link } from '@/i18n/navigation'
-import { routing, type Locale } from '@/i18n/routing'
+import { routing } from '@/i18n/routing'
 import { localeAlternates } from '@/lib/metadata'
-
-export const revalidate = 300
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -19,15 +15,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return localeAlternates(locale, '/')
 }
 
-/** Bento shape: first tile is the large feature, second spans wide. */
-const BENTO_MODIFIERS = ['tile--xl', 'tile--w tile--dark', '', 'tile--dark']
-
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   setRequestLocale(locale)
 
   const t = await getTranslations('home')
-  const featured = await getFeaturedPortfolio(locale as Locale, 4)
   return (
     <>
       {/* HERO — immersive "Birth of Next" motion field */}
@@ -269,30 +261,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* WORK BENTO */}
-      <section className="work" id="work">
-        <div className="wrap">
-          <div className="sec-head">
-            <p className="label">{t('workSection.label')}</p>
-            <h2 className="sec-title">{t('workSection.title')}</h2>
-          </div>
-          {featured.length > 0 ? (
-            <>
-              <div className="work__bento">
-                {featured.map((entry, i) => (
-                  <WorkTile key={entry.id} entry={entry} modifier={BENTO_MODIFIERS[i] ?? ''} />
-                ))}
-              </div>
-              <p className="work__more">
-                <Link href="/work" className="btn btn--ghost">
-                  {t('workSection.seeAll')}
-                </Link>
-              </p>
-            </>
-          ) : null}
         </div>
       </section>
 

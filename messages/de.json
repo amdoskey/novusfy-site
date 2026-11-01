@@ -103,11 +103,6 @@
       "c4Title": "Modernes Marketing",
       "c4Body": "Systemdenken für Kampagnen, die über Zeit an Wirkung gewinnen."
     },
-    "workSection": {
-      "label": "Ausgewählte Projekte",
-      "title": "Kapitel, die wir mitgeschrieben haben.",
-      "seeAll": "Alle Projekte ansehen"
-    },
     "finalCta": {
       "label": "Bereit für Ihr Next?",
       "title": "Ihr Next beginnt jetzt.",
@@ -119,23 +114,6 @@
       "emailLabel": "E-Mail",
       "webLabel": "Web"
     }
-  },
-  "work": {
-    "metaTitle": "Projekte — Novusfy",
-    "metaDescription": "Ausgewählte Case Studies: Marken-, Marketing- und Digitalprojekte für Kunden aus Immobilien, Medien, Telekommunikation und Gesundheitswesen.",
-    "eyebrow": "Ausgewählte Projekte",
-    "title": "Kapitel, die wir mitgeschrieben haben.",
-    "subtitle": "Strategie-, Marken- und Digitalprojekte — die Arbeit hinter der Positionierung.",
-    "empty": "Die Case Studies werden gerade vorbereitet. Schauen Sie bald wieder vorbei."
-  },
-  "caseStudy": {
-    "backShort": "← Alle Projekte",
-    "backLong": "← Zurück zu allen Projekten",
-    "industry": "Branche",
-    "services": "Leistungen",
-    "results": "Ergebnisse",
-    "visit": "{name} besuchen",
-    "site": "Website"
   },
   "about": {
     "eyebrow": "Über Novusfy",
@@ -360,13 +338,5 @@
     "join": "Auf die Warteliste",
     "joined": "Sie stehen auf der Liste ✓",
     "note": "Kein Spam. Eine E-Mail, sobald Ihr Track startet."
-  },
-  "serviceLabels": {
-    "branding": "Branding",
-    "web-development": "Webentwicklung",
-    "ai-automation": "KI & Automatisierung",
-    "digital-strategy": "Digitalstrategie",
-    "marketing": "Marketing",
-    "software-development": "Softwareentwicklung"
   }
 }

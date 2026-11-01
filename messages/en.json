@@ -103,11 +103,6 @@
       "c4Title": "Modern Marketing",
       "c4Body": "Systems thinking for campaigns built to compound over time."
     },
-    "workSection": {
-      "label": "Selected work",
-      "title": "Next chapters we've helped write.",
-      "seeAll": "See all work"
-    },
     "finalCta": {
       "label": "Ready for your next?",
       "title": "Your next begins now.",
@@ -119,23 +114,6 @@
       "emailLabel": "Email",
       "webLabel": "Web"
     }
-  },
-  "work": {
-    "metaTitle": "Work — Novusfy",
-    "metaDescription": "Selected case studies: brand, marketing, and digital systems work for clients across real estate, media, telecom, and healthcare.",
-    "eyebrow": "Selected work",
-    "title": "Next chapters we've helped write.",
-    "subtitle": "Strategy, brand, and digital systems work — the projects behind the positioning.",
-    "empty": "Case studies are being prepared. Check back shortly."
-  },
-  "caseStudy": {
-    "backShort": "← All work",
-    "backLong": "← Back to all work",
-    "industry": "Industry",
-    "services": "Services",
-    "results": "Results",
-    "visit": "Visit {name}",
-    "site": "site"
   },
   "about": {
     "eyebrow": "About Novusfy",
@@ -360,13 +338,5 @@
     "join": "Join the Waitlist",
     "joined": "You're on the list ✓",
     "note": "No spam. One email when your track opens."
-  },
-  "serviceLabels": {
-    "branding": "Branding",
-    "web-development": "Web Development",
-    "ai-automation": "AI & Automation",
-    "digital-strategy": "Digital Strategy",
-    "marketing": "Marketing",
-    "software-development": "Software Development"
   }
 }
