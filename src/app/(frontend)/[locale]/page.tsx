@@ -6,7 +6,7 @@ import ClientStrip from '../components/ClientStrip'
 import HeroCanvas from '../components/HeroCanvas'
 import { Link } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
-import { localeAlternates } from '@/lib/metadata'
+import { pageMetadata } from '@/lib/metadata'
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -14,7 +14,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
-  return localeAlternates(locale, '/')
+  return pageMetadata(locale, 'home')
 }
 
 /** Keys under home.challenges — one card each. */

@@ -1,9 +1,35 @@
 {
   "meta": {
-    "title": "Novusfy — Ihr Next beginnt jetzt",
-    "description": "Novusfy hilft Unternehmen, Startups und ambitionierten Berufstätigen, durch Strategie, Marketing, digitale Systeme und praxisnahes Lernen zu wachsen, zu starten und sich neu zu erfinden.",
-    "ogDescription": "Strategie, Marketing, digitale Systeme und praxisnahes Lernen – ein Partner für Ihren nächsten Schritt.",
-    "ogAlt": "Novusfy — Ihr Next beginnt jetzt"
+    "home": {
+      "title": "Novusfy — Strategie-, Marketing- & Digitalberatung",
+      "description": "Novusfy hilft Unternehmen, Startups und Berufstätigen, mit Strategie, Marketing, digitalen Systemen und praxisnahem Lernen zu wachsen und neu zu starten.",
+      "ogTitle": "Ihr Next beginnt jetzt."
+    },
+    "about": {
+      "title": "Über Novusfy — Beratung in Deutschland & Erbil",
+      "description": "Consulting, Marketing und digitale Lösungen aus Deutschland und Erbil – mit einer Idee: Fortschritt beginnt, sobald Sie Klarheit über Ihr Next gewinnen.",
+      "ogTitle": "Beratung in Deutschland & Erbil"
+    },
+    "expertise": {
+      "title": "Expertise: Strategie, Marketing & Digitales — Novusfy",
+      "description": "Sechs Kernkompetenzen, ein Partner: Unternehmensberatung, Gründungen, Marketing als Dienstleistung, digitale und kreative Lösungen, Tourismus und Coaching.",
+      "ogTitle": "Strategie, Marketing & Digitales"
+    },
+    "consultation": {
+      "title": "Kostenloses 15-Minuten-Gespräch buchen — Novusfy",
+      "description": "Starten Sie mit einem kostenlosen 15-Minuten-Gespräch, einer 45-minütigen Strategy Session oder dem Momentum Program. Bei der Buchung zahlen Sie nichts.",
+      "ogTitle": "Kostenloses 15-Minuten-Gespräch buchen"
+    },
+    "learning": {
+      "title": "Weiterbildung: Coaching, Workshops & Kurse — Novusfy",
+      "description": "Praxisnahes Lernen in Strategie, Marketing, KI und digitalen Systemen – als 1:1-Coaching, Team-Workshop oder Online-Kurs. Sagen Sie uns, was Sie lernen möchten.",
+      "ogTitle": "Coaching, Workshops & Kurse"
+    },
+    "contact": {
+      "title": "Kontakt zu Novusfy — Standorte in Deutschland & Erbil, Irak",
+      "description": "Kontakt zu Novusfy: zwei Standorte – Deutschland und Erbil, Irak – ein Team. Schreiben Sie uns direkt oder per Formular; wir antworten innerhalb eines Werktags.",
+      "ogTitle": "Standorte in Deutschland & Erbil, Irak"
+    }
   },
   "nav": {
     "home": "Home",
@@ -150,8 +176,6 @@
     }
   },
   "about": {
-    "metaTitle": "Über Novusfy",
-    "metaDescription": "Die Brücke zu Ihrem nächsten Kapitel. Novusfy steht für Klarheit, Strategie, Präsenz und wirksames Handeln.",
     "eyebrow": "Über Novusfy",
     "title": "Die Brücke zu Ihrem nächsten Kapitel.",
     "subtitle": "Wir sind ein Unternehmen für Consulting, Marketing und digitale Lösungen — gebaut auf einer Idee: Echter Fortschritt beginnt in dem Moment, in dem Sie Klarheit über Ihr Next gewinnen.",
@@ -195,8 +219,6 @@
     "emailLabel": "E-Mail"
   },
   "services": {
-    "metaTitle": "Expertise — Novusfy",
-    "metaDescription": "Strategie, Marketing, digitale Systeme und Umsetzung – ausgerichtet auf Ihren nächsten Schritt.",
     "eyebrow": "Was wir tun",
     "title": "Strategie, Marketing, digitale Systeme und Umsetzung — gebaut um Ihren nächsten Schritt.",
     "subtitle": "Sechs Kernkompetenzen, ein Partner. Einzeln buchbar oder kombiniert zu einem kompletten Wachstumssystem.",
@@ -265,8 +287,6 @@
     "webLabel": "Web"
   },
   "contact": {
-    "metaTitle": "Kontakt — Novusfy",
-    "metaDescription": "Nehmen Sie Kontakt mit Novusfy auf. Zwei Standorte – Deutschland und Erbil, Irak – ein Team. Schreiben Sie uns direkt oder senden Sie eine Nachricht; wir antworten innerhalb eines Werktags.",
     "eyebrow": "Kontakt",
     "title": "Starten wir Ihr nächstes Kapitel.",
     "subtitle": "Zwei Standorte, ein Team. Erreichen Sie uns direkt — oder senden Sie eine Nachricht, wir melden uns innerhalb eines Werktags.",
@@ -295,8 +315,6 @@
     "metaWebLabel": "Web"
   },
   "learning": {
-    "metaTitle": "Weiterbildung — Novusfy",
-    "metaDescription": "Praxisnahes Lernen in Strategie, Marketing, KI und digitalen Systemen – als 1:1-Coaching, Team-Workshop oder Online-Kurs.",
     "title": "Lernen Sie, was Sie voranbringt.",
     "subtitle": "Praxisnahes Lernen in Strategie, Marketing, KI und digitalen Systemen – als 1:1-Coaching, Team-Workshop oder Online-Kurs. Sagen Sie uns, was Sie lernen möchten, und wir gestalten es passend für Sie.",
     "ctaInterest": "Interesse bekunden",
@@ -369,8 +387,6 @@
     "newTab": "(öffnet in neuem Tab)"
   },
   "consultation": {
-    "metaTitle": "Beratung buchen — Novusfy",
-    "metaDescription": "Starten Sie mit einem kostenlosen 15-minütigen Gespräch, einer fokussierten Strategy Session oder dem vierwöchigen Momentum Program.",
     "eyebrow": "Beratung",
     "title": "Alles beginnt mit einem Gespräch.",
     "subtitle": "Wählen Sie das Format, das zu Ihrer Situation passt. Jede Zusammenarbeit beginnt damit, Ihre Lage zu verstehen – das erste Gespräch ist kostenlos."

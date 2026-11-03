@@ -4,6 +4,8 @@ import type { NextConfig } from 'next'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
+import { LEGACY_HOST, SITE_URL } from './src/config/site'
+
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
 const __filename = fileURLToPath(import.meta.url)
@@ -25,9 +27,23 @@ const LEGACY_REDIRECTS = PREFIXES.flatMap((p) => [
   { source: `${p}/kontakt`, destination: '/de/contact', permanent: true },
 ])
 
+/**
+ * The old production host → the canonical domain, same path, permanent (308).
+ * `has.value` is matched as an anchored regex, so dots are escaped to keep it
+ * an exact host match: preview URLs (novusfy-site-git-….vercel.app,
+ * novusfy-site-<hash>-….vercel.app) don't match and keep working.
+ */
+const HOST_REDIRECT = {
+  source: '/:path*',
+  has: [{ type: 'host' as const, value: LEGACY_HOST.replaceAll('.', '\\.') }],
+  destination: `${SITE_URL}/:path*`,
+  permanent: true,
+}
+
 const nextConfig: NextConfig = {
   async redirects() {
-    return LEGACY_REDIRECTS
+    // Host redirect first, so old-host requests go straight to the canonical domain.
+    return [HOST_REDIRECT, ...LEGACY_REDIRECTS]
   },
   images: {
     localPatterns: [

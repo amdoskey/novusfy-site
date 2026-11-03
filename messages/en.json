@@ -1,9 +1,35 @@
 {
   "meta": {
-    "title": "Novusfy — Your Next Begins Now",
-    "description": "Novusfy helps businesses, startups, and ambitious professionals grow, launch, and reinvent through strategy, marketing, digital systems, and practical learning.",
-    "ogDescription": "Strategy, marketing, digital systems, and practical learning — one partner for your next move.",
-    "ogAlt": "Novusfy — Your Next Begins Now"
+    "home": {
+      "title": "Novusfy — Strategy, Marketing & Digital Consulting",
+      "description": "Novusfy helps businesses, startups, and ambitious professionals grow, launch, and reinvent through strategy, marketing, digital systems, and practical learning.",
+      "ogTitle": "Your Next Begins Now."
+    },
+    "about": {
+      "title": "About Novusfy — Consulting in Germany & Erbil",
+      "description": "A consulting, marketing, and digital solutions company with offices in Germany and Erbil, built on one idea: progress starts when you get clear on what's next.",
+      "ogTitle": "Consulting in Germany & Erbil"
+    },
+    "expertise": {
+      "title": "Expertise: Strategy, Marketing & Digital — Novusfy",
+      "description": "Six core capabilities, one partner: business consulting, startup launches, marketing-as-a-service, digital and creative work, travel experiences and coaching.",
+      "ogTitle": "Strategy, Marketing & Digital"
+    },
+    "consultation": {
+      "title": "Book a Free 15-Minute Consultation — Novusfy",
+      "description": "Start with a free 15-minute Discovery Call, a focused 45-minute Strategy Session or the four-week Momentum Program. No payment is taken at booking.",
+      "ogTitle": "Book a Free 15-Minute Consultation"
+    },
+    "learning": {
+      "title": "Learning: Coaching, Workshops & Courses — Novusfy",
+      "description": "Practical learning in strategy, marketing, AI and digital systems — as 1:1 coaching, team workshops or online courses. Tell us what you want to learn.",
+      "ogTitle": "Coaching, Workshops & Courses"
+    },
+    "contact": {
+      "title": "Contact Novusfy — Offices in Germany & Erbil, Iraq",
+      "description": "Get in touch with Novusfy. Two offices — Germany and Erbil, Iraq — one team. Reach us directly or send a message and we’ll reply within one business day.",
+      "ogTitle": "Offices in Germany & Erbil, Iraq"
+    }
   },
   "nav": {
     "home": "Home",
@@ -150,8 +176,6 @@
     }
   },
   "about": {
-    "metaTitle": "About Novusfy",
-    "metaDescription": "The bridge to your next chapter. Novusfy is built around clarity, strategy, presence, and meaningful action.",
     "eyebrow": "About Novusfy",
     "title": "The bridge to your next chapter.",
     "subtitle": "We're a consulting, marketing, and digital solutions company built around one idea: meaningful progress starts the moment you get clear about what's next.",
@@ -195,8 +219,6 @@
     "emailLabel": "Email"
   },
   "services": {
-    "metaTitle": "Expertise — Novusfy",
-    "metaDescription": "Strategy, marketing, digital systems, and execution — built around your next move.",
     "eyebrow": "What we do",
     "title": "Strategy, marketing, digital systems, and execution — built around your next move.",
     "subtitle": "Six core capabilities, one operating partner. Engage one or stack them into a complete growth system.",
@@ -265,8 +287,6 @@
     "webLabel": "Web"
   },
   "contact": {
-    "metaTitle": "Contact — Novusfy",
-    "metaDescription": "Get in touch with Novusfy. Two offices — Germany and Erbil, Iraq — one team. Reach us directly or send a message and we’ll reply within one business day.",
     "eyebrow": "Get in touch",
     "title": "Let's start your next chapter.",
     "subtitle": "Two offices, one team. Reach us directly, or send a message and we'll get back to you within one business day.",
@@ -295,8 +315,6 @@
     "metaWebLabel": "Web"
   },
   "learning": {
-    "metaTitle": "Learning — Novusfy",
-    "metaDescription": "Practical learning in strategy, marketing, AI and digital systems — as 1:1 coaching, team workshops or online courses.",
     "title": "Learn what moves you forward.",
     "subtitle": "Practical learning in strategy, marketing, AI and digital systems — as 1:1 coaching, team workshops or online courses. Tell us what you want to learn and we'll shape it around you.",
     "ctaInterest": "Show your interest",
@@ -369,8 +387,6 @@
     "newTab": "(opens in a new tab)"
   },
   "consultation": {
-    "metaTitle": "Book a consultation — Novusfy",
-    "metaDescription": "Start with a free 15-minute call, a focused strategy session or a four-week Momentum Program.",
     "eyebrow": "Consultation",
     "title": "Start with a conversation.",
     "subtitle": "Pick the format that fits where you are. Every engagement starts with understanding your situation — the first call is free."

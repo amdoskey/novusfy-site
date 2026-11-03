@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { setRequestLocale } from 'next-intl/server'
 
 import { routing } from '@/i18n/routing'
+import { legalMetadata } from '@/lib/metadata'
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -14,10 +15,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   await params
-  return {
-    title: 'Impressum — Novusfy',
-    alternates: { canonical: '/impressum' },
-  }
+  return legalMetadata('Impressum — Novusfy', '/impressum')
 }
 
 export default async function ImpressumPage({

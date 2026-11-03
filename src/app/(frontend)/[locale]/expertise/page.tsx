@@ -3,7 +3,7 @@ import { setRequestLocale } from 'next-intl/server'
 
 import { Link } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
-import { localeAlternates } from '@/lib/metadata'
+import { pageMetadata } from '@/lib/metadata'
 import { getTranslations } from 'next-intl/server'
 
 export function generateStaticParams() {
@@ -12,12 +12,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'services' })
-  return {
-    title: t('metaTitle'),
-    description: t('metaDescription'),
-    ...localeAlternates(locale, '/expertise'),
-  }
+  return pageMetadata(locale, 'expertise')
 }
 
 export default async function ExpertisePage({ params }: { params: Promise<{ locale: string }> }) {

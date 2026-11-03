@@ -1,11 +1,13 @@
 import React from 'react'
 
+import { SOCIAL_URLS } from '@/config/site'
+
 // Shared social row — used in the Footer and on the Contact page.
 // Icons use currentColor so they inherit the muted/hover colors from CSS.
 const SOCIALS = [
   {
     label: 'Instagram',
-    href: 'https://www.instagram.com/novusfy/',
+    href: SOCIAL_URLS.instagram,
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" strokeWidth="1.7" />
@@ -16,7 +18,7 @@ const SOCIALS = [
   },
   {
     label: 'Facebook',
-    href: 'https://www.facebook.com/novusfy/',
+    href: SOCIAL_URLS.facebook,
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path
@@ -28,7 +30,7 @@ const SOCIALS = [
   },
   {
     label: 'LinkedIn',
-    href: 'https://www.linkedin.com/company/novusfy',
+    href: SOCIAL_URLS.linkedin,
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path

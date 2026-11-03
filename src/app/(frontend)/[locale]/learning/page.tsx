@@ -4,7 +4,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import InterestForm from '../../components/InterestForm'
 import { Link } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
-import { localeAlternates } from '@/lib/metadata'
+import { pageMetadata } from '@/lib/metadata'
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -12,12 +12,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'learning' })
-  return {
-    title: t('metaTitle'),
-    description: t('metaDescription'),
-    ...localeAlternates(locale, '/learning'),
-  }
+  return pageMetadata(locale, 'learning')
 }
 
 const TOPICS = ['A', 'B', 'C', 'D', 'E', 'F'] as const

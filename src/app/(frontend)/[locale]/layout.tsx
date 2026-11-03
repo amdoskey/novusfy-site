@@ -1,4 +1,5 @@
 import React from 'react'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
@@ -8,6 +9,7 @@ import Interactions from '../components/Interactions'
 import Nav from '../components/Nav'
 import ScrollReveal from '../components/ScrollReveal'
 import { cairo, jakarta, jetbrainsMono, nexa, plexArabic } from '../fonts'
+import { SITE_NAME, SITE_URL } from '@/config/site'
 import { dirFor, routing } from '@/i18n/routing'
 import '../styles.css'
 
@@ -30,30 +32,26 @@ export const viewport = {
   themeColor: '#0A0A0F', // midnight, globally — matches the brand's dark sections
 }
 
-const OG_LOCALE: Record<string, string> = { en: 'en_US', de: 'de_DE', ar: 'ar_AR' }
-
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+/**
+ * Site-wide defaults. Every page overrides title, description, canonical,
+ * hreflang, Open Graph and Twitter via pageMetadata()/legalMetadata() in
+ * src/lib/metadata.ts; these values only show where a page sets nothing (404).
+ * Share images come from the opengraph-image / twitter-image route files.
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
   const { locale } = await params
-  const isDefault = locale === routing.defaultLocale
   const t = await getTranslations({ locale, namespace: 'meta' })
 
   return {
-    metadataBase: new URL('https://novusfy.com'),
-    title: t('title'),
-    description: t('description'),
-    alternates: {
-      canonical: isDefault ? '/' : `/${locale}`,
-      languages: { en: '/', de: '/de', ar: '/ar' },
-    },
-    openGraph: {
-      title: t('title'),
-      description: t('ogDescription'),
-      url: isDefault ? 'https://novusfy.com' : `https://novusfy.com/${locale}`,
-      siteName: 'Novusfy',
-      locale: OG_LOCALE[locale] ?? 'en_US',
-      // Placeholder slot — drop the final artwork in public/og-image.png (1200x630).
-      images: [{ url: '/og-image.png', width: 1200, height: 630, alt: t('ogAlt') }],
-    },
+    metadataBase: new URL(SITE_URL),
+    title: t('home.title'),
+    description: t('home.description'),
+    applicationName: SITE_NAME,
+    twitter: { card: 'summary_large_image' },
     icons: {
       icon: '/icon-blue.png',
       apple: '/icon-blue.png',

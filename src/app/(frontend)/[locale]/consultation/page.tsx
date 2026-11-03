@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 import BookingCards from '../../components/BookingCards'
 import { routing } from '@/i18n/routing'
-import { localeAlternates } from '@/lib/metadata'
+import { pageMetadata } from '@/lib/metadata'
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -11,12 +11,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'consultation' })
-  return {
-    title: t('metaTitle'),
-    description: t('metaDescription'),
-    ...localeAlternates(locale, '/consultation'),
-  }
+  return pageMetadata(locale, 'consultation')
 }
 
 export default async function ConsultationPage({
