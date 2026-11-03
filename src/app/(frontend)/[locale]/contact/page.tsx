@@ -3,10 +3,12 @@ import { setRequestLocale } from 'next-intl/server'
 
 import { Link } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
+import { breadcrumbs } from '@/lib/jsonld'
 import { pageMetadata } from '@/lib/metadata'
 import { getTranslations } from 'next-intl/server'
 
 import ContactForm from '../../components/ContactForm'
+import JsonLd from '../../components/JsonLd'
 import MapEmbed from '../../components/MapEmbed'
 import SocialLinks from '../../components/SocialLinks'
 
@@ -48,6 +50,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 
   return (
     <>
+      <JsonLd data={await breadcrumbs(locale, 'contact')} />
       <section className="phead">
         <div className="wrap">
           <p className="eyebrow">

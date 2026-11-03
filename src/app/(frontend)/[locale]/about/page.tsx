@@ -1,8 +1,10 @@
 import React from 'react'
 import { setRequestLocale } from 'next-intl/server'
 
+import JsonLd from '../../components/JsonLd'
 import { Link } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
+import { breadcrumbs } from '@/lib/jsonld'
 import { pageMetadata } from '@/lib/metadata'
 import { getTranslations } from 'next-intl/server'
 
@@ -23,6 +25,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
   return (
     <>
+      <JsonLd data={await breadcrumbs(locale, 'about')} />
       <section className="phead">
         <div className="wrap">
           <p className="eyebrow">

@@ -43,7 +43,7 @@ export default async function DatenschutzPage({
       <section className="legal">
         <div className="wrap">
           <div className="prose legal__body">
-            <h3>1. Verantwortlicher</h3>
+            <h2>1. Verantwortlicher</h2>
             <p>
               Verantwortlicher im Sinne der Datenschutz-Grundverordnung
               (DSGVO) ist:
@@ -71,7 +71,7 @@ export default async function DatenschutzPage({
 
             <hr />
 
-            <h3>2. Allgemeines zur Datenverarbeitung</h3>
+            <h2>2. Allgemeines zur Datenverarbeitung</h2>
             <p>
               Wir verarbeiten personenbezogene Daten unserer Nutzer
               grundsätzlich nur, soweit dies zur Bereitstellung einer
@@ -86,7 +86,7 @@ export default async function DatenschutzPage({
 
             <hr />
 
-            <h3>3. Hosting und technische Infrastruktur</h3>
+            <h2>3. Hosting und technische Infrastruktur</h2>
             <p>
               Diese Website wird über folgende externe Dienstleister
               betrieben. Beim Aufruf der Website werden automatisch
@@ -95,7 +95,7 @@ export default async function DatenschutzPage({
               Dienstleister verarbeitet, um die Website auszuliefern.
             </p>
 
-            <h4>Hosting: Vercel Inc.</h4>
+            <h3>Hosting: Vercel Inc.</h3>
             <p>
               Unsere Website wird bei Vercel Inc., 340 S Lemon Ave #4133,
               Walnut, CA 91789, USA, gehostet. Vercel verarbeitet in diesem
@@ -115,7 +115,7 @@ export default async function DatenschutzPage({
               EU-Kommission vom 10. Juli 2023.
             </p>
 
-            <h4>Server-Logfiles</h4>
+            <h3>Server-Logfiles</h3>
             <p>
               Beim Aufruf dieser Website erhebt unser Hosting-Anbieter Vercel
               automatisch Informationen, die Ihr Browser übermittelt:
@@ -131,7 +131,7 @@ export default async function DatenschutzPage({
               endgültigen Klärung des Vorfalls von der Löschung ausgenommen.
             </p>
 
-            <h4>Datenbank: Neon (Neon, Inc.)</h4>
+            <h3>Datenbank: Neon (Neon, Inc.)</h3>
             <p>
               Die Inhalte dieser Website (z.&nbsp;B. Texte und
               Projektbeschreibungen) sowie die Zugangsdaten der
@@ -143,7 +143,7 @@ export default async function DatenschutzPage({
               Datenbank gespeichert.
             </p>
 
-            <h4>Objektspeicher: Cloudflare R2 (Cloudflare, Inc.)</h4>
+            <h3>Objektspeicher: Cloudflare R2 (Cloudflare, Inc.)</h3>
             <p>
               Bilder und andere Mediendateien dieser Website werden im
               Speicherdienst R2 der Cloudflare, Inc. (USA) gespeichert; der
@@ -162,7 +162,7 @@ export default async function DatenschutzPage({
 
             <hr />
 
-            <h3>4. Kontakt- und Interessensformular</h3>
+            <h2>4. Kontakt- und Interessensformular</h2>
             <p>
               Wenn Sie uns über das Kontaktformular oder über das
               Interessensformular auf der Seite „Weiterbildung" Anfragen
@@ -185,7 +185,7 @@ export default async function DatenschutzPage({
               Aufbewahrungspflichten entgegenstehen.
             </p>
 
-            <h4>E-Mail-Versand: Resend</h4>
+            <h3>E-Mail-Versand: Resend</h3>
             <p>
               Für den Versand der über die Formulare übermittelten Nachrichten nutzen wir den Dienst Resend (Resend, Inc., USA).
               Der Versand erfolgt über Server in der EU (Irland). Wir haben
@@ -196,7 +196,7 @@ export default async function DatenschutzPage({
               EU-US Data Privacy Framework zertifiziert.
             </p>
 
-            <h4>E-Mail-Postfach</h4>
+            <h3>E-Mail-Postfach</h3>
             <p>
               Unser E-Mail-Postfach wird bei der Verpex Limited, 87 North
               Road, Poole, Dorset BH14 0LT, Vereinigtes Königreich,
@@ -207,7 +207,7 @@ export default async function DatenschutzPage({
               Angemessenheitsbeschluss der EU-Kommission (Art. 45 DSGVO).
             </p>
 
-            <h4>Terminbuchung über Cal.com</h4>
+            <h3>Terminbuchung über Cal.com</h3>
             <p>
               Für die Buchung von Terminen verlinken wir auf den Dienst
               Cal.com (Cal.com, Inc., USA). Auf unserer Website werden keine
@@ -229,7 +229,7 @@ export default async function DatenschutzPage({
 
             <hr />
 
-            <h3>5. Google Maps</h3>
+            <h2>5. Google Maps</h2>
             <p>
               Auf unserer Kontaktseite verwenden wir den Kartendienst
               „Google Maps" des Anbieters Google Ireland Limited, Gordon
@@ -262,7 +262,7 @@ export default async function DatenschutzPage({
 
             <hr />
 
-            <h3>6. Cookies</h3>
+            <h2>6. Cookies</h2>
             <p>
               Diese Website setzt keine Cookies und speichert keine
               Informationen in Ihrem Browser (z.&nbsp;B. Local Storage oder
@@ -274,7 +274,7 @@ export default async function DatenschutzPage({
 
             <hr />
 
-            <h3>7. Ihre Rechte als betroffene Person</h3>
+            <h2>7. Ihre Rechte als betroffene Person</h2>
             <p>
               Ihnen stehen gegenüber uns hinsichtlich Ihrer
               personenbezogenen Daten folgende Rechte zu:
@@ -313,7 +313,7 @@ export default async function DatenschutzPage({
             </ul>
 
             <div className="legal__box">
-              <h4>Widerspruchsrecht gemäß Art. 21 DSGVO</h4>
+              <h3>Widerspruchsrecht gemäß Art. 21 DSGVO</h3>
               <p>
                 Wenn die Datenverarbeitung auf Grundlage von Art. 6 Abs. 1
                 lit. f DSGVO erfolgt, haben Sie jederzeit das Recht, aus
@@ -358,7 +358,7 @@ export default async function DatenschutzPage({
 
             <hr />
 
-            <h3>8. SSL-/TLS-Verschlüsselung</h3>
+            <h2>8. SSL-/TLS-Verschlüsselung</h2>
             <p>
               Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der
               Übertragung vertraulicher Inhalte eine SSL- bzw.
@@ -369,7 +369,7 @@ export default async function DatenschutzPage({
 
             <hr />
 
-            <h3>9. Automatisierte Entscheidungsfindung</h3>
+            <h2>9. Automatisierte Entscheidungsfindung</h2>
             <p>
               Eine automatisierte Entscheidungsfindung einschließlich
               Profiling gemäß Art. 22 DSGVO findet nicht statt.

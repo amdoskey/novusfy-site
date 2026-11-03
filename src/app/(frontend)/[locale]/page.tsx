@@ -284,22 +284,22 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <div className="learn-cards">
               <div className="learn-card">
                 <p className="label">{t('learnPreview.cardLabel')}</p>
-                <h4>{t('learnPreview.c1Title')}</h4>
+                <h3>{t('learnPreview.c1Title')}</h3>
                 <p>{t('learnPreview.c1Body')}</p>
               </div>
               <div className="learn-card">
                 <p className="label">{t('learnPreview.cardLabel')}</p>
-                <h4>{t('learnPreview.c2Title')}</h4>
+                <h3>{t('learnPreview.c2Title')}</h3>
                 <p>{t('learnPreview.c2Body')}</p>
               </div>
               <div className="learn-card">
                 <p className="label">{t('learnPreview.cardLabel')}</p>
-                <h4>{t('learnPreview.c3Title')}</h4>
+                <h3>{t('learnPreview.c3Title')}</h3>
                 <p>{t('learnPreview.c3Body')}</p>
               </div>
               <div className="learn-card">
                 <p className="label">{t('learnPreview.cardLabel')}</p>
-                <h4>{t('learnPreview.c4Title')}</h4>
+                <h3>{t('learnPreview.c4Title')}</h3>
                 <p>{t('learnPreview.c4Body')}</p>
               </div>
             </div>

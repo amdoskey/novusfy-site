@@ -20,20 +20,20 @@ export default function Footer() {
           <SocialLinks className="foot__social" />
         </div>
         <div className="foot__col">
-          <h4>{t('company')}</h4>
+          <h2>{t('company')}</h2>
           <Link href="/about">{t('about')}</Link>
           <Link href="/expertise">{t('expertise')}</Link>
           <Link href="/consultation">{t('consultation')}</Link>
         </div>
         <div className="foot__col">
-          <h4>{t('explore')}</h4>
+          <h2>{t('explore')}</h2>
           <Link href="/learning">{t('learning')}</Link>
           <Link href="/contact">{t('contact')}</Link>
           <Link href="/datenschutz">{t('privacy')}</Link>
           <Link href="/impressum">{t('impressum')}</Link>
         </div>
         <div className="foot__col">
-          <h4>{t('reachUs')}</h4>
+          <h2>{t('reachUs')}</h2>
           <a href="mailto:info@novusfy.com" dir="ltr">info@novusfy.com</a>
           <a href="#">{t('locations')}</a>
           <a href="#" dir="ltr">novusfy.com</a>

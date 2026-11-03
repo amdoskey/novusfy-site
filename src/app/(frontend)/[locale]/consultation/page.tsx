@@ -2,7 +2,9 @@ import React from 'react'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 import BookingCards from '../../components/BookingCards'
+import JsonLd from '../../components/JsonLd'
 import { routing } from '@/i18n/routing'
+import { breadcrumbs, consultationOffers } from '@/lib/jsonld'
 import { pageMetadata } from '@/lib/metadata'
 
 export function generateStaticParams() {
@@ -26,6 +28,8 @@ export default async function ConsultationPage({
 
   return (
     <>
+      <JsonLd data={await breadcrumbs(locale, 'consultation')} />
+      <JsonLd data={await consultationOffers(locale)} />
       <section className="phead">
         <div className="wrap">
           <p className="eyebrow">
@@ -41,7 +45,7 @@ export default async function ConsultationPage({
 
       <section className="consult">
         <div className="wrap">
-          <BookingCards />
+          <BookingCards headingLevel="h2" />
         </div>
       </section>
     </>

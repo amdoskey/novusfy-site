@@ -226,7 +226,7 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:900;letter-spacing
   transition:transform var(--dur-med) var(--ease),border-color var(--dur-med) var(--ease)}
 .learn-card:hover{transform:translateY(-4px);border-color:var(--blue)}
 .learn-card .label{margin-bottom:12px}
-.learn-card h4{font-size:19px;letter-spacing:-.02em;margin-bottom:10px}
+.learn-card h3{font-size:19px;letter-spacing:-.02em;margin-bottom:10px}
 .learn-card p{font-size:14px;color:var(--on-variant);font-family:var(--f-text)}
 
 /* FINAL CTA */
@@ -249,7 +249,7 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:900;letter-spacing
   background-size:8px 1px;background-repeat:repeat-x;background-position:0 100%}
 .foot__brand .brand{margin-bottom:16px}
 .foot__slogan{color:var(--muted-invert);font-size:17px;font-weight:500;font-family:var(--f-text);max-width:30ch}
-.foot__col h4{font-family:var(--f-text);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-invert);font-weight:700;margin-bottom:18px}
+.foot__col h2{font-family:var(--f-text);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-invert);font-weight:700;margin-bottom:18px}
 .foot__col a{display:block;color:#d6d7e6;padding:7px 0;font-size:15px;font-family:var(--f-text);
   transition:color var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease)}
 .foot__col a:hover{transform:translateX(2px)}
@@ -322,7 +322,7 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:900;letter-spacing
 .svc-card__ico{width:50px;height:50px;border-radius:12px;background:rgba(1,6,255,.08);display:grid;place-items:center;margin-bottom:22px}
 .svc-card__ico svg{width:26px;height:26px;stroke:var(--blue);fill:none;stroke-width:1.6}
 .svc-card__no{font-family:var(--f-mono);font-size:12px;color:var(--blue);letter-spacing:.12em;margin-bottom:14px}
-.svc-card h3{font-size:clamp(22px,2.6vw,29px);letter-spacing:-.025em;margin-bottom:14px;line-height:1.08}
+.svc-card h2{font-size:clamp(22px,2.6vw,29px);letter-spacing:-.025em;margin-bottom:14px;line-height:1.08}
 .svc-card p{color:var(--on-variant);font-size:16.5px;margin-bottom:24px;max-width:48ch;font-family:var(--f-text)}
 .svc-card__list{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
 .svc-card__list span{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
@@ -652,9 +652,9 @@ body:has(.herox) .nav.is-stuck{animation:navSettle var(--dur-med) var(--ease-out
 .phead .wrap > *:nth-child(4){animation-delay:.35s}
 
 .prose{font-family:var(--f-text);color:var(--ink);line-height:1.72}
-.prose h3{font-family:var(--f-display);font-weight:900;font-size:clamp(22px,2.6vw,29px);letter-spacing:-.02em;
+.prose h2{font-family:var(--f-display);font-weight:900;font-size:clamp(22px,2.6vw,29px);letter-spacing:-.02em;
   margin:44px 0 14px;text-wrap:balance}
-.prose h4{font-family:var(--f-text);font-weight:700;font-size:17px;letter-spacing:.01em;
+.prose h3{font-family:var(--f-text);font-weight:700;font-size:17px;letter-spacing:.01em;
   margin:30px 0 10px;color:var(--blue)}
 .prose p{margin:0 0 18px;color:var(--on-variant)}
 .prose ul,.prose ol{margin:0 0 20px;padding-inline-start:22px;color:var(--on-variant)}
@@ -669,7 +669,7 @@ body:has(.herox) .nav.is-stuck{animation:navSettle var(--dur-med) var(--ease-out
 .legal{padding:0 0 clamp(60px,8vw,120px)}
 .legal__body{max-width:72ch}
 .legal__box{margin:28px 0 32px;padding:22px 26px;border:1px solid var(--blue);border-radius:var(--r);background:var(--surface-low)}
-.legal__box h4{margin-top:0}
+.legal__box h3{margin-top:0}
 .legal__box p:last-child{margin-bottom:0}
 .legal__stand{margin-top:40px;font-size:14px}
 
@@ -727,7 +727,7 @@ body:has(.herox) .nav.is-stuck{animation:navSettle var(--dur-med) var(--ease-out
 .offer:hover{transform:translateY(-4px);border-color:var(--blue)}
 .offer--primary{border-color:var(--blue);background:var(--surface-low);box-shadow:0 0 0 1px var(--blue)}
 .offer__meta{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;color:var(--blue);margin-bottom:16px}
-.offer h3{font-size:clamp(22px,2.4vw,27px);letter-spacing:-.025em;line-height:1.1;margin-bottom:14px}
+.offer h2,.offer h3{font-size:clamp(22px,2.4vw,27px);letter-spacing:-.025em;line-height:1.1;margin-bottom:14px}
 .offer__body{color:var(--on-variant);font-size:15.5px;font-family:var(--f-text);margin-bottom:28px}
 .offer .btn{margin-top:auto;align-self:flex-start;max-width:100%;white-space:normal;text-align:start}
 .offers__note{margin-top:22px;max-width:70ch;font-family:var(--f-text);font-size:14px;color:var(--on-variant)}

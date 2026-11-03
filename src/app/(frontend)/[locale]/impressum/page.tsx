@@ -43,7 +43,7 @@ export default async function ImpressumPage({
       <section className="legal">
         <div className="wrap">
           <div className="prose legal__body">
-            <h3>Angaben gemäß § 5 DDG</h3>
+            <h2>Angaben gemäß § 5 DDG</h2>
 
             <p>
               <strong>Novusfy</strong>
@@ -58,7 +58,7 @@ export default async function ImpressumPage({
               Deutschland
             </p>
 
-            <h4>Kontakt</h4>
+            <h3>Kontakt</h3>
             <p>
               Telefon:{' '}
               <a href="tel:+491793412853" dir="ltr">
@@ -69,7 +69,7 @@ export default async function ImpressumPage({
               <a href="mailto:info@novusfy.com">info@novusfy.com</a>
             </p>
 
-            <h4>Umsatzsteuer</h4>
+            <h3>Umsatzsteuer</h3>
             <p>
               Gemäß § 19 UStG (Kleinunternehmerregelung) wird keine
               Umsatzsteuer berechnet und ausgewiesen.
@@ -79,14 +79,14 @@ export default async function ImpressumPage({
               <span dir="ltr">DE465613507-00001</span>
             </p>
 
-            <h4>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h4>
+            <h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3>
             <p>
               Karwan Jameel
               <br />
               (Anschrift wie oben)
             </p>
 
-            <h4>Registereintrag</h4>
+            <h3>Registereintrag</h3>
             <p>
               Gewerbeanmeldung bei der Gemeinde Gaienhofen
               <br />
@@ -95,7 +95,7 @@ export default async function ImpressumPage({
 
             <hr />
 
-            <h3>EU-Streitschlichtung</h3>
+            <h2>EU-Streitschlichtung</h2>
             <p>
               Die Europäische Kommission stellt eine Plattform zur
               Online-Streitbeilegung (OS) bereit, die Sie hier finden:{' '}
@@ -116,7 +116,7 @@ export default async function ImpressumPage({
 
             <hr />
 
-            <h3>Haftung für Inhalte</h3>
+            <h2>Haftung für Inhalte</h2>
             <p>
               Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene
               Inhalte auf diesen Seiten nach den allgemeinen Gesetzen
@@ -136,7 +136,7 @@ export default async function ImpressumPage({
               entfernen.
             </p>
 
-            <h3>Haftung für Links</h3>
+            <h2>Haftung für Links</h2>
             <p>
               Unser Angebot enthält Links zu externen Websites Dritter, auf
               deren Inhalte wir keinen Einfluss haben. Deshalb können wir
@@ -154,7 +154,7 @@ export default async function ImpressumPage({
               werden wir derartige Links umgehend entfernen.
             </p>
 
-            <h3>Urheberrecht</h3>
+            <h2>Urheberrecht</h2>
             <p>
               Die durch die Seitenbetreiber erstellten Inhalte und Werke
               auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die

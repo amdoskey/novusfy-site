@@ -6,8 +6,15 @@ import { BOOKING, formatPrice } from '@/config/booking'
 /**
  * The three ways to work with us. Shared by /consultation and the home page.
  * Every CTA is a plain external link to Cal.com, opened in a new tab.
+ *
+ * `headingLevel` keeps the outline in order: 'h2' where the cards sit right
+ * under the page h1 (/consultation), 'h3' under a section h2 (home).
  */
-export default async function BookingCards() {
+export default async function BookingCards({
+  headingLevel: Heading = 'h3',
+}: {
+  headingLevel?: 'h2' | 'h3'
+}) {
   const locale = await getLocale()
   const t = await getTranslations('booking')
 
@@ -47,7 +54,7 @@ export default async function BookingCards() {
         {cards.map((c) => (
           <article key={c.key} className={`offer${c.primary ? ' offer--primary' : ''}`}>
             <p className="offer__meta">{c.meta}</p>
-            <h3>{c.title}</h3>
+            <Heading>{c.title}</Heading>
             <p className="offer__body">{c.body}</p>
             <a
               href={c.url}

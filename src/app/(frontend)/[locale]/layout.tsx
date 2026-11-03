@@ -5,12 +5,14 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 import Footer from '../components/Footer'
+import JsonLd from '../components/JsonLd'
 import Interactions from '../components/Interactions'
 import Nav from '../components/Nav'
 import ScrollReveal from '../components/ScrollReveal'
 import { cairo, jakarta, jetbrainsMono, nexa, plexArabic } from '../fonts'
 import { SITE_NAME, SITE_URL } from '@/config/site'
 import { dirFor, routing } from '@/i18n/routing'
+import { siteGraph } from '@/lib/jsonld'
 import '../styles.css'
 
 // Nav theming used to run through a pre-hydration inline <script> that set
@@ -80,6 +82,7 @@ export default async function LocaleLayout({
       className={`scroll-smooth ${nexa.variable} ${jakarta.variable} ${jetbrainsMono.variable} ${cairo.variable} ${plexArabic.variable}`}
     >
       <body>
+        <JsonLd data={await siteGraph(locale)} />
         <NextIntlClientProvider>
           <Nav />
           <main>{children}</main>

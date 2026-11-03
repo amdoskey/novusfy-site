@@ -1,8 +1,10 @@
 import React from 'react'
 import { setRequestLocale } from 'next-intl/server'
 
+import JsonLd from '../../components/JsonLd'
 import { Link } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
+import { breadcrumbs, expertiseServices } from '@/lib/jsonld'
 import { pageMetadata } from '@/lib/metadata'
 import { getTranslations } from 'next-intl/server'
 
@@ -23,6 +25,8 @@ export default async function ExpertisePage({ params }: { params: Promise<{ loca
 
   return (
     <>
+      <JsonLd data={await breadcrumbs(locale, 'expertise')} />
+      <JsonLd data={await expertiseServices(locale)} />
       <section className="phead">
         <div className="wrap">
           <p className="eyebrow">
@@ -47,7 +51,7 @@ export default async function ExpertisePage({ params }: { params: Promise<{ loca
                 </svg>
               </div>
               <div className="svc-card__no">{t('s1No')}</div>
-              <h3>{t('s1Title')}</h3>
+              <h2>{t('s1Title')}</h2>
               <p>{t('s1Body')}</p>
               <div className="svc-card__list">
                 <span>{t('s1t1')}</span>
@@ -65,7 +69,7 @@ export default async function ExpertisePage({ params }: { params: Promise<{ loca
                 </svg>
               </div>
               <div className="svc-card__no">{t('s2No')}</div>
-              <h3>{t('s2Title')}</h3>
+              <h2>{t('s2Title')}</h2>
               <p>{t('s2Body')}</p>
               <div className="svc-card__list">
                 <span>{t('s2t1')}</span>
@@ -82,7 +86,7 @@ export default async function ExpertisePage({ params }: { params: Promise<{ loca
                 </svg>
               </div>
               <div className="svc-card__no">{t('s3No')}</div>
-              <h3>{t('s3Title')}</h3>
+              <h2>{t('s3Title')}</h2>
               <p>{t('s3Body')}</p>
               <div className="svc-card__list">
                 <span>{t('s3t1')}</span>
@@ -100,7 +104,7 @@ export default async function ExpertisePage({ params }: { params: Promise<{ loca
                 </svg>
               </div>
               <div className="svc-card__no">{t('s4No')}</div>
-              <h3>{t('s4Title')}</h3>
+              <h2>{t('s4Title')}</h2>
               <p>{t('s4Body')}</p>
               <div className="svc-card__list">
                 <span>{t('s4t1')}</span>
@@ -116,7 +120,7 @@ export default async function ExpertisePage({ params }: { params: Promise<{ loca
                 </svg>
               </div>
               <div className="svc-card__no">{t('s5No')}</div>
-              <h3>{t('s5Title')}</h3>
+              <h2>{t('s5Title')}</h2>
               <p>{t('s5Body')}</p>
               <div className="svc-card__list">
                 <span>{t('s5t1')}</span>
@@ -132,7 +136,7 @@ export default async function ExpertisePage({ params }: { params: Promise<{ loca
                 </svg>
               </div>
               <div className="svc-card__no">{t('s6No')}</div>
-              <h3>{t('s6Title')}</h3>
+              <h2>{t('s6Title')}</h2>
               <p>{t('s6Body')}</p>
               <div className="svc-card__list">
                 <span>{t('s6t1')}</span>

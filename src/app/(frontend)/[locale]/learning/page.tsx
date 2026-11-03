@@ -1,9 +1,11 @@
 import React from 'react'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
+import JsonLd from '../../components/JsonLd'
 import InterestForm from '../../components/InterestForm'
 import { Link } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
+import { breadcrumbs } from '@/lib/jsonld'
 import { pageMetadata } from '@/lib/metadata'
 
 export function generateStaticParams() {
@@ -25,6 +27,7 @@ export default async function LearningPage({ params }: { params: Promise<{ local
 
   return (
     <>
+      <JsonLd data={await breadcrumbs(locale, 'learning')} />
       <section className="phead">
         <div className="wrap">
           <h1 className="phead__title">{t('title')}</h1>
