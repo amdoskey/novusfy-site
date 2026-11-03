@@ -390,5 +390,12 @@
     "eyebrow": "Beratung",
     "title": "Alles beginnt mit einem Gespräch.",
     "subtitle": "Wählen Sie das Format, das zu Ihrer Situation passt. Jede Zusammenarbeit beginnt damit, Ihre Lage zu verstehen – das erste Gespräch ist kostenlos."
+  },
+  "notFound": {
+    "eyebrow": "Fehler 404",
+    "title": "Diese Seite gibt es nicht.",
+    "body": "Der Link ist vielleicht veraltet oder falsch geschrieben. Starten Sie auf der Startseite oder buchen Sie ein kostenloses 15-Minuten-Gespräch – wir helfen Ihnen weiter.",
+    "ctaHome": "Zur Startseite",
+    "ctaBook": "Kostenloses Gespräch buchen"
   }
 }

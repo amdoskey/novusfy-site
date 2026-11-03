@@ -40,10 +40,54 @@ const HOST_REDIRECT = {
   permanent: true,
 }
 
+/**
+ * URLs from the old WordPress site on novusfy.com (its wp-sitemap.xml, checked
+ * Nov 2026), mapped to their closest page. English only — WordPress had no
+ * locale prefixes. Order matters: specific rules before the /services catch-all.
+ */
+const WORDPRESS_REDIRECTS = [
+  ['/faqs', '/consultation'],
+  ['/author/admin', '/about'],
+  ['/services/:slug(personal-professional-development.*)', '/learning'],
+  ['/services/:path*', '/expertise'],
+  // The five consulting blog posts.
+  ['/:slug(why-every-entrepreneur.*)', '/expertise'],
+  ['/:slug(innovative-solutions.*)', '/expertise'],
+  ['/:slug(harness-digital-transformation.*)', '/expertise'],
+  ['/:slug(mastering-change-management.*)', '/expertise'],
+  ['/:slug(what-consultants-should-know.*)', '/expertise'],
+  // Template leftovers, archives and feeds → home.
+  ['/:slug(spending-habits-.*)', '/'],
+  ['/blog/:path*', '/'],
+  ['/blog-grid', '/'],
+  ['/sample-page', '/'],
+  ['/hello-world', '/'],
+  ['/category/:path*', '/'],
+  ['/tag/:path*', '/'],
+  ['/project/:path*', '/'],
+  ['/author/charisma', '/'],
+  ['/feed', '/'],
+  ['/comments/feed', '/'],
+].map(([source, destination]) => ({ source, destination, permanent: true }))
+
+/**
+ * Trailing slashes. `skipTrailingSlashRedirect` turns off Next's built-in
+ * /path/ → /path redirect, which runs before every custom rule and would make
+ * old WordPress URLs (always /slug/) take two hops. This rule restores it as
+ * the last redirect, so legacy URLs go to their target in one hop and every
+ * other /path/ still lands on /path.
+ */
+const TRAILING_SLASH = { source: '/:path+/', destination: '/:path+', permanent: true }
+
 const nextConfig: NextConfig = {
+  skipTrailingSlashRedirect: true,
+  experimental: {
+    // Localized full-page 404 for unmatched URLs (src/app/global-not-found.tsx).
+    globalNotFound: true,
+  },
   async redirects() {
     // Host redirect first, so old-host requests go straight to the canonical domain.
-    return [HOST_REDIRECT, ...LEGACY_REDIRECTS]
+    return [HOST_REDIRECT, ...WORDPRESS_REDIRECTS, ...LEGACY_REDIRECTS, TRAILING_SLASH]
   },
   images: {
     localPatterns: [

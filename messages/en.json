@@ -390,5 +390,12 @@
     "eyebrow": "Consultation",
     "title": "Start with a conversation.",
     "subtitle": "Pick the format that fits where you are. Every engagement starts with understanding your situation — the first call is free."
+  },
+  "notFound": {
+    "eyebrow": "Error 404",
+    "title": "This page doesn’t exist.",
+    "body": "The link may be old or mistyped. Start from the home page or book a free 15-minute call — we’ll point you in the right direction.",
+    "ctaHome": "Go to the home page",
+    "ctaBook": "Book a free call"
   }
 }
