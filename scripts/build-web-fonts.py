@@ -1,12 +1,15 @@
 """
-Builds the self-hosted web fonts in assets/fonts/web/ from the source TTFs in
-assets/fonts/ (official files from github.com/google/fonts, ofl/ folder).
+Builds the self-hosted web fonts in assets/fonts/web/ (and the static share-
+image fonts in assets/fonts/og/) from the source TTFs in assets/fonts/
+(official files from github.com/google/fonts, ofl/ folder).
 
 Variable fonts stay variable (one file per family, like Google Fonts serves
 them) but are cut down to the weight range the site uses; static fonts stay
 one file per weight. Each file keeps only the scripts we render (Latin + Latin
-Extended, plus Arabic for the Arabic faces) and is written as WOFF2. That keeps /ar close to what Google Fonts
-used to serve (~70 KB per face) instead of shipping the full 200–600 KB TTFs.
+Extended, plus Arabic for the Arabic faces) and is written as WOFF2. That
+keeps /ar close to what Google Fonts used to serve (~70 KB per face) instead of
+shipping the full 200–600 KB TTFs. Output is deterministic (no timestamps), so
+re-running it on unchanged sources leaves git clean.
 
 The outputs are committed; next/font/local reads them at build time, so builds
 never touch the network. Only re-run this when a source TTF changes:
@@ -54,6 +57,13 @@ FONTS = [
 ]
 
 
+# Static TTFs for the share images (src/lib/og.tsx): satori can't read variable fonts.
+OG_FONTS = [
+    ("JetBrainsMono[wght].ttf", "JetBrainsMono-Regular", 400, [LATIN, LATIN_EXT]),
+]
+OG_OUT = SRC / "og"
+
+
 def unicodes(ranges: list[str]) -> list[int]:
     cps: list[int] = []
     for part in ",".join(ranges).split(","):
@@ -65,7 +75,7 @@ def unicodes(ranges: list[str]) -> list[int]:
 def main() -> None:
     OUT.mkdir(exist_ok=True)
     for src, name, weights, ranges in FONTS:
-        font = TTFont(SRC / src)
+        font = TTFont(SRC / src, recalcTimestamp=False)
 
         # Subset first, then limit the axes (the other order trips a fontTools
         # bug with partially instanced gvar tables).
@@ -85,6 +95,21 @@ def main() -> None:
 
         out = OUT / f"{name}.woff2"
         font.flavor = "woff2"
+        font.save(out)
+        print(f"{out.relative_to(ROOT)}  {out.stat().st_size // 1024} KB")
+
+    OG_OUT.mkdir(exist_ok=True)
+    for src, name, weight, ranges in OG_FONTS:
+        font = TTFont(SRC / src, recalcTimestamp=False)
+        options = subset.Options()
+        options.layout_features = ["*"]
+        options.name_IDs = ["*"]
+        options.notdef_outline = True
+        sub = subset.Subsetter(options)
+        sub.populate(unicodes=unicodes(ranges))
+        sub.subset(font)
+        font = instancer.instantiateVariableFont(font, {"wght": weight})  # fully static
+        out = OG_OUT / f"{name}.ttf"
         font.save(out)
         print(f"{out.relative_to(ROOT)}  {out.stat().st_size // 1024} KB")
 

@@ -18,10 +18,17 @@ export default createMiddleware(routing)
  * /contact/send is the contact form handler. ContactForm posts to that absolute
  * path from every locale, so it must not be rewritten to /de/contact/send.
  *
+ * Share images (opengraph-image / twitter-image) are generated per locale at
+ * /<locale>/…/opengraph-image-<hash>/card. Next writes /en/… into the meta
+ * tags; the proxy would 307 that to the unprefixed path, so it skips them and
+ * Next serves the prerendered file directly.
+ *
  * Excluded, in order: Payload API, Payload admin, Next internals, Vercel
- * internals, uploaded media, the contact handler, and anything with a file
- * extension (favicons, images, robots.txt).
+ * internals, uploaded media, the contact handler, share images, and anything
+ * with a file extension (favicons, images, robots.txt, sitemap.xml, llms.txt).
  */
 export const config = {
-  matcher: ['/((?!api|admin|_next|_vercel|media|contact/send|.*\\..*).*)'],
+  matcher: [
+    '/((?!api|admin|_next|_vercel|media|contact/send|.*(?:opengraph|twitter)-image|.*\\..*).*)',
+  ],
 }
