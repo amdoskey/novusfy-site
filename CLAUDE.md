@@ -8,10 +8,11 @@ doing any Payload-related work.
 Novusfy website project with full context. Written for a Claude that has no
 memory of prior sessions.
 
-**Last updated:** November 1, 2026
+**Last updated:** November 3, 2026
 **Owner:** DDTAJ (based in Erbil, Iraq)
-**Repo:** GitHub → `novusfy-site` · **Live:** `novusfy-site.vercel.app`
-(`novusfy.com` still points at the old WordPress site on cPanel — see §8)
+**Repo:** GitHub → `novusfy-site` · **Live:** `novusfy.com` on Vercel (per the
+owner, Nov 3). `novusfy-site.vercel.app` 308-redirects to it. The old
+WordPress install still answers on the Verpex IP (see §8).
 
 > ⚠️ **No secrets in this file.** API keys, database strings, and passwords live
 > only in the local `.env` (gitignored) and in Vercel's Environment Variables.
@@ -19,10 +20,11 @@ memory of prior sessions.
 
 ---
 
-## 0. Current state at a glance (Nov 1, 2026)
+## 0. Current state at a glance (Nov 3, 2026)
 
 The site is a **consultation-first** marketing site in EN / DE / AR. Every path
-leads to a free 15-minute call booked on Cal.com. Recent work, all pushed:
+leads to a free 15-minute call booked on Cal.com. Phases 1–3 are pushed;
+Phase 4 is committed locally and **not pushed yet**:
 
 - **Phase 1 — audit + Impressum.** Read-only privacy audit (cookies, storage,
   media hosts, Maps requests). Impressum gained the
@@ -42,6 +44,15 @@ leads to a free 15-minute call booked on Cal.com. Recent work, all pushed:
   cards equal height with aligned CTAs; nav collapses to the burger below
   1180px; faint card borders fixed (see gotcha 18); privacy-label spacing fixed;
   Learning preview copy updated.
+- **Phase 4 — SEO, share images, AI discoverability, local fonts.** All fonts
+  self-hosted from `assets/fonts/` (no build-time download); canonical domain
+  `https://novusfy.com` with absolute canonical + hreflang (en/de/ar +
+  x-default); legal pages `noindex, follow`; `sitemap.xml`, `robots.txt`
+  (named AI/search bots allowed), `/llms.txt`; localized OG/Twitter cards
+  (`src/lib/og.tsx`); JSON-LD (Organization, WebSite, Erbil LocalBusiness,
+  Services, Offers, breadcrumbs); new titles/descriptions in `meta.<page>`;
+  old WordPress URLs 308 in one hop; localized `global-not-found`; heading
+  outline fixed (one h1, no skipped levels).
 
 Open items are in §6.
 
@@ -94,8 +105,12 @@ pairing them with the text span renders "NOVUSFY Novusfy" (bug already hit once)
   **EU region**; the sender comes from `CONTACT_FROM`.
 - **Cal.com** for bookings — **linked to, never embedded** (§5).
 - **Verpex** (cPanel) hosts the `info@novusfy.com` mailbox and, for now, DNS.
-- Fonts self-hosted via `next/font` (Nexa via `next/font/local`, others via
-  `next/font/google`) — no visitor request ever reaches Google Fonts.
+- Fonts: all `next/font/local`, so neither builds nor visitors ever contact
+  Google. Sources are the official TTFs from github.com/google/fonts (OFL
+  licences beside them) plus Nexa. `scripts/build-web-fonts.py` (fonttools,
+  run by hand, deterministic) writes the subset WOFF2 files the site serves
+  (`assets/fonts/web/`) and a static mono TTF for share images
+  (`assets/fonts/og/`). Re-run it only when a TTF or a weight changes.
 
 ### Routes (all exist in en / de / ar; English unprefixed)
 
@@ -109,31 +124,51 @@ pairing them with the text span renders "NOVUSFY Novusfy" (bug already hit once)
 | `/contact` | Email, socials, contact form, two offices with consent-gated maps |
 | `/impressum`, `/datenschutz` | German legal pages — same German text at every locale URL |
 | `/contact/send` | POST handler for both forms (outside `[locale]`, see gotcha 10) |
+| `/sitemap.xml`, `/robots.txt`, `/llms.txt` | App-root routes (`src/app/`), all static |
+| `…/opengraph-image-*/card`, `…/twitter-image-*/card` | Share images per page and locale (gotcha 26) |
+| any unknown URL | Localized 404 — `src/app/global-not-found.tsx` (gotcha 27) |
 | `/admin`, `/api/*` | Payload |
 
-**Redirects (308, `next.config.ts`, every locale prefix):** `/services` →
-`/expertise`, `/learning-hub` → `/learning`, `/work` and `/work/:slug` → that
-locale's home, `/kontakt` → `/de/contact`.
+**Redirects (308, `next.config.ts`), in this order:**
+1. Host `novusfy-site.vercel.app` → `https://novusfy.com`, same path (exact
+   host match; preview URLs are untouched).
+2. Old WordPress URLs (English only): `/faqs` → `/consultation`;
+   `/author/admin` → `/about`; `/services/personal-professional-development*`
+   → `/learning`; other `/services/*` → `/expertise`; the five consulting blog
+   posts → `/expertise`; blog, template pages, `spending-habits-*`,
+   category/tag/project archives, `/author/charisma`, feeds → `/`.
+3. Every locale prefix: `/services` → `/expertise`, `/learning-hub` →
+   `/learning`, `/work` and `/work/:slug` → that locale's home, `/kontakt` →
+   `/de/contact`.
+4. `/:path+/` → `/:path+` (trailing slash, gotcha 28).
 
 ### Directory structure
 
 ```
 src/app/(frontend)/
   [locale]/             ← EVERY page lives under here (en unprefixed, /de, /ar)
-    layout.tsx          ← <html lang dir>, NextIntlClientProvider, localized
-                          title/OG from the `meta` namespace
+    layout.tsx          ← <html lang dir>, NextIntlClientProvider, metadataBase,
+                          site-wide JSON-LD
     page.tsx · about/ · expertise/ · consultation/ · learning/ · contact/
-    impressum/ · datenschutz/   ← hardcoded German, canonical = unprefixed URL
+                        ← each: generateMetadata → pageMetadata(), plus
+                          opengraph-image.tsx + twitter-image.tsx
+    impressum/ · datenschutz/   ← hardcoded German, canonical = unprefixed URL,
+                          noindex (legalMetadata())
   contact/send/route.ts ← both forms; allow-listed `type` (contact ·
                           learning-interest); email only, nothing stored
   components/           ← Nav, Footer, HeroCanvas, ClientStrip, BookingCards,
                           ContactForm, InterestForm, PrivacyAck (+ FormError),
                           LocaleSwitcher, MapEmbed (🔴 consent gate — §7),
-                          ScrollReveal, SocialLinks, Interactions
+                          ScrollReveal, SocialLinks, Interactions, JsonLd
   fonts.ts · styles.css · routeTheme.ts (stripLocale helper only)
+src/app/global-not-found.tsx ← localized full-page 404 (gotcha 27)
+src/app/sitemap.ts · robots.ts · llms.txt/route.ts
 
 src/app/(payload)/      ← Payload admin + API — DO NOT TOUCH
 src/config/
+  site.ts               ← SITE_URL, CONTENT_UPDATED (sitemap lastmod — bump
+                          it when content changes), email, offices, socials,
+                          INDEXABLE_PATHS
   booking.ts            ← 🔴 the ONLY place for Cal.com URLs and prices
   clients.ts            ← client logo list for the home strip
   learning.ts           ← interest-form topic/format keys (also the server allow-list)
@@ -141,18 +176,26 @@ src/i18n/               ← routing.ts (locales, localeCookie:false, RTL) ·
                           navigation.ts · request.ts
 src/proxy.ts            ← 🔴 locale routing (Next 16's name for middleware) —
                           matcher MUST exclude Payload
-src/lib/metadata.ts     ← localeAlternates(): canonical + hreflang
+src/lib/metadata.ts     ← pageMetadata() / legalMetadata(): titles, absolute
+                          canonical, hreflang + x-default, OG, Twitter
+src/lib/og.tsx          ← the one share-image renderer (next/og)
+src/lib/jsonld.ts       ← schema.org graphs (no ratings/reviews, ever)
+scripts/build-web-fonts.py ← TTF → subset WOFF2 (needs `pip install fonttools brotli`)
 src/collections/        ← Users · Media · CourseCategories · Courses ·
                           Portfolio · Articles
 src/access/index.ts     ← publishedOrAuthenticated · authenticated
 src/seed/               ← one-off Portfolio seeding (EN/DE/AR) + lexical.ts
-messages/               ← en.json · de.json · ar.json — 326 keys each, parity
-                          verified; 12 namespaces: meta, nav, footer, home,
-                          about, services, contact, learning, contactForm,
-                          interestForm, booking, consultation
+messages/               ← en.json · de.json · ar.json — 335 keys each, parity
+                          verified; 13 namespaces: meta (SEO strings per
+                          page: meta.<page>.title/description/ogTitle), nav,
+                          footer, home, about, services, contact, learning,
+                          contactForm, interestForm, booking, consultation,
+                          notFound
 assets/content/         ← source Markdown (seed data, impressum.md,
                           datenschutz.md — keep datenschutz.md in sync with the page)
-next.config.ts          ← redirects + images.localPatterns for /api/media/file
+next.config.ts          ← redirects (host, WordPress, legacy, trailing slash),
+                          skipTrailingSlashRedirect, experimental.globalNotFound,
+                          images.localPatterns for /api/media/file
 ```
 
 **No frontend page reads Payload right now.** The Portfolio collection (5
@@ -212,8 +255,9 @@ marquee direction have scoped `[dir='rtl']` rules. Phone numbers sit in
    `await` in scripts.
 9. **`payload run` strips CLI args** — use env vars (`SEED_DRY=1`), not flags.
 10. 🔴 **Next 16 uses `src/proxy.ts`, not `middleware.ts`.** Its matcher must
-    exclude `api`, `admin`, `_next`, `_vercel`, `media`, `contact/send` and
-    files with extensions. If it catches `/admin` or `/api/*` the CMS breaks;
+    exclude `api`, `admin`, `_next`, `_vercel`, `media`, `contact/send`,
+    share-image paths (`opengraph-image`/`twitter-image`) and files with
+    extensions. If it catches `/admin` or `/api/*` the CMS breaks;
     if it catches `/contact/send` the forms post to `/de/contact/send` and 404.
     **Any change to that regex needs `/admin`, `/api/portfolio` and both forms
     re-tested.**
@@ -229,7 +273,8 @@ marquee direction have scoped `[dir='rtl']` rules. Phone numbers sit in
     blank page in production (works locally, so it's easy to miss).
 15. 🔴 **Never render a `<script>` inside a React tree** (React 19 errors on
     client navigation). Express state in CSS — e.g. the dark home nav is
-    `body:has(.herox)`.
+    `body:has(.herox)`. Exception: `type="application/ld+json"` is a data
+    block React renders without the error — that's what `JsonLd` uses.
 16. **`npm run build` and `npm run dev` can corrupt each other's `.next`.** If
     the dev server throws `SyntaxError: Unexpected end of JSON input`,
     `rm -rf .next` and restart. Next 16 also refuses a second `next dev` in the
@@ -251,13 +296,32 @@ marquee direction have scoped `[dir='rtl']` rules. Phone numbers sit in
     collapses to the burger below **1180px**. Longer nav labels need re-measuring.
 22. **Legal pages are German-only by design.** `/impressum` and `/datenschutz`
     show the same German text at `/`, `/de` and `/ar` URLs, canonical to the
-    unprefixed URL, no hreflang. Don't "translate" them.
+    unprefixed URL, no hreflang, `noindex, follow`, not in the sitemap. Don't
+    "translate" them.
 23. **`npm run lint` is broken** (ESLint config loader crash, pre-existing). Use
-    `npx tsc --noEmit` and `npm run build` as the gates. A build can also fail
-    transiently while `next/font/google` downloads fonts — retry once before
-    debugging.
+    `npx tsc --noEmit` and `npm run build` as the gates. (Builds no longer
+    download fonts, so the old transient font-fetch failure is gone.)
 24. **The MCP network monitor records localhost only.** To prove no third-party
     request, use `performance.getEntriesByType('resource')` in the page.
+25. **Image metadata runs at build time without a request.** In
+    `generateImageMetadata` / `opengraph-image`, next-intl's `getTranslations()`
+    reads request headers and fails the build. `src/lib/og.tsx` imports
+    `messages/*.json` directly instead.
+26. **satori (`next/og`) limits.** No variable fonts (it crashes on `fvar`), so
+    share images use static TTFs. No RTL/bidi: Arabic joins but word order
+    and spacing break, so `/ar` shares the English card (Arabic alt text).
+    Next writes `/en/…` into `og:image`; the proxy skips those paths so they
+    serve 200 directly instead of a 307.
+27. **404 = `src/app/global-not-found.tsx`, not `[locale]/not-found.tsx`.** With
+    two root layouts and the frontend one under `[locale]`, a catch-all +
+    `not-found.tsx` returned 404 but an empty server-rendered shell (blank for
+    crawlers). global-not-found renders the full page; the locale comes from
+    the next-intl proxy via `getLocale()`.
+28. **Trailing slashes are handled by our own redirect.** `skipTrailingSlashRedirect`
+    is on because Next's built-in slash redirect runs before custom rules
+    (old WordPress `/slug/` URLs took two hops). The last rule in
+    `next.config.ts` (`/:path+/` → `/:path+`) restores the normal behaviour —
+    keep it last.
 
 ---
 
@@ -349,12 +413,15 @@ project is confirmed. No payment is taken at booking.
 
 ## 6. Open items
 
-1. **Native DE/AR review** of all copy, especially the Phase 3 strings and the
-   booking cards. Earlier flags still open: German "Marketing als
+1. **Native DE/AR review** of all copy, especially the Phase 3 strings, the
+   booking cards, and the Phase 4 strings (`meta.*` titles, descriptions and
+   share-image headlines; `notFound.*`). Earlier flags still open: German "Marketing als
    Dienstleistung"; Arabic keeps `Next` in Latin script mid-sentence.
 2. **Client logo files** — add SVGs to `public/clients/` and set `logo:` in
    `src/config/clients.ts`.
-3. **Connect `novusfy.com` to Vercel** — follow §8 *exactly*, or email breaks.
+3. **Domain:** reported live on Vercel (Nov 3). Confirm mail and both forms
+   end to end (§8). Then push Phase 4 and submit `https://novusfy.com/sitemap.xml`
+   in Google Search Console and Bing Webmaster Tools.
 4. **Rotate the R2 secret** and save the new one in Vercel as a **Sensitive**
    environment variable.
 5. **Add `sslmode=verify-full` to `DATABASE_URL` in Vercel** (and local
@@ -365,8 +432,7 @@ project is confirmed. No payment is taken at booking.
    confirmation).
 7. **Branded notification email** — the internal email `/contact/send` sends is
    plain HTML.
-8. **`public/og-image.png`** (1200×630) — referenced by the metadata, still
-   missing.
+8. ~~`public/og-image.png`~~ — replaced by generated share images (Phase 4).
 9. **Payload email adapter (Resend)** so `/admin` password resets actually send.
 10. Still-open content: real photography for the hero, About team/office image
     and founder photo; Courses / Articles collections unwired and empty.
